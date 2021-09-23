@@ -8,12 +8,17 @@
         <variable
             name="representative"
             type="com.example.android.politicalpreparedness.representative.model.Representative" />
+
+        <variable
+            name="clickListener"
+            type="com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_clickable_height"
+        android:onClick="@{() -> clickListener.onClick(representative)}"
         android:padding="@dimen/default_padding">
 
         <ImageView

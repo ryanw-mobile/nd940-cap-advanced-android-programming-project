@@ -14,7 +14,7 @@ import com.example.android.politicalpreparedness.databinding.ViewholderRepresent
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter :
+class RepresentativeListAdapter(val clickListener: RepresentativeListener) :
     ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
@@ -23,16 +23,17 @@ class RepresentativeListAdapter :
 
     override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(clickListener, item)
     }
 }
 
 class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Representative) {
+    fun bind(clickListener: RepresentativeListener, item: Representative) {
         // XML retrieves string values for textviews
         binding.representative = item
+        binding.clickListener = clickListener
 
         // Use Glide to take care of the profile image
         // BindingAdapter is defined to supply the URL from the XML
@@ -116,7 +117,7 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
     }
 }
 
-//TODO: Create RepresentativeListener
-class RepresentativeListener {
-
+//COMPLETED: Create RepresentativeListener
+class RepresentativeListener(val clickListener: (representativeId: String) -> Unit) {
+    fun onClick(representative: Representative) = clickListener(representative.official.name)
 }
