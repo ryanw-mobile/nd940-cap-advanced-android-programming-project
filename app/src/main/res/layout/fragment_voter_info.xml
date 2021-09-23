@@ -101,7 +101,7 @@
             android:id="@+id/address_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.address.empty ? View.GONE : View.VISIBLE"
+            android:visibility="@{viewModel.address.isEmpty() ? View.GONE : View.VISIBLE}"
             app:constraint_referenced_ids="divider,state_correspondence_header,address" />
 
         <!-- COMPLETED: Add visual styling and content -->
