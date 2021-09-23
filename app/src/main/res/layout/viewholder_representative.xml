@@ -26,12 +26,13 @@
             tools:src="@drawable/ic_profile" />
 
         <TextView
-            android:id="@+id/representative_title"
+            android:id="@+id/representative_office_name"
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:lines="1"
             android:paddingStart="@dimen/double_padding"
+            android:text="@{representative.office.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,9 +45,10 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:paddingStart="@dimen/double_padding"
+            android:text="@{representative.official.name}"
             app:layout_constraintEnd_toStartOf="@id/www_icon"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
-            app:layout_constraintTop_toBottomOf="@id/representative_title"
+            app:layout_constraintTop_toBottomOf="@id/representative_office_name"
             tools:text="Senator Name" />
 
         <TextView
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:paddingStart="@dimen/double_padding"
+            android:text="@{representative.official.party}"
             app:layout_constraintEnd_toStartOf="@id/www_icon"
             app:layout_constraintStart_toEndOf="@id/representative_photo"
             app:layout_constraintTop_toBottomOf="@id/representative_name"
@@ -72,7 +75,7 @@
             android:src="@drawable/ic_www"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/facebook_icon"
-            app:layout_constraintTop_toBottomOf="@id/representative_title" />
+            app:layout_constraintTop_toBottomOf="@id/representative_office_name" />
 
         <ImageView
             android:id="@+id/facebook_icon"
@@ -85,7 +88,7 @@
             android:src="@drawable/ic_facebook"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/twitter_icon"
-            app:layout_constraintTop_toBottomOf="@id/representative_title" />
+            app:layout_constraintTop_toBottomOf="@id/representative_office_name" />
 
         <ImageView
             android:id="@+id/twitter_icon"
@@ -98,7 +101,7 @@
             android:src="@drawable/ic_twitter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title" />
+            app:layout_constraintTop_toBottomOf="@id/representative_office_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
