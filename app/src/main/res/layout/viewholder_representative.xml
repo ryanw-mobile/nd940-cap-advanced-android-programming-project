@@ -26,10 +26,10 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:contentDescription="@{representative.official.name}"
-            app:fetchImage="@{representative.official.photoUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:profileImage="@{representative.official.photoUrl}"
             tools:src="@drawable/ic_profile" />
 
         <TextView
