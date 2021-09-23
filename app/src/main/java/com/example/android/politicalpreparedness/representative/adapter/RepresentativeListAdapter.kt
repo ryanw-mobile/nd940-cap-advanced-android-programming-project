@@ -10,8 +10,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
@@ -37,14 +35,8 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
         binding.representative = item
 
         // Use Glide to take care of the profile image
+        // BindingAdapter is defined to supply the URL from the XML
         // binding.representativePhoto.setImageResource(R.drawable.ic_profile)
-        Glide.with(binding.root)
-            .load(item.official.photoUrl)
-            .placeholder(R.drawable.ic_profile)
-            .error(R.drawable.ic_profile)
-            .fallback(R.drawable.ic_profile)
-            .circleCrop()
-            .into(binding.representativePhoto)
 
         //COMPLETED: Show social links ** Hint: Use provided helper methods
         //COMPLETED: Show www link ** Hint: Use provided helper methods
