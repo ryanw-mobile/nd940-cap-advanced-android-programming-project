@@ -14,7 +14,7 @@ import com.example.android.politicalpreparedness.databinding.ViewholderRepresent
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter(val clickListener: RepresentativeListener) :
+class RepresentativeListAdapter(private val clickListener: RepresentativeListener) :
     ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
@@ -31,7 +31,7 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(clickListener: RepresentativeListener, item: Representative) {
-        // XML retrieves string values for textviews
+        // XML retrieves string values for text views
         binding.representative = item
         binding.clickListener = clickListener
 
@@ -109,7 +109,7 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
 //COMPLETED: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem.official.name == newItem.official.name
+        return oldItem.office.division.id == newItem.office.division.id
     }
 
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
@@ -119,5 +119,5 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
 
 //COMPLETED: Create RepresentativeListener
 class RepresentativeListener(val clickListener: (representativeId: String) -> Unit) {
-    fun onClick(representative: Representative) = clickListener(representative.official.name)
+    fun onClick(representative: Representative) = clickListener(representative.office.division.id)
 }
