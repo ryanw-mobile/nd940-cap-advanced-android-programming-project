@@ -19,13 +19,8 @@
         <!-- COMPLETED: Add Upcoming Election Recycler and Header -->
         <TextView
             android:id="@+id/textview_upcoming_elections"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:padding="@dimen/default_padding"
+            style="@style/sectionHeader"
             android:text="@string/upcoming_elections"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_upcoming"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,13 +41,8 @@
         <!-- COMPLETED: Add Saved Election Recycler and Header -->
         <TextView
             android:id="@+id/textview_saved_elections"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:padding="@dimen/default_padding"
+            style="@style/sectionHeader"
             android:text="@string/saved_elections"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_saved"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
