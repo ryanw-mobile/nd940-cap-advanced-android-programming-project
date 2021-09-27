@@ -52,7 +52,8 @@ class RepresentativeFragment : Fragment() {
         //COMPLETED: Establish bindings
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         //COMPLETED: Define and assign Representative adapter
         val representativesAdapter = RepresentativeListAdapter()
