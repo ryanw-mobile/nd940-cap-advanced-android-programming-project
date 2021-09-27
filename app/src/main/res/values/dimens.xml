@@ -4,6 +4,6 @@
     <dimen name="double_padding">16dp</dimen>
     <dimen name="min_clickable_height">48dp</dimen>
 
-    <!-- TODO: Add necessary dimension values -->s
+    <!-- COMPLETED: Add necessary dimension values -->s
 
 </resources>

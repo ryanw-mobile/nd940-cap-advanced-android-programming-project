@@ -23,6 +23,6 @@
     <string name="city">City</string>
     <string name="zip">Zip</string>
 
-    <!-- TODO: Add necessary string values -->
+    <!-- COMPLETED: Add necessary string values -->
 
 </resources>
