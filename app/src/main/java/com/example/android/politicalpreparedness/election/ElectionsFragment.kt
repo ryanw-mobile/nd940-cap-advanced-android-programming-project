@@ -54,11 +54,8 @@ class ElectionsFragment : Fragment() {
 
         //TODO: Add binding values
         electionUpcomingAdapter = ElectionListAdapter(ElectionListener { election ->
-            findNavController().navigate(
-                ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                    election.id, election.division
-                )
-            )
+            viewModel.navigateToVoterInfo(election)
+        })
         })
 
         //TODO: Link elections to voter info

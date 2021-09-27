@@ -48,6 +48,13 @@ class ElectionsViewModel(private val dataSource: ElectionDao) : ViewModel() {
         }
     }
 
-    //TODO: Create functions to navigate to saved or upcoming election voter info
+    //COMPLETED: Create functions to navigate to saved or upcoming election voter info
+    fun navigateToVoterInfo(election: Election) {
+        _selectedElection.value = election
+    }
+
+    fun doneNavigateToVoterInfo() {
+        _selectedElection.value = null
+    }
 
 }
