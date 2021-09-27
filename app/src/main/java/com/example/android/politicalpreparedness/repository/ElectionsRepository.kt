@@ -23,8 +23,8 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     suspend fun fetchUpcomingElections() {
         withContext(Dispatchers.IO) {
             try {
-                val getElectionsDeferred = CivicsApi.retrofitService.getElections()
-                database.electionDao.insertAll(getElectionsDeferred.elections)
+                val electionResponse = CivicsApi.retrofitService.getElections()
+                database.electionDao.insertAll(electionResponse.elections)
             } catch (e: Exception) {
                 e.printStackTrace()
                 // We just do not make changes to the DB if API failed.
