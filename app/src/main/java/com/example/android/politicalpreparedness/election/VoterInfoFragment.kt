@@ -52,8 +52,8 @@ class VoterInfoFragment : Fragment() {
         return binding.root
     }
 
-    //TODO: Create method to load URL intents
-    private fun openWebUrl(url : String) {
+    //COMPLETED: Create method to load URL intents
+    private fun openWebUrl(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
     }
