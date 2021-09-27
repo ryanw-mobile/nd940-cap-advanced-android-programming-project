@@ -42,7 +42,7 @@ class ElectionsFragment : Fragment() {
 
         //COMPLETED: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
         //COMPLETED: Link elections to voter info
