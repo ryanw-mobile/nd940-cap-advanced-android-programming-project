@@ -18,13 +18,10 @@ class VoterInfoViewModel(
 ) :
     ViewModel() {
 
-    //TODO: Add live data to hold voter info
-    // These have been bind to the XML layout
-    private val _electionTitle = MutableLiveData<String>()
-    val electionTitle: LiveData<String> = _electionTitle
-
-    private val _electionDate = MutableLiveData<String>()
-    val electionDate: LiveData<String> = _electionDate
+    //COMPLETED: Add live data to hold voter info
+    private var _voterInfo = MutableLiveData<VoterInfoResponse>()
+    val voterInfo: LiveData<VoterInfoResponse>
+        get() = _voterInfo
 
     // TextView clickable to open a link here
     private val _locationUrl = MutableLiveData<String>()
@@ -36,8 +33,6 @@ class VoterInfoViewModel(
 
     private val _address = MutableLiveData<String>()
     val address: LiveData<String> = _address
-
-    //TODO: Add var and methods to populate voter info
 
     //TODO: Add var and methods to support loading URLs
 
@@ -56,6 +51,14 @@ class VoterInfoViewModel(
             //COMPLETED: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
             getElectionFollowStatus()
 
+            //COMPLETED: Add var and methods to populate voter info
+            // Given we have the electionId, the address can be rather casual
+            val country = division.country
+            val state = division.state
+            val address = "$state, $country"
+            repository.fetchVoterInfo(electionId, address)
+            _voterInfo.value = repository.voterInfo
+        }
     }
 
     private fun getElectionFollowStatus() {

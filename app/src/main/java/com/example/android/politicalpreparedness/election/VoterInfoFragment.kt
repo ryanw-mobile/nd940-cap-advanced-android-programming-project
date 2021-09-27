@@ -37,6 +37,12 @@ class VoterInfoFragment : Fragment() {
         val viewModel =
             ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
 
+        //COMPLETED: Add binding values
+        val binding: FragmentVoterInfoBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
 
         //TODO: Handle loading of URLs
 
