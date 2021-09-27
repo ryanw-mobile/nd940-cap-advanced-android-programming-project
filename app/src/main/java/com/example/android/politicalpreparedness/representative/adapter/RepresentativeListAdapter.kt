@@ -14,7 +14,7 @@ import com.example.android.politicalpreparedness.databinding.ViewholderRepresent
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter(private val clickListener: RepresentativeListener) :
+class RepresentativeListAdapter :
     ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
@@ -23,17 +23,18 @@ class RepresentativeListAdapter(private val clickListener: RepresentativeListene
 
     override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(clickListener, item)
+        holder.bind(item)
     }
 }
 
-class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
+class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(clickListener: RepresentativeListener, item: Representative) {
+    fun bind(item: Representative) {
         // XML retrieves string values for text views
         binding.representative = item
-        binding.clickListener = clickListener
+
+        // TextView values are handled at XML
 
         // Use Glide to take care of the profile image
         // BindingAdapter is defined to supply the URL from the XML
@@ -118,6 +119,8 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
 }
 
 //COMPLETED: Create RepresentativeListener
+//Note: in this implementation, the viewholder itself is not clickable but the buttons inside
+//Therefore this Listener is redundant
 class RepresentativeListener(val clickListener: (representativeId: String) -> Unit) {
     fun onClick(representative: Representative) = clickListener(representative.office.division.id)
 }
