@@ -51,11 +51,13 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) :
 //COMPLETED: Create ElectionDiffCallback
 class ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
     override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Election, newItem: Election): Boolean {
-        return oldItem == newItem
+        return ((oldItem.id == newItem.id)
+                && (oldItem.electionDay == newItem.electionDay)
+                && (oldItem.name == newItem.name))
     }
 }
 
