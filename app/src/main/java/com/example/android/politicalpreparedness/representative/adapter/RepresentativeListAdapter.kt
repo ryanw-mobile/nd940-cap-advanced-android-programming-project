@@ -118,9 +118,6 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
     }
 }
 
-//COMPLETED: Create RepresentativeListener
+//IGNORED: Create RepresentativeListener
 //Note: in this implementation, the viewholder itself is not clickable but the buttons inside
 //Therefore this Listener is redundant
-class RepresentativeListener(val clickListener: (representativeId: String) -> Unit) {
-    fun onClick(representative: Representative) = clickListener(representative.office.division.id)
-}
