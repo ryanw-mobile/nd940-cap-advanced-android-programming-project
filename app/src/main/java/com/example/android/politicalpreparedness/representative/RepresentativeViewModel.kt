@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.representative
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,12 +41,16 @@ class RepresentativeViewModel : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     fun fetchRepresentatives() {
+        Log.d(
+            TAG,
+            "fetchRepresentatives - final address = {${_address.value!!.toFormattedString()}"
+        )
         coroutineScope.launch {
             _address.value?.let {
-                val getPropertiesDeferred =
-                    CivicsApi.retrofitService.getRepresentatives(address.value!!.toFormattedString())
                 try {
-                    val (offices, officials) = getPropertiesDeferred.await()
+                    val getRepresentativesDeferred =
+                        CivicsApi.retrofitService.getRepresentatives(_address.value!!.toFormattedString())
+                    val (offices, officials) = getRepresentativesDeferred
                     _representatives.value =
                         offices.flatMap { office -> office.getRepresentatives(officials) }
                 } catch (e: Exception) {
@@ -69,4 +74,7 @@ class RepresentativeViewModel : ViewModel() {
     //COMPLETED: Create function to get address from individual fields
     //There is no need to create any function for this as we have two-way bindings
 
+    companion object {
+        const val TAG = "RepresentativeViewModel"
+    }
 }
