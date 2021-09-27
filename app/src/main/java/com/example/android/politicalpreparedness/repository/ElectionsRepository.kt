@@ -1,6 +1,7 @@
 package com.example.android.politicalpreparedness.network.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
@@ -18,6 +19,10 @@ class ElectionsRepository(private val database: ElectionDatabase) {
 
     var voterInfo: VoterInfoResponse? = null
     var isFollowed by Delegates.notNull<Boolean>()
+
+    private var _voterInfoLoadError = MutableLiveData(false)
+    val voterInfoLoadError: LiveData<Boolean>
+        get() = _voterInfoLoadError
 
     /***
      * Fetch data from REST API and store to database
@@ -44,9 +49,11 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     suspend fun fetchVoterInfo(electionId: Int, address: String) {
         withContext(Dispatchers.IO) {
             voterInfo = try {
+                _voterInfoLoadError.postValue(false)
                 CivicsApi.retrofitService.getVoterInfo(address, electionId)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _voterInfoLoadError.postValue(true)
                 null
             }
         }

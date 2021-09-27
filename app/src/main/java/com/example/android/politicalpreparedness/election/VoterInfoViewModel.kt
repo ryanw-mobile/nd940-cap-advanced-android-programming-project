@@ -23,6 +23,8 @@ class VoterInfoViewModel(
     val voterInfo: LiveData<VoterInfoResponse>
         get() = _voterInfo
 
+    val voterInfoLoadError = repository.voterInfoLoadError
+
     // TextView clickable to open a link here
     private val _locationUrl = MutableLiveData<String>()
     val locationUrl: LiveData<String> = _locationUrl

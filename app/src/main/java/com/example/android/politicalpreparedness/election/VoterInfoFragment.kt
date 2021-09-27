@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,10 +24,6 @@ class VoterInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //COMPLETED: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-         */
         val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
         //COMPLETED: Add ViewModel values and create ViewModel
@@ -43,6 +40,20 @@ class VoterInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        //COMPLETED: Populate voter info -- hide views without provided data.
+        /**
+        Hint: You will need to ensure proper data is provided from previous fragment.
+         */
+        viewModel.voterInfoLoadError.observe(viewLifecycleOwner, { error ->
+            if (error) {
+                binding.root.visibility = View.GONE
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.error_load_voterinfo),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
 
         //TODO: Handle loading of URLs
         //COMPLETED: Handle save button UI state
