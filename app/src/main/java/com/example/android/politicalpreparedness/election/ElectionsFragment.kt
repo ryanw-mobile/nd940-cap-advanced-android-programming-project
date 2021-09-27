@@ -40,7 +40,17 @@ class ElectionsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        //TODO: Add ViewModel values and create ViewModel
+        //COMPLETED: Link elections to voter info
+        viewModel.selectedElection.observe(viewLifecycleOwner, { election ->
+            election?.let {
+                findNavController().navigate(
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                        election.id, election.division
+                    )
+                )
+                viewModel.doneNavigateToVoterInfo()
+            }
+        })
 
         //TODO: Add binding values
         electionUpcomingAdapter = ElectionListAdapter(ElectionListener { election ->

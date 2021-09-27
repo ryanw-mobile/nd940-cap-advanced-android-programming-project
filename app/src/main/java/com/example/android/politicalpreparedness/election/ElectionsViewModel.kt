@@ -19,8 +19,17 @@ class ElectionsViewModel(private val dataSource: ElectionDao) : ViewModel() {
     val upcoomingElections: LiveData<List<Election>>
         get() = _upcomingElections
 
-    //TODO: Create live data val for saved elections
+    //COMPLETED: Create live data val for saved elections
+    private val _savedElections = MutableLiveData<List<Election>>()
+    val savedElections: LiveData<List<Election>>
+        get() = _savedElections
+
+    private val _selectedElection = MutableLiveData<Election>()
+    val selectedElection: LiveData<Election>
+        get() = _selectedElection
+
     init {
+        _selectedElection.value = null
         fetchUpcomingElections()
     }
 
