@@ -12,6 +12,9 @@
     <string name="twitter_link">twitter link</string>
     <string name="facebook_link">facebook link</string>
     <string name="website_link">website link</string>
+    <string name="error_no_location_permission">Please grant the location permission</string>
+    <string name="settings">Settings</string>
+    <string name="error_null_location">Cannot determine your location. Try again later?</string>
 
     <!-- TODO: Add necessary string values -->
 
