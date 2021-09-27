@@ -17,11 +17,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -36,7 +39,9 @@ class RepresentativeFragment : Fragment() {
     lateinit var binding: FragmentRepresentativeBinding
 
     //COMPLETED: Declare ViewModel
-    val viewModel = RepresentativeViewModel()
+    private val viewModel: RepresentativeViewModel by lazy {
+        ViewModelProvider(this).get(RepresentativeViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,16 +50,25 @@ class RepresentativeFragment : Fragment() {
     ): View? {
 
         //COMPLETED: Establish bindings
-        binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
         binding.lifecycleOwner = this
 
-        //TODO: Define and assign Representative adapter
+        //COMPLETED: Define and assign Representative adapter
+        val representativesAdapter = RepresentativeListAdapter()
+        binding.representativeRecyclerview.adapter = representativesAdapter
 
-        //TODO: Populate Representative adapter
+        //COMPLETED: Populate Representative adapter
+        viewModel.representatives.observe(
+            viewLifecycleOwner,
+            { representativesAdapter.submitList(it) })
 
-        //TODO: Establish button listeners for field and location search
+        //COMPLETED: Establish button listeners for field and location search
         binding.buttonLocation.setOnClickListener { checkAndRequestLocationPermissionsAndGetLocation() }
-
+        binding.buttonSearch.setOnClickListener {
+            hideKeyboard()
+            viewModel.fetchRepresentatives()
+        }
 
         return binding.root
     }
@@ -186,7 +200,7 @@ class RepresentativeFragment : Fragment() {
 
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
 }

@@ -14,13 +14,17 @@ import kotlinx.coroutines.launch
 class RepresentativeViewModel : ViewModel() {
 
     //COMPLETED: Establish live data for representatives and address
-    private var _address = MutableLiveData<Address>()
+    private val _address = MutableLiveData<Address>()
     val address: LiveData<Address>
         get() = _address
 
-    private var _representatives = MutableLiveData<List<Representative>>()
+    private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>>
         get() = _representatives
+
+    init {
+        _address.value = Address("", "", "", "", "")
+    }
 
     //COMPLETED: Create function to fetch representatives from API from a provided address
     /**
