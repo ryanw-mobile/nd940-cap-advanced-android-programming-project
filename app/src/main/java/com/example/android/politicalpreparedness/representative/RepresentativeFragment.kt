@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
@@ -60,6 +61,10 @@ class RepresentativeFragment : Fragment() {
         val representativesAdapter = RepresentativeListAdapter()
         binding.representativeRecyclerview.adapter = representativesAdapter
 
+        val dividerItemDecoration =
+            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.representativeRecyclerview.addItemDecoration(dividerItemDecoration)
+        
         //COMPLETED: Populate Representative adapter
         viewModel.representatives.observe(
             viewLifecycleOwner,
@@ -71,7 +76,12 @@ class RepresentativeFragment : Fragment() {
                 viewModel.address.value?.state = binding.state.selectedItem as String
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 viewModel.address.value?.state = binding.state.selectedItem as String
             }
         }
