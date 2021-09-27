@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -31,5 +32,20 @@ interface ElectionDao {
     //COMPLETED: Add clear query
     @Query("DELETE FROM election_table")
     fun clear()
+    // Extended functions to manage followed elections
+    @Query("INSERT INTO followed_election VALUES(:electionId)")
+    suspend fun followElection(electionId: Int)
+
+    @Query("SELECT * FROM election_table WHERE id IN (select ID from followed_election)")
+    fun getFollowedElections(): LiveData<List<Election>>
+
+    @Query("select exists(select * from followed_election where id = :electionId)")
+    fun isFollowedElection(electionId: Int): LiveData<Boolean>
+
+    @Query("DELETE FROM followed_election WHERE id = :electionId")
+    suspend fun unfollowElection(electionId: Int)
+
+    @Query("DELETE FROM followed_election")
+    suspend fun clearFollowedElections()
 
 }
