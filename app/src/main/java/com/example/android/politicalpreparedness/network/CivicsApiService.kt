@@ -6,6 +6,7 @@ import com.example.android.politicalpreparedness.network.models.RepresentativeRe
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
@@ -16,9 +17,18 @@ import retrofit2.http.Query
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
 // COMPLETED: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
+/**
+ * Moshi's composition mechanism tries to find the best adapter for each type.
+ * It starts with the first adapter or factory registered with Moshi.Builder.add(),
+ * and proceeds until it finds an adapter for the target type.
+ * If a type can be matched multiple adapters, the earliest one wins.
+ * To register an adapter at the end of the list, use Moshi.Builder.addLast() instead.
+ * This is most useful when registering general-purpose adapters, such as the KotlinJsonAdapterFactory below.
+ */
 private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
     .add(ElectionAdapter())
+    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+    .add(KotlinJsonAdapterFactory())
     .build()
 
 private val retrofit = Retrofit.Builder()
