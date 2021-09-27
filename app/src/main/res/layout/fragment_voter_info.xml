@@ -11,6 +11,18 @@
             name="viewModel"
             type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
 
+        <variable
+            name="voterInfo"
+            type="com.example.android.politicalpreparedness.network.models.VoterInfoResponse" />
+
+        <variable
+            name="election"
+            type="com.example.android.politicalpreparedness.network.models.Election" />
+
+        <variable
+            name="division"
+            type="com.example.android.politicalpreparedness.network.models.Division" />
+
         <import type="android.view.View" />
     </data>
 
@@ -149,7 +161,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
-            android:onClick="@{() -> viewModel.toggleFollowElection()"
+            android:onClick="@{()->viewModel.toggleFollowElection()}"
+            android:text="@{viewModel.isFollowed() ? @string/unfollow_election : @string/follow_election}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

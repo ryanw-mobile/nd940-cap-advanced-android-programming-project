@@ -42,7 +42,7 @@ interface ElectionDao {
     fun getFollowedElections(): LiveData<List<Election>>
 
     @Query("select exists(select * from followed_election where id = :electionId)")
-    fun isFollowedElection(electionId: Int): LiveData<Boolean>
+    fun isFollowedElection(electionId: Int): Boolean
 
     @Query("DELETE FROM followed_election WHERE id = :electionId")
     suspend fun unfollowElection(electionId: Int)

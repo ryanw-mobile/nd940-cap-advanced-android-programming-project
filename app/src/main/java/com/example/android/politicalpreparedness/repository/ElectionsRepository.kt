@@ -7,6 +7,7 @@ import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.properties.Delegates
 
 
 class ElectionsRepository(private val database: ElectionDatabase) {
@@ -16,6 +17,7 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     val followedElections: LiveData<List<Election>> = database.electionDao.getFollowedElections()
 
     var voterInfo: VoterInfoResponse? = null
+    var isFollowed by Delegates.notNull<Boolean>()
 
     /***
      * Fetch data from REST API and store to database
@@ -32,6 +34,12 @@ class ElectionsRepository(private val database: ElectionDatabase) {
         }
     }
 
+    suspend fun isElectionFollowed(electionId: Int) {
+        withContext(Dispatchers.IO) {
+            isFollowed = database.electionDao.isFollowedElection(electionId)
+        }
+    }
+
     // ---- VoterInfo ----
     suspend fun fetchVoterInfo(electionId: Int, address: String) {
         withContext(Dispatchers.IO) {
@@ -41,6 +49,18 @@ class ElectionsRepository(private val database: ElectionDatabase) {
                 e.printStackTrace()
                 null
             }
+        }
+    }
+
+    suspend fun unfollowElection(electionId: Int) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.unfollowElection(electionId)
+        }
+    }
+
+    suspend fun followElection(electionId: Int) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.followElection(electionId)
         }
     }
 
