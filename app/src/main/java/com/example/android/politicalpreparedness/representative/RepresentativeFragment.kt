@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -65,6 +66,15 @@ class RepresentativeFragment : Fragment() {
             { representativesAdapter.submitList(it) })
 
         //COMPLETED: Establish button listeners for field and location search
+        binding.state.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                viewModel.address.value?.state = binding.state.selectedItem as String
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.address.value?.state = binding.state.selectedItem as String
+            }
+        }
         binding.buttonLocation.setOnClickListener { checkAndRequestLocationPermissionsAndGetLocation() }
         binding.buttonSearch.setOnClickListener {
             hideKeyboard()

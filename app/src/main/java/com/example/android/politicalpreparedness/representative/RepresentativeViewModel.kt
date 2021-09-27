@@ -23,7 +23,7 @@ class RepresentativeViewModel : ViewModel() {
         get() = _representatives
 
     init {
-        _address.value = Address("", "", "", "", "")
+        _address.value = Address("", "", "", "Alabama", "")
     }
 
     //COMPLETED: Create function to fetch representatives from API from a provided address
@@ -67,8 +67,6 @@ class RepresentativeViewModel : ViewModel() {
     }
 
     //COMPLETED: Create function to get address from individual fields
-    fun setAddress(line1: String, line2: String, city: String, state: String, zip: String) {
-        setAddress(Address(line1, line2, city, state, zip))
-    }
+    //There is no need to create any function for this as we have two-way bindings
 
 }
