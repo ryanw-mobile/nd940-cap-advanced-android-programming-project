@@ -6,7 +6,6 @@
 
     <!-- COMPLETED: Add data binding node for Voter Info ViewModel -->
     <data>
-
         <variable
             name="viewModel"
             type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
@@ -52,11 +51,11 @@
             android:layout_marginTop="@dimen/double_padding"
             android:layout_marginEnd="@dimen/default_padding"
             android:layout_marginBottom="@dimen/double_padding"
+            android:text="@{viewModel.voterInfo.election.electionDay.toLocaleString()}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/election_name"
-            app:text="@{viewModel.electionDate}"
             tools:text="12 November 2021" />
 
         <!-- COMPLETED: Add visual styling and content -->
