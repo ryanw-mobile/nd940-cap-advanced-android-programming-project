@@ -20,6 +20,9 @@ class ElectionsViewModel(private val dataSource: ElectionDao) : ViewModel() {
         get() = _upcomingElections
 
     //TODO: Create live data val for saved elections
+    init {
+        fetchUpcomingElections()
+    }
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
     private var viewModelJob = Job()
