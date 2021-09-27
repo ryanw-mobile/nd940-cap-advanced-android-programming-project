@@ -20,6 +20,9 @@ fun fetchImage(view: ImageView, src: String?) {
             .fallback(R.drawable.ic_profile)
             .circleCrop()
             .into(view)
+    } ?: run {
+        // src is null, we still have to show a placeholder
+        view.setImageResource(R.drawable.ic_profile)
     }
 }
 
