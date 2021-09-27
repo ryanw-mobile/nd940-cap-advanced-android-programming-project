@@ -45,6 +45,8 @@ class VoterInfoFragment : Fragment() {
 
 
         //TODO: Handle loading of URLs
+        //COMPLETED: Handle save button UI state
+        //XML interacting with ViewModel directly
 
         // COMPLETED: cont'd Handle save button clicks
         // XML calling ViewModel function directly
