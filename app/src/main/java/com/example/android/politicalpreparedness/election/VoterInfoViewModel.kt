@@ -1,11 +1,19 @@
 package com.example.android.politicalpreparedness.election
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.android.politicalpreparedness.database.ElectionDao
+import androidx.lifecycle.ViewModel
+import com.example.android.politicalpreparedness.network.models.Division
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import com.example.android.politicalpreparedness.network.repository.ElectionsRepository
 
-class VoterInfoViewModel(private val dataSource: ElectionDao) : BaseObservable() {
+class VoterInfoViewModel(
+    private val repository: ElectionsRepository,
+    private val electionId: Int,
+    private val division: Division
+) :
+    ViewModel() {
 
     //TODO: Add live data to hold voter info
     // These have been bind to the XML layout
