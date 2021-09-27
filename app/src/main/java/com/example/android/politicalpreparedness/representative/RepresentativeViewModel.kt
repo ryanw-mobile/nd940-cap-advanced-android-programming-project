@@ -50,6 +50,7 @@ class RepresentativeViewModel : ViewModel() {
                 try {
                     val getRepresentativesDeferred =
                         CivicsApi.retrofitService.getRepresentatives(_address.value!!.toFormattedString())
+                    // Important: No need to call await() from inside the Coroutine.
                     val (offices, officials) = getRepresentativesDeferred
                     _representatives.value =
                         offices.flatMap { office -> office.getRepresentatives(officials) }
