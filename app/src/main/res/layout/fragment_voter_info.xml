@@ -6,6 +6,7 @@
 
     <!-- COMPLETED: Add data binding node for Voter Info ViewModel -->
     <data>
+
         <variable
             name="viewModel"
             type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
@@ -112,7 +113,7 @@
             android:id="@+id/address_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.address.isEmpty() ? View.GONE : View.VISIBLE}"
+            android:visibility="gone"
             app:constraint_referenced_ids="divider,state_correspondence_header,address" />
 
         <!-- COMPLETED: Add visual styling and content -->
@@ -147,10 +148,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/double_padding"
+            android:text="@{viewModel.voterInfo.state.get(0).electionAdministrationBody.correspondenceAddress.toFormattedString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
-            app:text="@{viewModel.address}"
             tools:text="Address" />
 
         <!-- COMPLETED: Add button to save election to Room -->

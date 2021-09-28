@@ -6,9 +6,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2734375" />
         <entry key="app/src/main/res/layout/fragment_election.xml" value="0.2734375" />
         <entry key="app/src/main/res/layout/fragment_launch.xml" value="0.2734375" />
+        <entry key="app/src/main/res/layout/fragment_representative.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_voter_info.xml" value="0.2734375" />
         <entry key="app/src/main/res/layout/listitem_election.xml" value="0.16875" />
-        <entry key="app/src/main/res/layout/viewholder_representative.xml" value="0.16875" />
+        <entry key="app/src/main/res/layout/viewholder_election.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/viewholder_representative.xml" value="0.375" />
       </map>
     </option>
   </component>

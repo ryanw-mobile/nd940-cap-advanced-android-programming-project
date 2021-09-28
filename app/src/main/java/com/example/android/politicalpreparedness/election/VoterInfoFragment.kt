@@ -55,7 +55,22 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        //TODO: Handle loading of URLs
+        // Control the visibility of the State Correspondence
+        // Could have a better way to do this
+        viewModel.voterInfo.observe(viewLifecycleOwner, {
+            // When it changes and have valid values, we update the UI
+            binding.addressGroup.visibility =
+                if (viewModel.getCorrespondenceAddress().isNullOrEmpty()) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+
+            //COMPLETED: Handle loading of URLs
+            binding.stateLocations.setOnClickListener { openWebUrl(viewModel.getVotingLocationUrl()) }
+            binding.stateBallot.setOnClickListener { openWebUrl(viewModel.getBallotInformationUrl()) }
+        })
+
         //COMPLETED: Handle save button UI state
         //XML interacting with ViewModel directly
 
@@ -66,9 +81,11 @@ class VoterInfoFragment : Fragment() {
     }
 
     //COMPLETED: Create method to load URL intents
-    private fun openWebUrl(url: String) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(browserIntent)
+    private fun openWebUrl(url: String?) {
+        url?.let {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+            startActivity(browserIntent)
+        }
     }
 
 }

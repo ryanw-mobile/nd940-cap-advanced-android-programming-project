@@ -26,17 +26,16 @@ class VoterInfoViewModel(
     val voterInfoLoadError = repository.voterInfoLoadError
 
     // TextView clickable to open a link here
-    private val _locationUrl = MutableLiveData<String>()
+    private var _locationUrl = MutableLiveData<String>()
     val locationUrl: LiveData<String> = _locationUrl
 
     // TextView clickable to open a link here
-    private val _ballotUrl = MutableLiveData<String>()
+    private var _ballotUrl = MutableLiveData<String>()
     val ballotUrl: LiveData<String> = _ballotUrl
 
-    private val _address = MutableLiveData<String>()
+    private var _address = MutableLiveData<String>()
     val address: LiveData<String> = _address
 
-    //TODO: Add var and methods to support loading URLs
 
     private var _isFollowed = MutableLiveData<Boolean>()
     val isFollowed: LiveData<Boolean>
@@ -82,5 +81,15 @@ class VoterInfoViewModel(
             }
         }
     }
+
+    //COMPLETED: Add var and methods to support loading URLs
+    fun getVotingLocationUrl(): String? =
+        _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.votingLocationFinderUrl
+
+    fun getBallotInformationUrl(): String? =
+        _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.ballotInfoUrl
+
+    fun getCorrespondenceAddress(): String? =
+        _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.correspondenceAddress?.toFormattedString()
 
 }
