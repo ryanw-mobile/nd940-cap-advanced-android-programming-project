@@ -1,7 +1,7 @@
-## Political Preparedness
+## Political Preparedness [![Build Status](https://app.travis-ci.com/ryanwong-uk/nd940-cap-advanced-android-programming-project.svg?branch=main)](https://app.travis-ci.com/ryanwong-uk/nd940-cap-advanced-android-programming-project)
 
-Political Preparedness is a Capstone project I have submitted for graduating from the Udacity Android
-Developers Kotlin Nanodegree program in September 2021.
+Political Preparedness is a Capstone project I have submitted for graduating from the Udacity
+Android Developers Kotlin Nanodegree program in September 2021.
 
 ![Screenshot1](screenshots/screen0.png) ![Screenshot2](screenshots/screen1.png)
 ![Screenshot3](screenshots/screen2.png) ![Screenshot4](screenshots/screen3.png)
@@ -30,26 +30,56 @@ In addition the following features are included:
 * Device permission
 * Device location
 
-## Running the App
+## Setting up the keystore
 
-As a project deliverable, the current code base has simplified greatly the build configurations. For
-now you will have to build and run the App using Android Studio.
+* Android keystore is not being stored in this repository. You need your own keystore to generate
+  the apk / App Bundle
 
-### API Keys
+* You need to have your own Civic API key from Google:
+  the [Google Developers Console](https://console.developers.google.com/)
 
-In order for this project to pull data, you will need to add your API Key to the project as a value
-in the CivicsHttpClient. You can generate an API Key from
-the [Google Developers Console](https://console.developers.google.com/)
+* To ensure sensitive data are not being pushed to Git by accident, the keystore and its passwords
+  are kept one level up of the project folder, so they are not managed by Git.
 
-Once you have the API key, you will need to generate a file `MyKeys.kt` at the project root, with
-the following contents:
+* If your project folder is at `/app/nd940-cap/`, the keystore file and `keystore.properties`
+  should be placed at `/app/`
 
-```
-object MyKeys {
-    const val KEY_CIVICAPI = your_key_here"
-}
-```
+* The format of `keystore.properties` is:
+  ```
+     store=/app/release-key.keystore
+     alias=<alias>
+     pass=<alias password>
+     storePass=<keystore password>
+     civicApiKey="<your API Key here>"
+  ```
 
-As the project has been submitted and marked, and I have graduated from the Nanodegree programme
-already. This will be improved in the next version of the App, which serves as a skill
-demonstration.
+## Building the App
+
+### Build and install on the connected device
+
+   ```
+   ./gradlew installDebug
+   // or
+   // ./gradlew installRelease
+   ```
+
+* Options are: `Debug`, `Release`
+* Debug builds will have an App package name suffix `.debug`
+
+### Build and sign a bundle for distribution
+
+After August 2021, all new apps and games will be required to publish with the Android App Bundle
+format.
+
+   ```
+   ./gradlew clean bundleRelease
+   ```
+
+### Build and sign an apk for distribution
+
+   ```
+   ./gradlew clean assembleRelease
+   ```
+
+* The generated apk(s) will be stored under `app/build/outputs/apk/`
+* Other usages can be listed using `./gradelew tasks`
