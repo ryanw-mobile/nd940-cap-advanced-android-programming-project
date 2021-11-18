@@ -8,9 +8,34 @@ apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 30
-    buildFeatures {
-        dataBinding true
+
+    signingConfigs {
+        release
     }
+
+    def isRunningOnTravis = System.getenv("CI") == "true"
+
+    if (isRunningOnTravis) {
+        // configure keystore
+        signingConfigs.release.storeFile = file("../secure.keystore")
+        signingConfigs.release.storePassword = System.getenv("storePass")
+        signingConfigs.release.keyAlias = System.getenv("alias")
+        signingConfigs.release.keyPassword = System.getenv("pass")
+
+        // Extra keys attached in the keystore.properties
+        defaultConfig.buildConfigField 'String', 'CIVIC_API_KEY', System.getenv("civicApiKey")
+    } else {
+        Properties keyProps = new Properties()
+        keyProps.load(new FileInputStream(file('../../keystore.properties')))
+        signingConfigs.release.storeFile = file(keyProps["store"])
+        signingConfigs.release.keyAlias = keyProps["alias"]
+        signingConfigs.release.storePassword = keyProps["storePass"]
+        signingConfigs.release.keyPassword = keyProps["pass"]
+
+        // Extra keys attached in the keystore.properties
+        defaultConfig.buildConfigField 'String', 'CIVIC_API_KEY', keyProps["civicApiKey"]
+    }
+
     defaultConfig {
         applicationId 'com.example.android.politicalpreparedness'
         minSdkVersion 26
@@ -20,23 +45,60 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix '.debug'
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def date = new Date()
+                    def formattedDate = date.format('yyyyMMdd-HHmmss')
+                    outputFileName = "politicalpreparedness-${variant.name}-${variant.versionName}-${formattedDate}.apk"
+                }
+            }
+        }
+
+        release {
+           shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def date = new Date()
+                    def formattedDate = date.format('yyyyMMdd-HHmmss')
+                    outputFileName = "politicalpreparedness-${variant.name}-${variant.versionName}-${formattedDate}.apk"
+                }
+            }
         }
     }
     buildFeatures {
         dataBinding true
     }
-//    androidExtensions {
-//        experimental = true
-//    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    testOptions {
+        animationsDisabled = true
+    }
+    packagingOptions {
+        // for JNA and JNA-platform
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+        // for byte-buddy
+        exclude "META-INF/licenses/ASM"
+        pickFirst "win32-x86-64/attach_hotspot_windows.dll"
+        pickFirst "win32-x86/attach_hotspot_windows.dll"
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
     }
 }
 
@@ -73,7 +135,7 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     //Room
     implementation "androidx.room:room-runtime:$version_room"
