@@ -64,7 +64,7 @@ class RepresentativeFragment : Fragment() {
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.representativeRecyclerview.addItemDecoration(dividerItemDecoration)
-        
+
         //COMPLETED: Populate Representative adapter
         viewModel.representatives.observe(
             viewLifecycleOwner,
@@ -209,11 +209,12 @@ class RepresentativeFragment : Fragment() {
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
             .map { address ->
                 Address(
-                    address.thoroughfare,
-                    address.subThoroughfare,
-                    address.locality,
-                    address.adminArea,
-                    address.postalCode
+                    // Geocoder might return null for all fields
+                    address?.thoroughfare ?: "",
+                    address?.subThoroughfare ?: "",
+                    address?.locality ?: "",
+                    address?.adminArea ?: "",
+                    address?.postalCode ?: ""
                 )
             }
             .first()
