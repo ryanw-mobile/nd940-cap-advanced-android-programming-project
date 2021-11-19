@@ -8,11 +8,11 @@
 
         <variable
             name="election"
-            type="com.example.android.politicalpreparedness.network.models.Election" />
+            type="com.example.android.politicalpreparedness.data.network.models.Election" />
 
         <variable
             name="clickListener"
-            type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
+            type="com.example.android.politicalpreparedness.ui.election.adapter.ElectionListener" />
     </data>
 
     <LinearLayout

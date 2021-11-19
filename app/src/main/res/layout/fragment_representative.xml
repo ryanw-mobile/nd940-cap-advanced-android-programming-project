@@ -2,18 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.politicalpreparedness.MainActivity">
+    tools:context="com.example.android.politicalpreparedness.ui.MainActivity">
 
     <!-- COMPLETED: Add data binding node -->
     <data>
 
         <variable
             name="viewModel"
-            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+            type="com.example.android.politicalpreparedness.ui.representative.RepresentativeViewModel" />
 
         <variable
             name="address"
-            type="com.example.android.politicalpreparedness.network.models.Address" />
+            type="com.example.android.politicalpreparedness.data.network.models.Address" />
     </data>
 
     <!-- COMPLETED: Add motion scene to hide form on vertical scroll. -->

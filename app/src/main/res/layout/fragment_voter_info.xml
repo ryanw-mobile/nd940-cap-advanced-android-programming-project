@@ -2,26 +2,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.politicalpreparedness.MainActivity">
+    tools:context="com.example.android.politicalpreparedness.ui.MainActivity">
 
     <!-- COMPLETED: Add data binding node for Voter Info ViewModel -->
     <data>
 
         <variable
             name="viewModel"
-            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
+            type="com.example.android.politicalpreparedness.ui.voterInfo.VoterInfoViewModel" />
 
         <variable
             name="voterInfo"
-            type="com.example.android.politicalpreparedness.network.models.VoterInfoResponse" />
+            type="com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse" />
 
         <variable
             name="election"
-            type="com.example.android.politicalpreparedness.network.models.Election" />
+            type="com.example.android.politicalpreparedness.data.network.models.Election" />
 
         <variable
             name="division"
-            type="com.example.android.politicalpreparedness.network.models.Division" />
+            type="com.example.android.politicalpreparedness.data.network.models.Division" />
 
         <import type="android.view.View" />
     </data>
@@ -67,8 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginTop="@dimen/double_padding"
-            android:layout_marginEnd="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/double_padding"
             android:text="Election Information"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
