@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.database.ElectionDatabase
-import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
+import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 
 
 class ElectionsFragment : Fragment() {
@@ -57,10 +57,14 @@ class ElectionsFragment : Fragment() {
         //COMPLETED: Initiate recycler adapters
         electionUpcomingAdapter = ElectionListAdapter(ElectionListener { election ->
             viewModel.navigateToVoterInfo(election)
-        })
+        }).apply {
+            setHasStableIds(true)
+        }
         electionFollowedAdapter = ElectionListAdapter(ElectionListener { election ->
             viewModel.navigateToVoterInfo(election)
-        })
+        }).apply {
+            setHasStableIds(true)
+        }
 
         //COMPLETED: Populate recycler adapters
         binding.recyclerviewUpcoming.adapter = electionUpcomingAdapter
@@ -68,9 +72,14 @@ class ElectionsFragment : Fragment() {
 
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        binding.recyclerviewUpcoming.addItemDecoration(dividerItemDecoration)
-        binding.recyclerviewSaved.addItemDecoration(dividerItemDecoration)
-
+        binding.recyclerviewUpcoming.apply {
+            addItemDecoration(dividerItemDecoration)
+            setHasFixedSize(true)
+        }
+        binding.recyclerviewSaved.apply {
+            addItemDecoration(dividerItemDecoration)
+            setHasFixedSize(true)
+        }
         return binding.root
     }
 

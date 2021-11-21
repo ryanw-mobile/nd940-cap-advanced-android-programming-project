@@ -20,6 +20,11 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
         val item = getItem(position)
         holder.bind(clickListener, item)
     }
+
+    // This is needed for hasStableIds()
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }
 
 //COMPLETED: Create ElectionViewHolder
