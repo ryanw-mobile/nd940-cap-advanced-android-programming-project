@@ -1,12 +1,12 @@
-package com.example.android.politicalpreparedness.ui.election.adapter
+package com.example.android.politicalpreparedness.ui.election
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
 import com.example.android.politicalpreparedness.data.network.models.Election
+import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
 
 class ElectionListAdapter(private val clickListener: ElectionListener) :
     ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
@@ -20,19 +20,18 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
         val item = getItem(position)
         holder.bind(clickListener, item)
     }
-
 }
 
 //COMPLETED: Create ElectionViewHolder
 class ElectionViewHolder(val binding: ViewholderElectionBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(clickListener: ElectionListener, item: Election) {
-        binding.election = item
-        binding.clickListener = clickListener
-
-        binding.executePendingBindings()
+    fun bind(listener: ElectionListener, item: Election) {
+        binding.apply {
+            election = item
+            clickListener = listener
+            executePendingBindings()
+        }
     }
-
 
     //COMPLETED: Add companion object to inflate ViewHolder (from)
     companion object {
@@ -50,15 +49,8 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) :
 
 //COMPLETED: Create ElectionDiffCallback
 class ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
-    override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: Election, newItem: Election): Boolean {
-        return ((oldItem.id == newItem.id)
-                && (oldItem.electionDay == newItem.electionDay)
-                && (oldItem.name == newItem.name))
-    }
+    override fun areItemsTheSame(oldItem: Election, newItem: Election) = (oldItem === newItem)
+    override fun areContentsTheSame(oldItem: Election, newItem: Election) = (oldItem == newItem)
 }
 
 //COMPLETED: Create ElectionListener
