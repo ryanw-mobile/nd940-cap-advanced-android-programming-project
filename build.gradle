@@ -15,7 +15,7 @@ buildscript {
         version_recyclerview = "1.1.0"
         version_glide = "4.11.0"
         version_play_services_location = '18.0.0'
-        version_room = '2.3.0'
+        version_room = '2.4.0-beta01'
     }
 
     repositories {
