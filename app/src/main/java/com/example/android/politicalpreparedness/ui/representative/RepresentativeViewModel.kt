@@ -1,6 +1,5 @@
 package com.example.android.politicalpreparedness.ui.representative
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class RepresentativeViewModel : ViewModel() {
 
@@ -41,10 +41,7 @@ class RepresentativeViewModel : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     fun fetchRepresentatives() {
-        Log.d(
-            TAG,
-            "fetchRepresentatives - final address = {${_address.value!!.toFormattedString()}"
-        )
+        Timber.d("fetchRepresentatives - final address = {${_address.value!!.toFormattedString()}")
         coroutineScope.launch {
             _address.value?.let {
                 try {
@@ -74,8 +71,4 @@ class RepresentativeViewModel : ViewModel() {
 
     //COMPLETED: Create function to get address from individual fields
     //There is no need to create any function for this as we have two-way bindings
-
-    companion object {
-        const val TAG = "RepresentativeViewModel"
-    }
 }

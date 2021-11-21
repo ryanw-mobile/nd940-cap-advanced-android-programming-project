@@ -28,14 +28,10 @@ import com.example.android.politicalpreparedness.data.network.models.Address
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 import java.util.*
 
 class RepresentativeFragment : Fragment() {
-
-    companion object {
-        //COMPLETED: Add Constant for Location request - obsoleted with the use of ActivityResultContracts
-        const val TAG = "RepresentativeFragment"
-    }
 
     lateinit var binding: FragmentRepresentativeBinding
 
@@ -113,16 +109,13 @@ class RepresentativeFragment : Fragment() {
         )) {
             PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
-                Log.d(TAG, "checkAndRequestLocationPermissionsAndGetLocation: permission granted")
+                Timber.d("checkAndRequestLocationPermissionsAndGetLocation: permission granted")
                 getLocation()
             }
             else -> {
                 // You can directly ask for the permission.
                 // The registered ActivityResultCallback gets the result of this request.
-                Log.d(
-                    TAG,
-                    "checkAndRequestLocationPermissionsAndGetLocation: permission not granted"
-                )
+                Timber.d("checkAndRequestLocationPermissionsAndGetLocation: permission not granted")
                 requestLocationPermissionLauncher.launch(
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
@@ -141,7 +134,7 @@ class RepresentativeFragment : Fragment() {
             if (isGranted) {
                 // Permission is granted. Continue the action or workflow in your
                 // app.
-                Log.d(TAG, "requestLocationPermissionLauncher: permission granted")
+                Timber.d( "requestLocationPermissionLauncher: permission granted")
                 getLocation()
             } else {
                 // Explain to the user that the feature is unavailable because the
@@ -190,9 +183,9 @@ class RepresentativeFragment : Fragment() {
             if (it != null) {
                 val address = geoCodeLocation(it)
                 viewModel.setAddress(address)
-                Log.d(TAG, "getLocation(): {$address.toFormattedString()}")
+                Timber.d( "getLocation(): {$address.toFormattedString()}")
             } else {
-                Log.d(TAG, "getLocation(): null result")
+                Timber.d( "getLocation(): null result")
                 Snackbar.make(
                     binding.root,
                     getString(R.string.error_null_location),

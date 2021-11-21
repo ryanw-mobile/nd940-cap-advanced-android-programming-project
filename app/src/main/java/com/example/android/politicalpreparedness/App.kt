@@ -16,5 +16,4 @@ class App : Application() {
             plant(Timber.DebugTree())
         }
     }
-
 }
