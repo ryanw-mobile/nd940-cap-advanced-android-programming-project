@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!-- I have created an extension function to convert the date -->
-        <import type="com.example.android.politicalpreparedness.ExtensionsKt" />
 
         <variable
             name="election"
@@ -37,7 +36,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{ExtensionsKt.toSimpleString(election.electionDay)}"
-            tools:text="Tue Jun 02:00:00" />
+            app:toSimpleString="@{election.electionDay}"
+            tools:text="07/12/2021" />
     </LinearLayout>
 </layout>

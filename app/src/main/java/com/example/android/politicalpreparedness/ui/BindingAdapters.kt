@@ -3,10 +3,13 @@ package com.example.android.politicalpreparedness.ui
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.android.politicalpreparedness.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
@@ -36,6 +39,14 @@ fun Spinner.setNewValue(value: String?) {
     if (position >= 0) {
         setSelection(position)
     }
+}
+
+@BindingAdapter("toSimpleString")
+fun TextView.formatDateValue(value: Date?) {
+    val dateFormat = SimpleDateFormat("dd/MM/yyy")
+    text = value?.let {
+        dateFormat.format(it)
+    } ?: ""
 }
 
 inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T> {
