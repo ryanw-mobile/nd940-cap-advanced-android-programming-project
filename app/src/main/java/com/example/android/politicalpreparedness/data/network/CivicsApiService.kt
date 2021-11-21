@@ -1,6 +1,5 @@
 package com.example.android.politicalpreparedness.data.network
 
-import com.example.android.politicalpreparedness.data.network.jsonadapter.ElectionAdapter
 import com.example.android.politicalpreparedness.data.network.models.ElectionResponse
 import com.example.android.politicalpreparedness.data.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse
@@ -26,7 +25,7 @@ private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
  * This is most useful when registering general-purpose adapters, such as the KotlinJsonAdapterFactory below.
  */
 private val moshi = Moshi.Builder()
-    .add(ElectionAdapter())
+    .add(ElectionJsonAdapter())
     .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
     .add(KotlinJsonAdapterFactory())
     .build()
