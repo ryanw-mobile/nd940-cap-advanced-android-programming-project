@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.database.ElectionDatabase
-import com.example.android.politicalpreparedness.data.network.repository.ElectionsRepository
+import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 
@@ -22,12 +22,9 @@ class VoterInfoFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val args =
-            com.example.android.politicalpreparedness.ui.voterInfo.VoterInfoFragmentArgs.fromBundle(
-                requireArguments()
-            )
+        val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
         //COMPLETED: Add ViewModel values and create ViewModel
         val electionsRepository =
@@ -62,16 +59,18 @@ class VoterInfoFragment : Fragment() {
         // Could have a better way to do this
         viewModel.voterInfo.observe(viewLifecycleOwner, {
             // When it changes and have valid values, we update the UI
-            binding.addressGroup.visibility =
-                if (viewModel.getCorrespondenceAddress().isNullOrEmpty()) {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
+            binding.apply {
+                addressGroup.visibility =
+                    if (viewModel.getCorrespondenceAddress().isNullOrEmpty()) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
 
-            //COMPLETED: Handle loading of URLs
-            binding.stateLocations.setOnClickListener { openWebUrl(viewModel.getVotingLocationUrl()) }
-            binding.stateBallot.setOnClickListener { openWebUrl(viewModel.getBallotInformationUrl()) }
+                //COMPLETED: Handle loading of URLs
+                stateLocations.setOnClickListener { openWebUrl(viewModel.getVotingLocationUrl()) }
+                stateBallot.setOnClickListener { openWebUrl(viewModel.getBallotInformationUrl()) }
+            }
         })
 
         //COMPLETED: Handle save button UI state
@@ -90,5 +89,4 @@ class VoterInfoFragment : Fragment() {
             startActivity(browserIntent)
         }
     }
-
 }
