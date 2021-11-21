@@ -2,7 +2,7 @@ package com.example.android.politicalpreparedness.ui.election
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.politicalpreparedness.data.network.repository.ElectionsRepository
+import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 
 //COMPLETED: Create Factory to generate ElectionViewModel with provided election datasource
 class ElectionsViewModelFactory(private val repository: ElectionsRepository) :

@@ -12,16 +12,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
-import com.example.android.politicalpreparedness.ui.election.adapter.ElectionListAdapter
-import com.example.android.politicalpreparedness.ui.election.adapter.ElectionListener
-import com.example.android.politicalpreparedness.data.network.repository.ElectionsRepository
+import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 
 
 class ElectionsFragment : Fragment() {
 
     //COMPLETED: Declare ViewModel
     lateinit var viewModel: ElectionsViewModel
-
     lateinit var binding: FragmentElectionBinding
     private lateinit var electionUpcomingAdapter: ElectionListAdapter
     private lateinit var electionFollowedAdapter: ElectionListAdapter

@@ -24,9 +24,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.data.network.models.Address
-import com.example.android.politicalpreparedness.ui.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
