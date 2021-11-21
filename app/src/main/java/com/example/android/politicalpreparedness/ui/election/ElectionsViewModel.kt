@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class ElectionsViewModel(private val repository: ElectionsRepository) : ViewModel() {
 
     //COMPLETED: Create live data val for upcoming elections
-    val upcoomingElections = repository.upcomingElections
+    val upcomingElections = repository.upcomingElections
 
     //COMPLETED: Create live data val for saved elections
     val savedElections = repository.followedElections

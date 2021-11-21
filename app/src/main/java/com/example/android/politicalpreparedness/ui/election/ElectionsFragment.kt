@@ -80,7 +80,7 @@ class ElectionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //COMPLETED: Refresh adapters when fragment loads
-        viewModel.upcoomingElections.observe(
+        viewModel.upcomingElections.observe(
             viewLifecycleOwner,
             { electionUpcomingAdapter.submitList(it) })
         viewModel.savedElections.observe(
