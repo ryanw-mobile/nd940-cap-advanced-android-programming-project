@@ -4,7 +4,7 @@
 
     <data>
         <!-- I have created an extension function to convert the date -->
-        <import type="com.example.android.politicalpreparedness.DateUtilsKt" />
+        <import type="com.example.android.politicalpreparedness.ExtensionsKt" />
 
         <variable
             name="election"
@@ -37,7 +37,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{DateUtilsKt.toSimpleString(election.electionDay)}"
+            android:text="@{ExtensionsKt.toSimpleString(election.electionDay)}"
             tools:text="Tue Jun 02:00:00" />
     </LinearLayout>
 </layout>
