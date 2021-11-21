@@ -26,6 +26,7 @@
             android:id="@+id/search_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/md_theme_outline"
             android:paddingBottom="@dimen/default_padding"
             app:layout_constraintBottom_toTopOf="@id/representative_results_layout"
             app:layout_constraintEnd_toEndOf="parent"

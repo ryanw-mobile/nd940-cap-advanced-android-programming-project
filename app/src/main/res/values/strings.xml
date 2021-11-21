@@ -23,6 +23,7 @@
     <string name="city">City</string>
     <string name="zip">Zip</string>
     <string name="error_load_voterinfo">Cannot retrieve the required information.</string>
+    <string name="election_information">Election Information</string>
 
     <!-- COMPLETED: Add necessary string values -->
 

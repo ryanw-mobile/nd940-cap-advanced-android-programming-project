@@ -17,7 +17,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_padding"
+        android:layout_marginStart="@dimen/double_padding"
+        android:layout_marginEnd="@dimen/double_padding"
         android:gravity="center"
         android:minHeight="@dimen/min_clickable_height"
         android:onClick="@{() -> clickListener.onClick(election)}"
@@ -25,17 +26,13 @@
 
         <TextView
             android:id="@+id/listitem_election_title"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/election_title"
             android:text="@{election.name}"
             tools:text="VIP Test Election" />
 
         <TextView
             android:id="@+id/listitem_election_date"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/election_date"
             app:toSimpleString="@{election.electionDay}"
             tools:text="07/12/2021" />
     </LinearLayout>
