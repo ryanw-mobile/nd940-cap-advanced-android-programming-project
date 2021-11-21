@@ -17,14 +17,11 @@ import com.example.android.politicalpreparedness.domain.model.Representative
 class RepresentativeListAdapter :
     ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
-        return RepresentativeViewHolder.from(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        RepresentativeViewHolder.from(parent)
 
-    override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
-    }
+    override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) =
+        holder.bind(getItem(position))
 }
 
 class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) :
@@ -42,15 +39,17 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
 
         //COMPLETED: Show social links ** Hint: Use provided helper methods
         //COMPLETED: Show www link ** Hint: Use provided helper methods
-        binding.twitterIcon.visibility = View.GONE
-        binding.facebookIcon.visibility = View.GONE
-        binding.wwwIcon.visibility = View.GONE
-
-        if (item.official.channels != null) {
-            showSocialLinks(item.official.channels)
+        View.GONE.let {
+            binding.twitterIcon.visibility = it
+            binding.facebookIcon.visibility = it
+            binding.wwwIcon.visibility = it
         }
-        if (item.official.urls != null) {
-            showWWWLinks(item.official.urls)
+
+        item.official.channels?.let {
+            showSocialLinks(it)
+        }
+        item.official.urls?.let {
+            showWWWLinks(it)
         }
 
         binding.executePendingBindings()
@@ -109,13 +108,11 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
 
 //COMPLETED: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
-    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem == newItem
-    }
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative) =
+        oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem.office.division.id == newItem.office.division.id
-    }
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative) =
+        oldItem == newItem
 }
 
 //IGNORED: Create RepresentativeListener

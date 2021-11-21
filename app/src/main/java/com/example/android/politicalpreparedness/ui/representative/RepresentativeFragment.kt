@@ -107,11 +107,11 @@ class RepresentativeFragment : Fragment() {
      * This was suggested by the mentor when doing the Project 4.
      */
     private fun checkAndRequestLocationPermissionsAndGetLocation() {
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
+        when (ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )) {
+            PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
                 Log.d(TAG, "checkAndRequestLocationPermissionsAndGetLocation: permission granted")
                 getLocation()
@@ -134,7 +134,7 @@ class RepresentativeFragment : Fragment() {
     // system permissions dialog. Save the return value, an instance of
     // ActivityResultLauncher. You can use either a val, as shown in this snippet,
     // or a lateinit var in your onAttach() or onCreate() method.
-    val requestLocationPermissionLauncher =
+    private val requestLocationPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -160,8 +160,7 @@ class RepresentativeFragment : Fragment() {
                         data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     })
-                }
-                    .show()
+                }.show()
             }
         }
 

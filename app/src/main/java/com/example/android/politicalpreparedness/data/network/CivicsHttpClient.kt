@@ -3,7 +3,7 @@ package com.example.android.politicalpreparedness.data.network
 import com.example.android.politicalpreparedness.BuildConfig
 import okhttp3.OkHttpClient
 
-class CivicsHttpClient : OkHttpClient() {
+sealed class CivicsHttpClient : OkHttpClient() {
 
     companion object {
 

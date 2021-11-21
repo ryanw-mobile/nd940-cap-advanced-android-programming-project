@@ -54,10 +54,7 @@ class VoterInfoViewModel(
 
             //COMPLETED: Add var and methods to populate voter info
             // Given we have the electionId, the address can be rather casual
-            val country = division.country
-            val state = division.state
-            val address = "$state, $country"
-            repository.fetchVoterInfo(electionId, address)
+            repository.fetchVoterInfo(electionId, "${division.state}, ${division.country}")
             _voterInfo.value = repository.voterInfo
         }
     }

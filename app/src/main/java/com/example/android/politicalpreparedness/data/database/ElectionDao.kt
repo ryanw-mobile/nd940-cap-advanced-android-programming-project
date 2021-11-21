@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.example.android.politicalpreparedness.data.network.models.Election
 
 @Dao
-interface ElectionDao {
+sealed interface ElectionDao {
 
     //COMPLETED: Add insert query
     @Insert
