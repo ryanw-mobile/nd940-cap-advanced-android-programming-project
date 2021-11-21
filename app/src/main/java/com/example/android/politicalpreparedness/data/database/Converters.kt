@@ -3,7 +3,7 @@ package com.example.android.politicalpreparedness.data.database
 import androidx.room.TypeConverter
 import java.util.*
 
-class Converters {
+object Converters {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }
