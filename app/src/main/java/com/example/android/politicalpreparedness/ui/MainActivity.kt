@@ -2,11 +2,15 @@ package com.example.android.politicalpreparedness.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.topAppbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 }
