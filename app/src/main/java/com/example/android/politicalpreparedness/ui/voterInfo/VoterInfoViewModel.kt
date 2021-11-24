@@ -2,21 +2,28 @@ package com.example.android.politicalpreparedness.ui.voterInfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.data.network.models.Division
 import com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
-class VoterInfoViewModel(
+@HiltViewModel
+class VoterInfoViewModel @Inject constructor(
     private val repository: ElectionsRepository,
-    private val electionId: Int,
-    private val division: Division
+    private val savedStateHandle: SavedStateHandle
 ) :
     ViewModel() {
+
+    private val electionId: Int = savedStateHandle["arg_election_id"]!!
+    private val division: Division = savedStateHandle["arg_division"]!!
 
     //COMPLETED: Add live data to hold voter info
     private var _voterInfo = MutableLiveData<VoterInfoResponse>()
