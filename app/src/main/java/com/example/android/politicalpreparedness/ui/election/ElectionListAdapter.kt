@@ -23,7 +23,7 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
 
     // This is needed for hasStableIds()
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return getItem(position).hashCode().toLong()
     }
 }
 

@@ -53,7 +53,9 @@ class RepresentativeFragment : Fragment() {
         binding.viewModel = viewModel
 
         //COMPLETED: Define and assign Representative adapter
-        val representativesAdapter = RepresentativeListAdapter()
+        val representativesAdapter = RepresentativeListAdapter().apply {
+            setHasStableIds(true)
+        }
         binding.representativeRecyclerview.adapter = representativesAdapter
 
         val dividerItemDecoration =
