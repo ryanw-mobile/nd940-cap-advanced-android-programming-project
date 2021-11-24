@@ -52,34 +52,32 @@
             tools:text="12 November 2021" />
 
         <!-- COMPLETED: Add visual styling and content -->
-        <TextView
-            android:id="@+id/state_header"
-            style="@style/election_information"
-            android:text="@string/election_information"
-            app:layout_constraintStart_toStartOf="@id/election_date"
-            app:layout_constraintTop_toBottomOf="@id/election_date" />
-
-        <!-- COMPLETED: Add click binding to open web URL -->
-        <!-- COMPLETED: Add visual styling and content -->
-        <TextView
-            android:id="@+id/state_locations"
-            style="@style/election_button"
-            android:text="@string/voting_locations"
-            app:layout_constraintEnd_toStartOf="@id/state_ballot"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/state_header" />
-
-        <!-- COMPLETED: Add click binding to open web URL -->
-        <!-- COMPLETED: Add visual styling and content -->
-        <TextView
-            android:id="@+id/state_ballot"
-            style="@style/election_button"
-            android:text="@string/ballot_information"
+        <LinearLayout
+            android:id="@+id/election_information_box"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/state_locations"
-            app:layout_constraintTop_toBottomOf="@id/state_header" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/election_date"
+            style="@style/election_information_box">
+
+            <TextView
+                android:id="@+id/state_header"
+                style="@style/election_information"
+                android:text="@string/election_information" />
+
+            <!-- COMPLETED: Add click binding to open web URL -->
+            <!-- COMPLETED: Add visual styling and content -->
+            <TextView
+                android:id="@+id/state_locations"
+                style="@style/election_button"
+                android:text="@string/voting_locations" />
+
+            <!-- COMPLETED: Add click binding to open web URL -->
+            <!-- COMPLETED: Add visual styling and content -->
+            <TextView
+                android:id="@+id/state_ballot"
+                style="@style/election_button"
+                android:text="@string/ballot_information" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/address_group"
@@ -99,7 +97,7 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/state_ballot" />
+            app:layout_constraintTop_toBottomOf="@id/election_information_box" />
 
         <TextView
             android:id="@+id/state_correspondence_header"
