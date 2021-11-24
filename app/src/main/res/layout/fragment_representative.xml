@@ -26,8 +26,7 @@
             android:id="@+id/search_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_theme_outline"
-            android:paddingBottom="@dimen/default_padding"
+            android:background="@color/md_theme_primaryContainer"
             app:layout_constraintBottom_toTopOf="@id/representative_results_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,9 +87,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_padding"
                 android:autofillHints=""
-                android:background="@color/white"
+                android:background="@color/md_theme_surfaceVariant"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/states"
+                android:fontFamily="@font/merriweather_sans"
                 android:inputType="textPostalAddress"
                 android:minHeight="@dimen/min_clickable_height"
                 app:layout_constraintBottom_toBottomOf="@id/city"
@@ -117,6 +117,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/find_my_representatives"
                 app:layout_constraintTop_toBottomOf="@id/zip" />
 
@@ -126,6 +127,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/use_my_location"
                 app:layout_constraintTop_toBottomOf="@id/button_search" />
 

@@ -4,7 +4,7 @@
     <style name="sectionHeader" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="android:background">@color/md_theme_onPrimaryContainer</item>
         <item name="android:paddingTop">@dimen/default_padding</item>
         <item name="android:paddingBottom">@dimen/default_padding</item>
         <item name="android:paddingStart">@dimen/double_padding</item>
@@ -18,7 +18,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/default_padding</item>
         <item name="android:autofillHints">unsupported</item>
-        <item name="android:background">@color/md_theme_onPrimary</item>
+        <item name="android:background">@color/md_theme_surfaceVariant</item>
         <item name="android:minHeight">@dimen/min_clickable_height</item>
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:fontFamily">@font/merriweather_sans</item>
