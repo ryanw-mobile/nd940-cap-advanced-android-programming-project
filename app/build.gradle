@@ -44,7 +44,10 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0.0"
+        resConfigs "en"
         vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "com.example.android.politicalpreparedness.CustomTestRunner"
     }
     buildTypes {
         debug {
