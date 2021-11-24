@@ -5,7 +5,8 @@ Android Developers Kotlin Nanodegree program in September 2021.
 
 ![Screenshot1](screenshots/screen0.png) ![Screenshot2](screenshots/screen1.png)
 ![Screenshot3](screenshots/screen2.png) ![Screenshot4](screenshots/screen3.png)
-![Screenshot5](screenshots/screen4.png)
+![Screenshot5](screenshots/screen4.png) ![Screenshot6](screenshots/screen5.png)
+![Screenshot7](screenshots/screen6.png)
 
 This app demonstrates the following views and techniques:
 
@@ -33,6 +34,7 @@ In addition the following features are included:
 
 * Device permission
 * Device location
+* Dark theme support
 
 ## Setting up the keystore
 
