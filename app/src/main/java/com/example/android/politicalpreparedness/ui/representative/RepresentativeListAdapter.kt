@@ -22,6 +22,11 @@ class RepresentativeListAdapter :
 
     override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) =
         holder.bind(getItem(position))
+
+    // This is needed for hasStableIds()
+    override fun getItemId(position: Int): Long {
+        return getItem(position).hashCode().toLong()
+    }
 }
 
 class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) :

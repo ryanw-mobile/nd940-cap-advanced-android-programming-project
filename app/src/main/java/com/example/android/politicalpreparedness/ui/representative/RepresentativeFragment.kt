@@ -10,7 +10,6 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
@@ -28,23 +27,23 @@ import com.example.android.politicalpreparedness.data.network.models.Address
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.util.*
 
+@AndroidEntryPoint
 class RepresentativeFragment : Fragment() {
+    //COMPLETED: Declare ViewModel
+    //Hilt DI - not using @Inject
+    private val viewModel: RepresentativeViewModel by viewModels()
 
     lateinit var binding: FragmentRepresentativeBinding
-
-    //COMPLETED: Declare ViewModel
-    private val viewModel: RepresentativeViewModel by lazy {
-        ViewModelProvider(this).get(RepresentativeViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         //COMPLETED: Establish bindings
         binding =
@@ -53,7 +52,9 @@ class RepresentativeFragment : Fragment() {
         binding.viewModel = viewModel
 
         //COMPLETED: Define and assign Representative adapter
-        val representativesAdapter = RepresentativeListAdapter()
+        val representativesAdapter = RepresentativeListAdapter().apply {
+            setHasStableIds(true)
+        }
         binding.representativeRecyclerview.adapter = representativesAdapter
 
         val dividerItemDecoration =
@@ -134,7 +135,7 @@ class RepresentativeFragment : Fragment() {
             if (isGranted) {
                 // Permission is granted. Continue the action or workflow in your
                 // app.
-                Timber.d( "requestLocationPermissionLauncher: permission granted")
+                Timber.d("requestLocationPermissionLauncher: permission granted")
                 getLocation()
             } else {
                 // Explain to the user that the feature is unavailable because the
@@ -183,9 +184,9 @@ class RepresentativeFragment : Fragment() {
             if (it != null) {
                 val address = geoCodeLocation(it)
                 viewModel.setAddress(address)
-                Timber.d( "getLocation(): {$address.toFormattedString()}")
+                Timber.d("getLocation(): {$address.toFormattedString()}")
             } else {
-                Timber.d( "getLocation(): null result")
+                Timber.d("getLocation(): null result")
                 Snackbar.make(
                     binding.root,
                     getString(R.string.error_null_location),

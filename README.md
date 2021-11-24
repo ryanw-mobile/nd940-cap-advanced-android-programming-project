@@ -16,6 +16,10 @@ This app demonstrates the following views and techniques:
 * [Room](https://developer.android.com/training/data-storage/room) for local database storage.
 * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) as a substitution of RxJava for
   asynchronous/non-blocking tasks.
+* [Dagger Hilt](https://dagger.dev/hilt/) for dependency injection
+* [Timber](https://github.com/JakeWharton/timber) for logging
+* [Hamcrest](http://hamcrest.org/JavaHamcrest/) for assertions in tests
+* [Travis CI](https://travis-ci.org/) for Continuous Integration
 
 It leverages the following components from the Jetpack library:
 

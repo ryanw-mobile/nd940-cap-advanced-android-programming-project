@@ -5,13 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.data.network.models.Election
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 //COMPLETED: Construct ViewModel and provide election datasource
-class ElectionsViewModel(private val repository: ElectionsRepository) : ViewModel() {
+@HiltViewModel
+class ElectionsViewModel @Inject constructor(private val repository: ElectionsRepository) :
+    ViewModel() {
 
     //COMPLETED: Create live data val for upcoming elections
     val upcomingElections = repository.upcomingElections

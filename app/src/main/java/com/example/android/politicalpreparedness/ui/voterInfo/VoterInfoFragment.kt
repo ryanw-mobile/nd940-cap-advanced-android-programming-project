@@ -9,14 +9,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.data.database.ElectionDatabase
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.ui.representative.RepresentativeViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class VoterInfoFragment : Fragment() {
+
+    @Inject
+    lateinit var electionsRepository: ElectionsRepository
+
+    //Hilt DI - not using @Inject
+    private val viewModel: VoterInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,15 +33,13 @@ class VoterInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
+//        val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
         //COMPLETED: Add ViewModel values and create ViewModel
-        val electionsRepository =
-            ElectionsRepository(ElectionDatabase.getInstance(requireContext()))
-        val viewModelFactory =
-            VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
-        val viewModel =
-            ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
+//        val viewModelFactory =
+ //          VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
+//        val viewModel =
+//            ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
 
         //COMPLETED: Add binding values
         val binding: FragmentVoterInfoBinding =
@@ -61,15 +68,15 @@ class VoterInfoFragment : Fragment() {
             // When it changes and have valid values, we update the UI
             binding.apply {
                 addressGroup.visibility =
-                    if (viewModel.getCorrespondenceAddress().isNullOrEmpty()) {
+                    if (viewModel!!.getCorrespondenceAddress().isNullOrEmpty()) {
                         View.GONE
                     } else {
                         View.VISIBLE
                     }
 
                 //COMPLETED: Handle loading of URLs
-                stateLocations.setOnClickListener { openWebUrl(viewModel.getVotingLocationUrl()) }
-                stateBallot.setOnClickListener { openWebUrl(viewModel.getBallotInformationUrl()) }
+                stateLocations.setOnClickListener { openWebUrl(viewModel!!.getVotingLocationUrl()) }
+                stateBallot.setOnClickListener { openWebUrl(viewModel!!.getBallotInformationUrl()) }
             }
         })
 

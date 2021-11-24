@@ -19,11 +19,11 @@ sealed interface ElectionDao {
 
     //COMPLETED: Add select all election query
     @Query("SELECT * FROM election_table")
-    fun getAllElections(): LiveData<List<Election>>
+    fun observeElectionList(): LiveData<List<Election>>
 
     //COMPLETED: Add select single election query
     @Query("SELECT * FROM election_table WHERE id = :electionId")
-    fun getElection(electionId: Int): LiveData<Election>
+    fun observeElection(electionId: Int): LiveData<Election>
 
     //COMPLETED: Add delete query
     @Query("DELETE FROM election_table WHERE id = :electionId")
@@ -39,7 +39,10 @@ sealed interface ElectionDao {
     suspend fun followElection(electionId: Int)
 
     @Query("SELECT * FROM election_table WHERE id IN (select ID from followed_election)")
-    fun getFollowedElections(): LiveData<List<Election>>
+    fun observeFollowedElections(): LiveData<List<Election>>
+
+    @Query("SELECT * FROM followed_election")
+    suspend fun getFollowedElectionIds(): List<Int>
 
     @Query("select exists(select * from followed_election where id = :electionId)")
     suspend fun isFollowedElection(electionId: Int): Boolean

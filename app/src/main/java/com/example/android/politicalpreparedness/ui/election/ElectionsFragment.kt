@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.data.database.ElectionDatabase
-import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ElectionsFragment : Fragment() {
 
     //COMPLETED: Declare ViewModel
-    lateinit var viewModel: ElectionsViewModel
+    //Hilt DI - not using @Inject
+    private val viewModel: ElectionsViewModel by viewModels()
+
     lateinit var binding: FragmentElectionBinding
     private lateinit var electionUpcomingAdapter: ElectionListAdapter
     private lateinit var electionFollowedAdapter: ElectionListAdapter
@@ -27,15 +28,9 @@ class ElectionsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         //COMPLETED: Add ViewModel values and create ViewModel
-        //This project does not grade for testing (so have not implemented)
-        // - but the database, repository, and viewModel are all separated for ease of unit tests
-        val electionsRepository =
-            ElectionsRepository(ElectionDatabase.getInstance(requireContext()))
-        val viewModelFactory = ElectionsViewModelFactory(electionsRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
+        //By Injection
 
         //COMPLETED: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)

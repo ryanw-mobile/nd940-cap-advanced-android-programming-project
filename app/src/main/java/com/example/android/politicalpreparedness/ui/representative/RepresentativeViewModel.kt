@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.data.network.CivicsApi
 import com.example.android.politicalpreparedness.data.network.models.Address
 import com.example.android.politicalpreparedness.domain.model.Representative
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class RepresentativeViewModel : ViewModel() {
+@HiltViewModel
+class RepresentativeViewModel @Inject constructor() : ViewModel() {
 
     //COMPLETED: Establish live data for representatives and address
     private val _address = MutableLiveData<Address>()
