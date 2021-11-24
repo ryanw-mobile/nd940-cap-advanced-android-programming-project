@@ -14,8 +14,8 @@ import kotlin.properties.Delegates
 class ElectionsRepository @Inject constructor(private val electionDao: ElectionDao) {
 
     // Data exposed to the public - they don't have to care where do the data comes from
-    val upcomingElections: LiveData<List<Election>> = electionDao.getAllElections()
-    val followedElections: LiveData<List<Election>> = electionDao.getFollowedElections()
+    val upcomingElections: LiveData<List<Election>> = electionDao.observeElectionList()
+    val followedElections: LiveData<List<Election>> = electionDao.observeFollowedElections()
 
     private var _voterInfo: VoterInfoResponse? = null
     val voterInfo get() = _voterInfo
