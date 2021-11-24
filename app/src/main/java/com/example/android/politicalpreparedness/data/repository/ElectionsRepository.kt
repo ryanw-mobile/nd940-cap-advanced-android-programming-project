@@ -8,10 +8,10 @@ import com.example.android.politicalpreparedness.data.network.models.Election
 import com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
-
-class ElectionsRepository(private val electionDao: ElectionDao) {
+class ElectionsRepository @Inject constructor(private val electionDao: ElectionDao) {
 
     // Data exposed to the public - they don't have to care where do the data comes from
     val upcomingElections: LiveData<List<Election>> = electionDao.getAllElections()

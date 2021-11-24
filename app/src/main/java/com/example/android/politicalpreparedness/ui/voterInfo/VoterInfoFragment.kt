@@ -11,12 +11,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.data.database.ElectionDatabase
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class VoterInfoFragment : Fragment() {
+
+    @Inject
+    lateinit var electionsRepository: ElectionsRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +31,6 @@ class VoterInfoFragment : Fragment() {
         val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
         //COMPLETED: Add ViewModel values and create ViewModel
-        val electionsRepository =
-            ElectionsRepository(ElectionDatabase.getInstance(requireContext()))
         val viewModelFactory =
             VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
         val viewModel =
