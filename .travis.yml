@@ -14,7 +14,7 @@ android:
     - android-26
     - extra
     - addon
-    - sys-img-armeabi-v7a-android-26
+    - sys-img-x86-google_apis_playstore-26
 env:
   global:
     - TARGET_VERSION=31
