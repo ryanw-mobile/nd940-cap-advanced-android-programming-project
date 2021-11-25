@@ -12,9 +12,9 @@ android:
     - build-tools-31.0.0
     - android-31
     - android-25
-    - extra
-    - addon
-    - ys-img-armeabi-v7a-google_apis-25
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - sys-img-armeabi-v7a-android-25
 env:
   global:
     - TARGET_VERSION=31
