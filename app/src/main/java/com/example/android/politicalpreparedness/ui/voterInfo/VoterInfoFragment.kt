@@ -6,15 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
-import com.example.android.politicalpreparedness.ui.representative.RepresentativeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -53,12 +50,9 @@ class VoterInfoFragment : Fragment() {
          */
         viewModel.voterInfoLoadError.observe(viewLifecycleOwner, { error ->
             if (error) {
-                binding.root.visibility = View.GONE
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.error_load_voterinfo),
-                    Toast.LENGTH_LONG
-                ).show()
+                binding.dataScreen.visibility = View.GONE
+                binding.loadingScreen.visibility = View.GONE
+                binding.errorScreen.visibility = View.VISIBLE
             }
         })
 

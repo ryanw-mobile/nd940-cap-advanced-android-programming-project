@@ -84,4 +84,5 @@
     <color name="md_theme_dark_primaryInverse">#00629D</color>
     <color name="seed">#34495E</color>
     <color name="error">#BA1B1B</color>
+    <color name="color_loadingmask">#CC000000</color>
 </resources>

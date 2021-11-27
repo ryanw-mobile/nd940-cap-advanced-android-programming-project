@@ -124,6 +124,20 @@
         <item name="android:padding">@dimen/default_padding</item>
     </style>
 
+    <style name="errorscreen_text" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/md_theme_onBackground</item>
+    </style>
+
+    <style name="errorscreen_icon">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/double_padding</item>
+    </style>
+
     <!-- COMPLETED: Add necessary styles -->
 
 </resources>

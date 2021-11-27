@@ -1,18 +1,11 @@
 package com.example.android.politicalpreparedness.ui.voterInfo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.data.network.models.Division
 import com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,19 +36,27 @@ class VoterInfoViewModel @Inject constructor(
     private var _address = MutableLiveData<String>()
     val address: LiveData<String> = _address
 
-
     private var _isFollowed = MutableLiveData<Boolean>()
     val isFollowed: LiveData<Boolean>
         get() = _isFollowed
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private var _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
+//    private var viewModelJob = Job()
+//    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
      */
     init {
-        coroutineScope.launch {
+        refresh()
+    }
+
+    private fun refresh() {
+        viewModelScope.launch {
+            _isLoading.postValue(true)
             //COMPLETED: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
             getElectionFollowStatus()
 
@@ -63,11 +64,12 @@ class VoterInfoViewModel @Inject constructor(
             // Given we have the electionId, the address can be rather casual
             repository.fetchVoterInfo(electionId, "${division.state}, ${division.country}")
             _voterInfo.value = repository.voterInfo
+            _isLoading.postValue(false)
         }
     }
 
     private fun getElectionFollowStatus() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             repository.isElectionFollowed(electionId)
             _isFollowed.value = repository.isFollowed
         }
@@ -75,7 +77,7 @@ class VoterInfoViewModel @Inject constructor(
 
     //COMPLETED: Add var and methods to save and remove elections to local database
     fun toggleFollowElection() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             if (_isFollowed.value == true) {
                 repository.unfollowElection(electionId)
                 _isFollowed.value = false

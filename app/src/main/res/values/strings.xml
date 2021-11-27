@@ -24,6 +24,7 @@
     <string name="zip">Zip</string>
     <string name="error_load_voterinfo">Cannot retrieve the required information.</string>
     <string name="election_information">Election Information</string>
+    <string name="error">Error</string>
 
     <!-- COMPLETED: Add necessary string values -->
 
