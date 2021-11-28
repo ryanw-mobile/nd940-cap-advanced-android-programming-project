@@ -42,8 +42,8 @@ android {
         applicationId 'com.example.android.politicalpreparedness'
         minSdkVersion 24 // Was 26: lowered for CI compatibility
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.1.2"
+        versionCode 5
+        versionName "1.2.0"
         resConfigs "en"
         vectorDrawables.useSupportLibrary = true
 
