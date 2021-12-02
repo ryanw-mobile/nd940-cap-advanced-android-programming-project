@@ -11,26 +11,27 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class ElectionsRepository @Inject constructor(private val electionDao: ElectionDao) {
+class ElectionsRepository @Inject constructor(private val electionDao: ElectionDao) :
+    BaseRepository {
 
     // Data exposed to the public - they don't have to care where do the data comes from
-    val upcomingElections: LiveData<List<Election>> = electionDao.observeElectionList()
-    val followedElections: LiveData<List<Election>> = electionDao.observeFollowedElections()
+    override val upcomingElections: LiveData<List<Election>> = electionDao.observeElectionList()
+    override val followedElections: LiveData<List<Election>> = electionDao.observeFollowedElections()
 
     private var _voterInfo: VoterInfoResponse? = null
-    val voterInfo get() = _voterInfo
+    override val voterInfo get() = _voterInfo
 
     private var _isFollowed by Delegates.notNull<Boolean>()
-    val isFollowed get() = _isFollowed
+    override val isFollowed get() = _isFollowed
 
     private var _voterInfoLoadError = MutableLiveData(false)
-    val voterInfoLoadError: LiveData<Boolean>
+    override val voterInfoLoadError: LiveData<Boolean>
         get() = _voterInfoLoadError
 
     /***
      * Fetch data from REST API and store to database
      */
-    suspend fun fetchUpcomingElections() = withContext(Dispatchers.IO) {
+    override suspend fun fetchUpcomingElections() = withContext(Dispatchers.IO) {
         try {
             val electionResponse = CivicsApi.retrofitService.getElections()
             electionDao.insertAll(electionResponse.elections)
@@ -40,12 +41,12 @@ class ElectionsRepository @Inject constructor(private val electionDao: ElectionD
         }
     }
 
-    suspend fun isElectionFollowed(electionId: Int) = withContext(Dispatchers.IO) {
+    override suspend fun isElectionFollowed(electionId: Int) = withContext(Dispatchers.IO) {
         _isFollowed = electionDao.isFollowedElection(electionId)
     }
 
     // ---- VoterInfo ----
-    suspend fun fetchVoterInfo(electionId: Int, address: String) = withContext(Dispatchers.IO) {
+    override suspend fun fetchVoterInfo(electionId: Int, address: String) = withContext(Dispatchers.IO) {
         _voterInfo = try {
             _voterInfoLoadError.postValue(false)
             CivicsApi.retrofitService.getVoterInfo(address, electionId)
@@ -56,12 +57,12 @@ class ElectionsRepository @Inject constructor(private val electionDao: ElectionD
         }
     }
 
-    suspend fun unfollowElection(electionId: Int) = withContext(Dispatchers.IO) {
+    override suspend fun unfollowElection(electionId: Int) = withContext(Dispatchers.IO) {
         electionDao.unfollowElection(electionId)
     }
 
 
-    suspend fun followElection(electionId: Int) = withContext(Dispatchers.IO) {
+    override suspend fun followElection(electionId: Int) = withContext(Dispatchers.IO) {
         electionDao.followElection(electionId)
     }
 }
