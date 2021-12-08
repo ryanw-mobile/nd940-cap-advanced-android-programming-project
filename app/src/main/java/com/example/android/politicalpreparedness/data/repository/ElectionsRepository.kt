@@ -12,7 +12,7 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class ElectionsRepository @Inject constructor(private val electionDao: ElectionDao) :
-    BaseRepository {
+    Repository {
 
     // Data exposed to the public - they don't have to care where do the data comes from
     override val upcomingElections: LiveData<List<Election>> = electionDao.observeElectionList()

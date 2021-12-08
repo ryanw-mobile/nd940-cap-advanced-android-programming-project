@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.android.politicalpreparedness.data.network.models.Election
 import com.example.android.politicalpreparedness.data.network.models.VoterInfoResponse
 
-interface BaseRepository {
+interface Repository {
     // Data exposed to the public - they don't have to care where do the data comes from
     val upcomingElections: LiveData<List<Election>>
     val followedElections: LiveData<List<Election>>
