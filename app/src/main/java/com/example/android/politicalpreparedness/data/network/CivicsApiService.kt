@@ -11,11 +11,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.util.*
+import java.util.Date
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-// COMPLETED: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 /**
  * Moshi's composition mechanism tries to find the best adapter for each type.
  * It starts with the first adapter or factory registered with Moshi.Builder.add(),
@@ -24,44 +23,46 @@ private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
  * To register an adapter at the end of the list, use Moshi.Builder.addLast() instead.
  * This is most useful when registering general-purpose adapters, such as the KotlinJsonAdapterFactory below.
  */
-private val moshi = Moshi.Builder()
-    .add(ElectionJsonAdapter())
-    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-    .add(KotlinJsonAdapterFactory())
-    .build()
+private val moshi =
+    Moshi.Builder()
+        .add(ElectionJsonAdapter())
+        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .client(CivicsHttpClient.getClient())
-    .baseUrl(BASE_URL)
-    .build()
+private val retrofit =
+    Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .client(CivicsHttpClient.getClient())
+        .baseUrl(BASE_URL)
+        .build()
 
 /**
  *  Documentation for the Google Civics API Service can be found at https://developers.google.com/civic-information/docs/v2
  */
 
 sealed interface CivicsApiService {
-    //COMPLETED: Add elections API Call
+    // COMPLETED: Add elections API Call
     @GET("elections")
     suspend fun getElections(): ElectionResponse
 
-    //COMPLETED: Add voterinfo API Call
+    // COMPLETED: Add voterinfo API Call
     @GET("voterinfo")
     suspend fun getVoterInfo(
         @Query("address")
         address: String,
         @Query("electionId")
-        electionId: Int
+        electionId: Int,
     ): VoterInfoResponse
 
-    //COMPLETED: Add representatives API Call
-    //No need to call await() from inside the Coroutine
-    //Therefore using suspend here without a need to use Deferred<...> as return type
+    // COMPLETED: Add representatives API Call
+    // No need to call await() from inside the Coroutine
+    // Therefore using suspend here without a need to use Deferred<...> as return type
     @GET("representatives")
     suspend fun getRepresentatives(
         @Query("address")
-        address: String
+        address: String,
     ): RepresentativeResponse
 }
 

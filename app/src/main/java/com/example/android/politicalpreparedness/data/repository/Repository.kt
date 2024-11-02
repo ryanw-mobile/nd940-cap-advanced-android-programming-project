@@ -20,7 +20,10 @@ interface Repository {
     suspend fun isElectionFollowed(electionId: Int)
 
     // ---- VoterInfo ----
-    suspend fun fetchVoterInfo(electionId: Int, address: String)
+    suspend fun fetchVoterInfo(
+        electionId: Int,
+        address: String,
+    )
 
     suspend fun unfollowElection(electionId: Int)
 

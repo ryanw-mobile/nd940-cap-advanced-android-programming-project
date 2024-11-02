@@ -15,9 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ElectionsFragment : Fragment() {
-
-    //COMPLETED: Declare ViewModel
-    //Hilt DI - not using @Inject
+    // COMPLETED: Declare ViewModel
+    // Hilt DI - not using @Inject
     private val viewModel: ElectionsViewModel by viewModels()
 
     lateinit var binding: FragmentElectionBinding
@@ -27,41 +26,48 @@ class ElectionsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        //COMPLETED: Add ViewModel values and create ViewModel
-        //By Injection
+        // COMPLETED: Add ViewModel values and create ViewModel
+        // By Injection
 
-        //COMPLETED: Add binding values
+        // COMPLETED: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        //COMPLETED: Link elections to voter info
+        // COMPLETED: Link elections to voter info
         viewModel.selectedElection.observe(viewLifecycleOwner, { election ->
             election?.let {
                 findNavController().navigate(
                     ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                        election.id, election.division
-                    )
+                        election.id,
+                        election.division,
+                    ),
                 )
                 viewModel.doneNavigateToVoterInfo()
             }
         })
 
-        //COMPLETED: Initiate recycler adapters
-        electionUpcomingAdapter = ElectionListAdapter(ElectionListener { election ->
-            viewModel.navigateToVoterInfo(election)
-        }).apply {
-            setHasStableIds(true)
-        }
-        electionFollowedAdapter = ElectionListAdapter(ElectionListener { election ->
-            viewModel.navigateToVoterInfo(election)
-        }).apply {
-            setHasStableIds(true)
-        }
+        // COMPLETED: Initiate recycler adapters
+        electionUpcomingAdapter =
+            ElectionListAdapter(
+                ElectionListener { election ->
+                    viewModel.navigateToVoterInfo(election)
+                },
+            ).apply {
+                setHasStableIds(true)
+            }
+        electionFollowedAdapter =
+            ElectionListAdapter(
+                ElectionListener { election ->
+                    viewModel.navigateToVoterInfo(election)
+                },
+            ).apply {
+                setHasStableIds(true)
+            }
 
-        //COMPLETED: Populate recycler adapters
+        // COMPLETED: Populate recycler adapters
         binding.recyclerviewUpcoming.adapter = electionUpcomingAdapter
         binding.recyclerviewSaved.adapter = electionFollowedAdapter
 
@@ -78,14 +84,19 @@ class ElectionsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
-        //COMPLETED: Refresh adapters when fragment loads
+        // COMPLETED: Refresh adapters when fragment loads
         viewModel.upcomingElections.observe(
             viewLifecycleOwner,
-            { electionUpcomingAdapter.submitList(it) })
+            { electionUpcomingAdapter.submitList(it) },
+        )
         viewModel.savedElections.observe(
             viewLifecycleOwner,
-            { electionFollowedAdapter.submitList(it) })
+            { electionFollowedAdapter.submitList(it) },
+        )
     }
 }

@@ -9,30 +9,28 @@ import com.example.android.politicalpreparedness.data.network.models.Election
 
 @Dao
 sealed interface ElectionDao {
-
-    //COMPLETED: Add insert query
+    // COMPLETED: Add insert query
     @Insert
     suspend fun insert(election: Election)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(elections: List<Election>)
 
-    //COMPLETED: Add select all election query
+    // COMPLETED: Add select all election query
     @Query("SELECT * FROM election_table")
     fun observeElectionList(): LiveData<List<Election>>
 
-    //COMPLETED: Add select single election query
+    // COMPLETED: Add select single election query
     @Query("SELECT * FROM election_table WHERE id = :electionId")
     fun observeElection(electionId: Int): LiveData<Election>
 
-    //COMPLETED: Add delete query
+    // COMPLETED: Add delete query
     @Query("DELETE FROM election_table WHERE id = :electionId")
     suspend fun delete(electionId: Int)
 
-    //COMPLETED: Add clear query
+    // COMPLETED: Add clear query
     @Query("DELETE FROM election_table")
     suspend fun clear()
-
 
     // Extended functions to manage followed elections
     @Query("INSERT INTO followed_election VALUES(:electionId)")
@@ -52,5 +50,4 @@ sealed interface ElectionDao {
 
     @Query("DELETE FROM followed_election")
     suspend fun clearFollowedElections()
-
 }

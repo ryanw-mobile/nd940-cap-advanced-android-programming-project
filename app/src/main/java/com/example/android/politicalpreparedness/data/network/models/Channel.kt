@@ -1,6 +1,6 @@
 package com.example.android.politicalpreparedness.data.network.models
 
-data class Channel (
+data class Channel(
     val type: String,
-    val id: String
+    val id: String,
 )

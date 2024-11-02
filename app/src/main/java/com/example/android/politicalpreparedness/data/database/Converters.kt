@@ -1,7 +1,7 @@
 package com.example.android.politicalpreparedness.data.database
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 object Converters {
     @TypeConverter

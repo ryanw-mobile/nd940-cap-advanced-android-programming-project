@@ -9,13 +9,16 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.android.politicalpreparedness.R
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 @BindingAdapter("profileImage")
-fun fetchImage(view: ImageView, src: String?) {
+fun fetchImage(
+    view: ImageView,
+    src: String?,
+) {
     src?.let {
         val uri = it.toUri().buildUpon().scheme("https").build()
-        //COMPLETED: Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
+        // COMPLETED: Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
         Glide.with(view)
             .load(uri)
             .placeholder(R.drawable.ic_profile)
@@ -32,10 +35,11 @@ fun fetchImage(view: ImageView, src: String?) {
 @BindingAdapter("stateValue")
 fun Spinner.setNewValue(value: String?) {
     val adapter = toTypedAdapter<String>(this.adapter as ArrayAdapter<*>)
-    val position = when (adapter.getItem(0)) {
-        is String -> adapter.getPosition(value)
-        else -> this.selectedItemPosition
-    }
+    val position =
+        when (adapter.getItem(0)) {
+            is String -> adapter.getPosition(value)
+            else -> this.selectedItemPosition
+        }
     if (position >= 0) {
         setSelection(position)
     }
