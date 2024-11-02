@@ -11,11 +11,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.util.*
+import java.util.Date
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-// COMPLETED: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 /**
  * Moshi's composition mechanism tries to find the best adapter for each type.
  * It starts with the first adapter or factory registered with Moshi.Builder.add(),

@@ -222,10 +222,10 @@ android {
      * Source sets can no longer contain shared roots as this is impossible to represent in the IDE.
      * In order to share sources between test and androidTest we should be able to use test fixtures.
      */
-    testFixtures {
-        enable = true
-        androidResources = true
-    }
+//    testFixtures {
+//        enable = true
+//        androidResources = true
+//    }
 
 //    sourceSets {
 //        androidTest {
@@ -246,6 +246,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlin.reflect)
+    implementation(libs.jetbrains.kotlin.stdlib)
     // implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version_kotlin_serialization"
 
     // Constraint Layout
@@ -264,138 +265,67 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+    implementation(libs.converter.moshi)
+    implementation(libs.retrofit2.kotlin.coroutines.adapter)
 
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.12.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
-    implementation("com.squareup.moshi:moshi-adapters:1.12.0")
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.adapters)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    ksp("com.github.bumptech.glide:compiler:4.12.0")
+    implementation(libs.glide)
+    ksp(libs.compiler)
 
     // Room
-    implementation("androidx.room:room-runtime:2.4.0")
-    implementation("androidx.room:room-ktx:2.4.0")
-    ksp("androidx.room:room-compiler:2.4.0")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Location
-    implementation("com.google.android.gms:play-services-location:18.0.0")
-    implementation("androidx.activity:activity-ktx:1.4.0")
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
+    implementation(libs.play.services.location)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
-    implementation("com.google.android.material:material:1.5.0-beta01")
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation(libs.material)
+    implementation(libs.timber)
 
     // Dependencies for local unit tests
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC")
-    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.truth)
 
     // AndroidX Test - JVM testing
-    testImplementation("androidx.test:core-ktx:1.4.0")
-    testImplementation("org.robolectric:robolectric:4.7.2")
-    testImplementation("androidx.test.ext:junit-ktx:1.1.3")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.junit.ktx)
+    testImplementation(libs.androidx.core.testing)
 
     // AndroidX Test - Instrumented testing
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
 
     // Dependencies for Android instrumented unit tests
-    androidTestImplementation("junit:junit:4.13.2")
-    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
-    implementation("androidx.test:core-ktx:1.4.0")
+    androidTestImplementation(libs.junit)
+    debugImplementation(libs.androidx.fragment.testing)
+    implementation(libs.core.ktx)
 
     // Dependencies for Android instrumented unit tests
-    androidTestImplementation("org.mockito:mockito-core:4.1.0")
-    androidTestImplementation("com.linkedin.dexmaker:dexmaker-mockito:2.28.1")
-    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-    implementation("androidx.test.espresso:espresso-idling-resource:3.4.0")
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.dexmaker.mockito)
+    androidTestImplementation(libs.androidx.core.testing)
+    implementation(libs.androidx.espresso.idling.resource)
     // runBlockingTest replacement
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC")
-    androidTestImplementation("com.google.truth:truth:1.1.3")
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.truth)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.40.2")
-    ksp("com.google.dagger:hilt-compiler:2.40.2")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
     // For instrumented tests - with Kotlin
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.40.2")
-    kspAndroidTest("com.google.dagger:hilt-android-compiler:2.40.2")
-
-//
-//
-//    "baselineProfile"(project(":baselineprofile"))
-//    implementation(platform(libs.androidx.compose.bom))
-//    implementation(libs.androidx.core.splashscreen)
-//    implementation(libs.androidx.core.ktx)
-//    implementation(libs.androidx.lifecycle.runtime.ktx)
-//    implementation(libs.androidx.activity.compose)
-//    implementation(libs.androidx.ui)
-//    implementation(libs.androidx.ui.graphics)
-//    implementation(libs.androidx.ui.tooling.preview)
-//    implementation(libs.androidx.material3)
-//    implementation(libs.androidx.material3.windowsizeclass)
-//    implementation(libs.androidx.lifecycle.runtime.compose)
-//    implementation(libs.androidx.material3.adaptive.android)
-//    implementation(libs.androidx.profileinstaller)
-//
-//    debugImplementation(libs.androidx.ui.tooling)
-//    debugImplementation(libs.androidx.ui.test.manifest)
-//    debugImplementation(libs.leakcanary.android)
-//
-//    // Dagger-Hilt
-//    implementation(libs.hilt.android)
-//    ksp(libs.hilt.compiler)
-//    implementation(libs.hilt.navigation.compose)
-//    kspAndroidTest(libs.hilt.android.compiler)
-//
-//    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-//
-//    implementation(libs.coil)
-//    implementation(libs.coil.gif)
-//
-//    // Ktor as replacement of Retrofit
-//    implementation(libs.ktor.client.cio)
-//    implementation(libs.ktor.client.content.negotiation)
-//    implementation(libs.ktor.serialization.kotlinx.json)
-//    implementation(libs.kotlinx.datetime)
-//
-//    // Room 2
-//    implementation(libs.androidx.room.runtime)
-//    implementation(libs.androidx.room.ktx)
-//    ksp(libs.androidx.room.compiler)
-//
-//    implementation(libs.androidx.legacy.support.v4)
-//    implementation(libs.androidx.lifecycle.extensions)
-//
-//    implementation(libs.kotlinx.coroutines.android)
-//    implementation(libs.androidx.datastore.preferences)
-//    implementation(libs.timber)
-//
-//    // testing
-//    testImplementation(libs.junit)
-//    testImplementation(libs.androidx.test.core.ktx)
-//    testImplementation(libs.kotlinx.coroutines.test)
-//    testImplementation(libs.robolectric)
-//    testImplementation(libs.mockk.android)
-//    testImplementation(libs.kotest.assertions.core)
-//
-//    // For instrumented tests - with Kotlin
-//    androidTestImplementation(platform(libs.androidx.compose.bom))
-//    androidTestImplementation(libs.androidx.junit)
-//    androidTestImplementation(libs.hilt.android.testing)
-//    androidTestImplementation(libs.androidx.test.rules)
-//    androidTestImplementation(libs.androidx.espresso.core)
-//    androidTestImplementation(libs.androidx.ui.test.junit4)
-//    androidTestImplementation(libs.androidx.uiautomator)
-//    androidTestImplementation(libs.kotest.assertions.core)
-//    androidTestImplementation(libs.kotlinx.coroutines.test)
-//    androidTestImplementation(libs.hilt.android.testing)
-//    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 }
 
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {

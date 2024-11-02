@@ -5,8 +5,10 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class VoterInfoResponse(
     val election: Election,
-    val pollingLocations: String? = null, // IGNORED: Future Use
-    val contests: String? = null, // IGNORED: Future Use
+    // IGNORED: Future Use
+    val pollingLocations: String? = null,
+    // IGNORED: Future Use
+    val contests: String? = null,
     val state: List<State>? = null,
     val electionElectionOfficials: List<ElectionOfficial>? = null,
 )

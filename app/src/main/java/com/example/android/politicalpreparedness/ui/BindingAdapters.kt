@@ -9,7 +9,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.android.politicalpreparedness.R
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 @BindingAdapter("profileImage")
 fun fetchImage(
