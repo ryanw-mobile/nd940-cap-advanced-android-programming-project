@@ -17,36 +17,34 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class VoterInfoFragment : Fragment() {
-
     @Inject
     lateinit var electionsRepository: ElectionsRepository
 
-    //Hilt DI - not using @Inject
+    // Hilt DI - not using @Inject
     private val viewModel: VoterInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-
 //        val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
-        //COMPLETED: Add ViewModel values and create ViewModel
+        // COMPLETED: Add ViewModel values and create ViewModel
 //        val viewModelFactory =
- //          VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
+        //          VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
 //        val viewModel =
 //            ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
 
-        //COMPLETED: Add binding values
+        // COMPLETED: Add binding values
         val binding: FragmentVoterInfoBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        //COMPLETED: Populate voter info -- hide views without provided data.
+        // COMPLETED: Populate voter info -- hide views without provided data.
         /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
+         Hint: You will need to ensure proper data is provided from previous fragment.
          */
         viewModel.voterInfoLoadError.observe(viewLifecycleOwner, { error ->
             if (error) {
@@ -68,14 +66,14 @@ class VoterInfoFragment : Fragment() {
                         View.VISIBLE
                     }
 
-                //COMPLETED: Handle loading of URLs
+                // COMPLETED: Handle loading of URLs
                 stateLocations.setOnClickListener { openWebUrl(viewModel!!.getVotingLocationUrl()) }
                 stateBallot.setOnClickListener { openWebUrl(viewModel!!.getBallotInformationUrl()) }
             }
         })
 
-        //COMPLETED: Handle save button UI state
-        //XML interacting with ViewModel directly
+        // COMPLETED: Handle save button UI state
+        // XML interacting with ViewModel directly
 
         // COMPLETED: cont'd Handle save button clicks
         // XML calling ViewModel function directly
@@ -83,7 +81,7 @@ class VoterInfoFragment : Fragment() {
         return binding.root
     }
 
-    //COMPLETED: Create method to load URL intents
+    // COMPLETED: Create method to load URL intents
     private fun openWebUrl(url: String?) {
         url?.let {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it))

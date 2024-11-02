@@ -12,10 +12,10 @@ data class Election(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "electionDay") val electionDay: Date,
-    @Embedded(prefix = "division_") @Json(name = "ocdDivisionId") val division: Division
+    @Embedded(prefix = "division_") @Json(name = "ocdDivisionId") val division: Division,
 )
 
 @Entity(tableName = "followed_election")
 data class FollowedElection(
-    @PrimaryKey val id: Int
+    @PrimaryKey val id: Int,
 )

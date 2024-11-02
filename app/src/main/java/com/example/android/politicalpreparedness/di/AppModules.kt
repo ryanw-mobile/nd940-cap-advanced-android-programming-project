@@ -11,11 +11,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class AppModules {
-    
     @Provides
     @Singleton
     fun provideElectionDao(database: ElectionDatabase): ElectionDao {
         return database.electionDao
     }
-
 }

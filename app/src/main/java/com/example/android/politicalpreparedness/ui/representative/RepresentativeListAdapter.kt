@@ -16,12 +16,15 @@ import com.example.android.politicalpreparedness.domain.model.Representative
 
 class RepresentativeListAdapter :
     ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ) = RepresentativeViewHolder.from(parent)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        RepresentativeViewHolder.from(parent)
-
-    override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) =
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(
+        holder: RepresentativeViewHolder,
+        position: Int,
+    ) = holder.bind(getItem(position))
 
     // This is needed for hasStableIds()
     override fun getItemId(position: Int): Long {
@@ -31,7 +34,6 @@ class RepresentativeListAdapter :
 
 class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) :
     RecyclerView.ViewHolder(binding.root) {
-
     fun bind(item: Representative) {
         // XML retrieves string values for text views
         binding.representative = item
@@ -42,8 +44,8 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
         // BindingAdapter is defined to supply the URL from the XML
         // binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-        //COMPLETED: Show social links ** Hint: Use provided helper methods
-        //COMPLETED: Show www link ** Hint: Use provided helper methods
+        // COMPLETED: Show social links ** Hint: Use provided helper methods
+        // COMPLETED: Show www link ** Hint: Use provided helper methods
         View.GONE.let {
             binding.twitterIcon.visibility = it
             binding.facebookIcon.visibility = it
@@ -60,7 +62,7 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
         binding.executePendingBindings()
     }
 
-    //COMPLETED: Add companion object to inflate ViewHolder (from)
+    // COMPLETED: Add companion object to inflate ViewHolder (from)
     companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
@@ -98,7 +100,10 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
             .firstOrNull()
     }
 
-    private fun enableLink(view: ImageView, url: String) {
+    private fun enableLink(
+        view: ImageView,
+        url: String,
+    ) {
         view.visibility = View.VISIBLE
         view.setOnClickListener { setIntent(url) }
     }
@@ -108,18 +113,21 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
         val intent = Intent(ACTION_VIEW, uri)
         itemView.context.startActivity(intent)
     }
-
 }
 
-//COMPLETED: Create RepresentativeDiffCallback
+// COMPLETED: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
-    override fun areItemsTheSame(oldItem: Representative, newItem: Representative) =
-        oldItem === newItem
+    override fun areItemsTheSame(
+        oldItem: Representative,
+        newItem: Representative,
+    ) = oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: Representative, newItem: Representative) =
-        oldItem == newItem
+    override fun areContentsTheSame(
+        oldItem: Representative,
+        newItem: Representative,
+    ) = oldItem == newItem
 }
 
-//IGNORED: Create RepresentativeListener
-//Note: in this implementation, the viewholder itself is not clickable but the buttons inside
-//Therefore this Listener is redundant
+// IGNORED: Create RepresentativeListener
+// Note: in this implementation, the viewholder itself is not clickable but the buttons inside
+// Therefore this Listener is redundant

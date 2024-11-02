@@ -10,13 +10,18 @@ import com.example.android.politicalpreparedness.databinding.ViewholderElectionB
 
 class ElectionListAdapter(private val clickListener: ElectionListener) :
     ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElectionViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ElectionViewHolder {
         return ElectionViewHolder.from(parent)
     }
 
-    //COMPLETED: Bind ViewHolder
-    override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
+    // COMPLETED: Bind ViewHolder
+    override fun onBindViewHolder(
+        holder: ElectionViewHolder,
+        position: Int,
+    ) {
         val item = getItem(position)
         holder.bind(clickListener, item)
     }
@@ -27,10 +32,13 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
     }
 }
 
-//COMPLETED: Create ElectionViewHolder
+// COMPLETED: Create ElectionViewHolder
 class ElectionViewHolder(val binding: ViewholderElectionBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(listener: ElectionListener, item: Election) {
+    fun bind(
+        listener: ElectionListener,
+        item: Election,
+    ) {
         binding.apply {
             election = item
             clickListener = listener
@@ -38,10 +46,10 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) :
         }
     }
 
-    //COMPLETED: Add companion object to inflate ViewHolder (from)
+    // COMPLETED: Add companion object to inflate ViewHolder (from)
     companion object {
-        //@LayoutRes
-        //val LAYOUT = R.layout.viewholder_election
+        // @LayoutRes
+        // val LAYOUT = R.layout.viewholder_election
 
         fun from(parent: ViewGroup): ElectionViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
@@ -52,14 +60,20 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) :
     }
 }
 
-//COMPLETED: Create ElectionDiffCallback
+// COMPLETED: Create ElectionDiffCallback
 class ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
-    override fun areItemsTheSame(oldItem: Election, newItem: Election) = (oldItem === newItem)
-    override fun areContentsTheSame(oldItem: Election, newItem: Election) = (oldItem == newItem)
+    override fun areItemsTheSame(
+        oldItem: Election,
+        newItem: Election,
+    ) = (oldItem === newItem)
+
+    override fun areContentsTheSame(
+        oldItem: Election,
+        newItem: Election,
+    ) = (oldItem == newItem)
 }
 
-//COMPLETED: Create ElectionListener
+// COMPLETED: Create ElectionListener
 class ElectionListener(val clickListener: (election: Election) -> Unit) {
     fun onClick(election: Election) = clickListener(election)
 }
-

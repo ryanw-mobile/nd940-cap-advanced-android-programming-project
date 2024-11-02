@@ -12,38 +12,38 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//COMPLETED: Construct ViewModel and provide election datasource
+// COMPLETED: Construct ViewModel and provide election datasource
 @HiltViewModel
-class ElectionsViewModel @Inject constructor(private val repository: ElectionsRepository) :
+class ElectionsViewModel
+    @Inject
+    constructor(private val repository: ElectionsRepository) :
     ViewModel() {
+        // COMPLETED: Create live data val for upcoming elections
+        val upcomingElections = repository.upcomingElections
 
-    //COMPLETED: Create live data val for upcoming elections
-    val upcomingElections = repository.upcomingElections
+        // COMPLETED: Create live data val for saved elections
+        val savedElections = repository.followedElections
 
-    //COMPLETED: Create live data val for saved elections
-    val savedElections = repository.followedElections
+        private var _selectedElection = MutableLiveData<Election?>()
+        val selectedElection: LiveData<Election?>
+            get() = _selectedElection
 
-    private var _selectedElection = MutableLiveData<Election?>()
-    val selectedElection: LiveData<Election?>
-        get() = _selectedElection
+        private var viewModelJob = Job()
+        private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+        init {
+            coroutineScope.launch {
+                _selectedElection.value = null
+                repository.fetchUpcomingElections()
+            }
+        }
 
-    init {
-        coroutineScope.launch {
+        // COMPLETED: Create functions to navigate to saved or upcoming election voter info
+        fun navigateToVoterInfo(election: Election) {
+            _selectedElection.value = election
+        }
+
+        fun doneNavigateToVoterInfo() {
             _selectedElection.value = null
-            repository.fetchUpcomingElections()
         }
     }
-
-    //COMPLETED: Create functions to navigate to saved or upcoming election voter info
-    fun navigateToVoterInfo(election: Election) {
-        _selectedElection.value = election
-    }
-
-    fun doneNavigateToVoterInfo() {
-        _selectedElection.value = null
-    }
-
-}

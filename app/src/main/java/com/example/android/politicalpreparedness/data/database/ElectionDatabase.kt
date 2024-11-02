@@ -8,8 +8,7 @@ import com.example.android.politicalpreparedness.data.network.models.FollowedEle
 
 @Database(entities = [Election::class, FollowedElection::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class ElectionDatabase: RoomDatabase() {
-
+abstract class ElectionDatabase : RoomDatabase() {
     // DAOs
     abstract val electionDao: ElectionDao
 }

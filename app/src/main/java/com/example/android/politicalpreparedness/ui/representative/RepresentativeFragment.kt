@@ -28,13 +28,13 @@ import com.example.android.politicalpreparedness.databinding.FragmentRepresentat
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 import timber.log.Timber
+import java.util.Locale
 
 @AndroidEntryPoint
 class RepresentativeFragment : Fragment() {
-    //COMPLETED: Declare ViewModel
-    //Hilt DI - not using @Inject
+    // COMPLETED: Declare ViewModel
+    // Hilt DI - not using @Inject
     private val viewModel: RepresentativeViewModel by viewModels()
 
     lateinit var binding: FragmentRepresentativeBinding
@@ -44,43 +44,45 @@ class RepresentativeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
-        //COMPLETED: Establish bindings
+        // COMPLETED: Establish bindings
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        //COMPLETED: Define and assign Representative adapter
-        val representativesAdapter = RepresentativeListAdapter().apply {
-            setHasStableIds(true)
-        }
+        // COMPLETED: Define and assign Representative adapter
+        val representativesAdapter =
+            RepresentativeListAdapter().apply {
+                setHasStableIds(true)
+            }
         binding.representativeRecyclerview.adapter = representativesAdapter
 
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.representativeRecyclerview.addItemDecoration(dividerItemDecoration)
 
-        //COMPLETED: Populate Representative adapter
+        // COMPLETED: Populate Representative adapter
         viewModel.representatives.observe(
             viewLifecycleOwner,
-            { representativesAdapter.submitList(it) })
+            { representativesAdapter.submitList(it) },
+        )
 
-        //COMPLETED: Establish button listeners for field and location search
-        binding.state.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                viewModel.address.value?.state = binding.state.selectedItem as String
-            }
+        // COMPLETED: Establish button listeners for field and location search
+        binding.state.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    viewModel.address.value?.state = binding.state.selectedItem as String
+                }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long,
-            ) {
-                viewModel.address.value?.state = binding.state.selectedItem as String
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    viewModel.address.value?.state = binding.state.selectedItem as String
+                }
             }
-        }
         binding.buttonLocation.setOnClickListener { checkAndRequestLocationPermissionsAndGetLocation() }
         binding.buttonSearch.setOnClickListener {
             hideKeyboard()
@@ -104,10 +106,12 @@ class RepresentativeFragment : Fragment() {
      * This was suggested by the mentor when doing the Project 4.
      */
     private fun checkAndRequestLocationPermissionsAndGetLocation() {
-        when (ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )) {
+        when (
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            )
+        ) {
             PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
                 Timber.d("checkAndRequestLocationPermissionsAndGetLocation: permission granted")
@@ -119,7 +123,7 @@ class RepresentativeFragment : Fragment() {
                 // The registered ActivityResultCallback gets the result of this request.
                 Timber.d("checkAndRequestLocationPermissionsAndGetLocation: permission not granted")
                 requestLocationPermissionLauncher.launch(
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 )
             }
         }
@@ -131,7 +135,7 @@ class RepresentativeFragment : Fragment() {
     // or a lateinit var in your onAttach() or onCreate() method.
     private val requestLocationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             if (isGranted) {
                 // Permission is granted. Continue the action or workflow in your
@@ -147,14 +151,16 @@ class RepresentativeFragment : Fragment() {
                 Snackbar.make(
                     binding.root,
                     getString(R.string.error_no_location_permission),
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_LONG,
                 ).setAction(getString(R.string.settings)) {
                     // If user chose deny and don't ask again, at least this is a way to change it
-                    startActivity(Intent().apply {
-                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    })
+                    startActivity(
+                        Intent().apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        },
+                    )
                 }.show()
             }
         }
@@ -178,8 +184,8 @@ class RepresentativeFragment : Fragment() {
      */
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        //COMPLETED: Get location from LocationServices
-        //COMPLETED: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+        // COMPLETED: Get location from LocationServices
+        // COMPLETED: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) {
             if (it != null) {
@@ -192,7 +198,7 @@ class RepresentativeFragment : Fragment() {
                 Snackbar.make(
                     binding.root,
                     getString(R.string.error_null_location),
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_LONG,
                 ).show()
             }
         }
@@ -210,7 +216,7 @@ class RepresentativeFragment : Fragment() {
                         address?.subThoroughfare ?: "",
                         address?.locality ?: "",
                         address?.adminArea ?: "",
-                        address?.postalCode ?: ""
+                        address?.postalCode ?: "",
                     )
                 }
                 ?.first()
@@ -221,5 +227,4 @@ class RepresentativeFragment : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
-
 }

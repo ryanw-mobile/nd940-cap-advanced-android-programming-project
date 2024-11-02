@@ -18,17 +18,18 @@ import javax.inject.Singleton
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [DatabaseModules::class]
+    replaces = [DatabaseModules::class],
 )
 object FakeDatabaseModules {
-
     // Using an in-memory database for testing, because it doesn't survive killing the process.
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): ElectionDatabase {
+    fun provideDatabase(
+        @ApplicationContext appContext: Context,
+    ): ElectionDatabase {
         return Room.inMemoryDatabaseBuilder(
             appContext.applicationContext,
-            ElectionDatabase::class.java
+            ElectionDatabase::class.java,
         ).allowMainThreadQueries().build()
     }
 }
