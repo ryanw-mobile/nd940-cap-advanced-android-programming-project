@@ -69,8 +69,8 @@ android {
 
         resourceConfigurations += setOf("en")
 
-        testInstrumentationRunner =
-            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
+//        testInstrumentationRunner =
+//            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -308,6 +308,7 @@ dependencies {
 
     // Dependencies for Android instrumented unit tests
     androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.fragment.testing)
     debugImplementation(libs.androidx.fragment.testing)
     implementation(libs.core.ktx)
 
@@ -324,8 +325,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     // For instrumented tests - with Kotlin
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.android.compiler)
+    // androidTestImplementation(libs.hilt.android.testing)
+    // kspAndroidTest(libs.hilt.android.compiler)
 }
 
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
