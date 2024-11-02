@@ -28,8 +28,8 @@ import com.example.android.politicalpreparedness.databinding.FragmentRepresentat
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import timber.log.Timber
-import java.util.*
 
 @AndroidEntryPoint
 class RepresentativeFragment : Fragment() {
@@ -42,7 +42,7 @@ class RepresentativeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         //COMPLETED: Establish bindings
@@ -76,7 +76,7 @@ class RepresentativeFragment : Fragment() {
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 viewModel.address.value?.state = binding.state.selectedItem as String
             }
@@ -113,6 +113,7 @@ class RepresentativeFragment : Fragment() {
                 Timber.d("checkAndRequestLocationPermissionsAndGetLocation: permission granted")
                 getLocation()
             }
+
             else -> {
                 // You can directly ask for the permission.
                 // The registered ActivityResultCallback gets the result of this request.
@@ -182,9 +183,10 @@ class RepresentativeFragment : Fragment() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) {
             if (it != null) {
-                val address = geoCodeLocation(it)
-                viewModel.setAddress(address)
-                Timber.d("getLocation(): {$address.toFormattedString()}")
+                geoCodeLocation(it)?.let { address -> viewModel.setAddress(address) }
+                    .also { address ->
+                        Timber.d("getLocation(): {$address.toFormattedString()}")
+                    }
             } else {
                 Timber.d("getLocation(): null result")
                 Snackbar.make(
@@ -196,20 +198,23 @@ class RepresentativeFragment : Fragment() {
         }
     }
 
-    private fun geoCodeLocation(location: Location): Address {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocation(location.latitude, location.longitude, 1)
-            .map { address ->
-                Address(
-                    // Geocoder might return null for all fields
-                    address?.thoroughfare ?: "",
-                    address?.subThoroughfare ?: "",
-                    address?.locality ?: "",
-                    address?.adminArea ?: "",
-                    address?.postalCode ?: ""
-                )
-            }
-            .first()
+    // TODO: worked around to return null for getwell
+    private fun geoCodeLocation(location: Location): Address? {
+        context?.let { context ->
+            val geocoder = Geocoder(context, Locale.getDefault())
+            return geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                ?.map { address ->
+                    Address(
+                        // Geocoder might return null for all fields
+                        address?.thoroughfare ?: "",
+                        address?.subThoroughfare ?: "",
+                        address?.locality ?: "",
+                        address?.adminArea ?: "",
+                        address?.postalCode ?: ""
+                    )
+                }
+                ?.first()
+        } ?: return null
     }
 
     private fun hideKeyboard() {

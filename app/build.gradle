@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
     id 'kotlinx-serialization'
@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace "com.example.android.politicalpreparedness"
-    compileSdkVersion 31
+    compileSdk 32
 
     signingConfigs {
         release
@@ -41,8 +41,8 @@ android {
 
     defaultConfig {
         applicationId 'com.example.android.politicalpreparedness'
-        minSdkVersion 24 // Was 26: lowered for CI compatibility
-        targetSdkVersion 30
+        minSdkVersion 26
+        targetSdkVersion 32
         versionCode 5
         versionName "1.2.0"
         resourceConfigurations += ['en']
@@ -115,20 +115,25 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "17" // or "11" if JDK 11 compatibility is preferred
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Kotlin
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
     // implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version_kotlin_serialization"
 
     // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
 
     // ViewModel and LiveData
-//    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
 
@@ -151,12 +156,12 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+    ksp 'com.github.bumptech.glide:compiler:4.12.0'
 
     //Room
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
-    kapt "androidx.room:room-compiler:2.4.0-beta02"
+    ksp "androidx.room:room-compiler:2.4.0-beta02"
 
     // Location
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
@@ -202,8 +207,8 @@ dependencies {
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$version_hilt"
-    kapt "com.google.dagger:hilt-compiler:$version_hilt"
+    ksp "com.google.dagger:hilt-compiler:$version_hilt"
     // For instrumented tests - with Kotlin
     androidTestImplementation "com.google.dagger:hilt-android-testing:$version_hilt"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$version_hilt"
+    kspAndroidTest "com.google.dagger:hilt-android-compiler:$version_hilt"
 }
