@@ -1,4 +1,4 @@
-## Political Preparedness [![Build Status](https://app.travis-ci.com/ryanwong-uk/nd940-cap-advanced-android-programming-project.svg?branch=main)](https://app.travis-ci.com/ryanwong-uk/nd940-cap-advanced-android-programming-project)
+## Political Preparedness<br/>![Gradle Build](https://github.com/ryanw-mobile/nd940-cap-advanced-android-programming-project/actions/workflows/main_build.yml/badge.svg) [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
 Political Preparedness is a Capstone project I have submitted for graduating from the Udacity
 Android Developers Kotlin Nanodegree program in September 2021. As already being assessed in
