@@ -42,10 +42,9 @@ roomRuntime = "2.6.1"
 roomKtx = "2.6.1"
 roomCompiler = "2.6.1"
 safeArgs = "2.8.3"
+timber = "5.0.1"
 
 # App configurations, not dependencies
-timber = "5.0.1"
-truth = "1.4.0"
 versionCode = "6"
 versionName = "2.0.0"
 minSdk = "28"
@@ -97,7 +96,6 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "retrofit2KotlinCoroutinesAdapter" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
-truth = { module = "com.google.truth:truth", version.ref = "truth" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
