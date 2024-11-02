@@ -2,7 +2,7 @@ buildscript {
     ext {
         version_android_gradle_plugin = '8.0.0'
         version_core = '1.7.0'
-        version_constraint_layout = '2.1.2'
+        version_constraint_layout = '2.2.0'
         version_glide = "4.8.0"
         version_kotlin = '1.8.10'
         version_kotlin_serialization = '1.0-M1-1.4.0-rc'
