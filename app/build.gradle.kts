@@ -4,12 +4,12 @@
  */
 
 import com.android.build.api.dsl.ManagedVirtualDevice
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -293,7 +293,6 @@ dependencies {
     // Dependencies for local unit tests
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.truth)
 
     // AndroidX Test - JVM testing
     testImplementation(libs.core.ktx)
@@ -317,9 +316,7 @@ dependencies {
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.core.testing)
     implementation(libs.androidx.espresso.idling.resource)
-    // runBlockingTest replacement
     androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.truth)
 
     // Hilt
     implementation(libs.hilt.android)
