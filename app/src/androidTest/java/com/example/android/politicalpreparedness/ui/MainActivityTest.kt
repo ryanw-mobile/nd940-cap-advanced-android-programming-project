@@ -5,6 +5,7 @@
 
 package com.example.android.politicalpreparedness.ui
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
@@ -23,8 +24,12 @@ class MainActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
+    @Rule(order = 1)
+    @JvmField
+    var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+
     private lateinit var mainActivityTestRobot: MainActivityTestRobot
-    val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     @Before
     fun setUp() {
