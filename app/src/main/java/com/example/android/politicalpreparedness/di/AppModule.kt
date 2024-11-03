@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class AppModules {
+class AppModule {
     @Provides
     @Singleton
     fun provideElectionDao(database: ElectionDatabase): ElectionDao {
