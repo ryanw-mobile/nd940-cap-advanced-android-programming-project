@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.ui.representative
+package com.example.android.politicalpreparedness.ui.destination.representative
 
 import android.Manifest
 import android.annotation.SuppressLint
