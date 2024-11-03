@@ -17,13 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class VoterInfoViewModel @Inject constructor(
     private val repository: ElectionsRepository,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     @DispatcherModule.MainDispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val electionId: Int = savedStateHandle["arg_election_id"]!!
     private val division: Division = savedStateHandle["arg_division"]!!
 
-    // COMPLETED: Add live data to hold voter info
     private var _voterInfo = MutableLiveData<VoterInfoResponse>()
     val voterInfo: LiveData<VoterInfoResponse>
         get() = _voterInfo
@@ -49,9 +48,6 @@ class VoterInfoViewModel @Inject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-//    private var viewModelJob = Job()
-//    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
      */
@@ -67,7 +63,9 @@ class VoterInfoViewModel @Inject constructor(
 
             // COMPLETED: Add var and methods to populate voter info
             // Given we have the electionId, the address can be rather casual
-            repository.fetchVoterInfo(electionId, "${division.state}, ${division.country}")
+            // Note that there are entries that does not have a state - right now use supply CA to avoid error
+            val state = if (division.state.isNullOrEmpty()) "CA" else division.state
+            repository.fetchVoterInfo(electionId, "$state, ${division.country}")
             _voterInfo.value = repository.voterInfo
             _isLoading.postValue(false)
         }
@@ -93,11 +91,28 @@ class VoterInfoViewModel @Inject constructor(
         }
     }
 
-    // COMPLETED: Add var and methods to support loading URLs
-    fun getVotingLocationUrl(): String? = _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.votingLocationFinderUrl
+    fun getVotingLocationUrl(): String? {
+        return _voterInfo.value
+            ?.state
+            ?.firstOrNull()
+            ?.electionAdministrationBody
+            ?.votingLocationFinderUrl
+    }
 
-    fun getBallotInformationUrl(): String? = _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.ballotInfoUrl
+    fun getBallotInformationUrl(): String? {
+        return _voterInfo.value
+            ?.state
+            ?.firstOrNull()
+            ?.electionAdministrationBody
+            ?.ballotInfoUrl
+    }
 
-    fun getCorrespondenceAddress(): String? =
-        _voterInfo.value?.state?.get(0)?.electionAdministrationBody?.correspondenceAddress?.toFormattedString()
+    fun getCorrespondenceAddress(): String? {
+        return _voterInfo.value
+            ?.state
+            ?.firstOrNull()
+            ?.electionAdministrationBody
+            ?.correspondenceAddress
+            ?.toFormattedString()
+    }
 }
