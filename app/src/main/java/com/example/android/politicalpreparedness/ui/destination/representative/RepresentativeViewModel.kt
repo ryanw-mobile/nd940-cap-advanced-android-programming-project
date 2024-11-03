@@ -9,10 +9,10 @@ import com.example.android.politicalpreparedness.data.network.models.Address
 import com.example.android.politicalpreparedness.di.DispatcherModule
 import com.example.android.politicalpreparedness.domain.model.Representative
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class RepresentativeViewModel @Inject constructor(
@@ -33,11 +33,11 @@ class RepresentativeViewModel @Inject constructor(
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
 
-    val (offices, officials) = getRepresentativesDeferred.await()
-    _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
+     val (offices, officials) = getRepresentativesDeferred.await()
+     _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
 
-    Note: getRepresentatives in the above code represents the method used to fetch data from the API
-    Note: _representatives in the above code represents the established mutable live data housing representatives
+     Note: getRepresentatives in the above code represents the method used to fetch data from the API
+     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
     fun fetchRepresentatives() {

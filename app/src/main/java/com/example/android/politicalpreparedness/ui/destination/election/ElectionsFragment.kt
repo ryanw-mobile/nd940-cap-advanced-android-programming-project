@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
-import com.example.android.politicalpreparedness.ui.election.ElectionsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,17 +37,20 @@ class ElectionsFragment : Fragment() {
         binding.viewModel = viewModel
 
         // COMPLETED: Link elections to voter info
-        viewModel.selectedElection.observe(viewLifecycleOwner, { election ->
-            election?.let {
-                findNavController().navigate(
-                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                        election.id,
-                        election.division,
-                    ),
-                )
-                viewModel.doneNavigateToVoterInfo()
-            }
-        })
+        viewModel.selectedElection.observe(
+            viewLifecycleOwner,
+            { election ->
+                election?.let {
+                    findNavController().navigate(
+                        ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                            election.id,
+                            election.division,
+                        ),
+                    )
+                    viewModel.doneNavigateToVoterInfo()
+                }
+            },
+        )
 
         // COMPLETED: Initiate recycler adapters
         electionUpcomingAdapter =

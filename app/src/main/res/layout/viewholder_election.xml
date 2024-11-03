@@ -11,7 +11,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.android.politicalpreparedness.ui.election.ElectionListener" />
+            type="com.example.android.politicalpreparedness.ui.destination.election.ElectionListener" />
     </data>
 
     <LinearLayout

@@ -4,12 +4,12 @@
  */
 
 import com.android.build.api.dsl.ManagedVirtualDevice
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -69,8 +69,8 @@ android {
 
         resourceConfigurations += setOf("en")
 
-//        testInstrumentationRunner =
-//            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
+        testInstrumentationRunner =
+            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -275,6 +275,7 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
+    implementation(libs.androidx.uiautomator)
     ksp(libs.compiler)
 
     // Room
@@ -321,9 +322,8 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    // For instrumented tests - with Kotlin
-    // androidTestImplementation(libs.hilt.android.testing)
-    // kspAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 }
 
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {

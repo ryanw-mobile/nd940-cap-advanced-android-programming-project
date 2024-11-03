@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.android.politicalpreparedness.ui.representative.RepresentativeViewModel" />
+            type="com.example.android.politicalpreparedness.ui.destination.representative.RepresentativeViewModel" />
 
         <variable
             name="address"

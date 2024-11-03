@@ -10,9 +10,9 @@ import com.example.android.politicalpreparedness.data.network.models.VoterInfoRe
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.di.DispatcherModule
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class VoterInfoViewModel @Inject constructor(
