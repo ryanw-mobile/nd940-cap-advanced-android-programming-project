@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.android.politicalpreparedness.ui.voterInfo.VoterInfoViewModel" />
+            type="com.example.android.politicalpreparedness.ui.destination.voterInfo.VoterInfoViewModel" />
 
         <variable
             name="voterInfo"

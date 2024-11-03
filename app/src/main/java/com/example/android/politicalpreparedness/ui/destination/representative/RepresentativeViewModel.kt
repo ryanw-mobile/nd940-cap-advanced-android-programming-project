@@ -1,24 +1,23 @@
-package com.example.android.politicalpreparedness.ui.representative
+package com.example.android.politicalpreparedness.ui.destination.representative
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.data.network.CivicsApi
 import com.example.android.politicalpreparedness.data.network.models.Address
+import com.example.android.politicalpreparedness.di.DispatcherModule
 import com.example.android.politicalpreparedness.domain.model.Representative
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class RepresentativeViewModel
-@Inject
-constructor() : ViewModel() {
-    // COMPLETED: Establish live data for representatives and address
+class RepresentativeViewModel @Inject constructor(
+    @DispatcherModule.MainDispatcher private val dispatcher: CoroutineDispatcher,
+) : ViewModel() {
     private val _address = MutableLiveData<Address>()
     val address: LiveData<Address>
         get() = _address
@@ -31,8 +30,6 @@ constructor() : ViewModel() {
         _address.value = Address("", "", "", "Alabama", "")
     }
 
-    // COMPLETED: Create function to fetch representatives from API from a provided address
-
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
 
@@ -43,12 +40,9 @@ constructor() : ViewModel() {
      Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     fun fetchRepresentatives() {
         Timber.d("fetchRepresentatives - final address = {${_address.value!!.toFormattedString()}")
-        coroutineScope.launch {
+        viewModelScope.launch(dispatcher) {
             _address.value?.let {
                 try {
                     val getRepresentativesDeferred =
@@ -65,16 +59,7 @@ constructor() : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        viewModelJob.cancel()
-        super.onCleared()
-    }
-
-    // COMPLETED: Create function get address from geo location
     fun setAddress(newAddress: Address) {
         _address.value = newAddress
     }
-
-    // COMPLETED: Create function to get address from individual fields
-    // There is no need to create any function for this as we have two-way bindings
 }

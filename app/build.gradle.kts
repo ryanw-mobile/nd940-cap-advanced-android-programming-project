@@ -69,8 +69,8 @@ android {
 
         resourceConfigurations += setOf("en")
 
-//        testInstrumentationRunner =
-//            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
+        testInstrumentationRunner =
+            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -193,12 +193,6 @@ android {
 //        }
 //    }
 
-    sourceSets {
-        named("test") {
-            java.srcDirs("src/testFixtures/java")
-        }
-    }
-
     testOptions {
         animationsDisabled = true
 
@@ -217,24 +211,6 @@ android {
             }
         }
     }
-
-    /**
-     * Source sets can no longer contain shared roots as this is impossible to represent in the IDE.
-     * In order to share sources between test and androidTest we should be able to use test fixtures.
-     */
-//    testFixtures {
-//        enable = true
-//        androidResources = true
-//    }
-
-//    sourceSets {
-//        androidTest {
-//            java.srcDirs += "src/sharedTest/java"
-//        }
-//        test {
-//            java.srcDirs += "src/sharedTest/java"
-//        }
-//    }
 }
 
 kotlin {
@@ -247,7 +223,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlin.reflect)
     implementation(libs.jetbrains.kotlin.stdlib)
-    // implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version_kotlin_serialization"
 
     // Constraint Layout
     implementation(libs.constraintlayout)
@@ -275,6 +250,7 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
+    implementation(libs.androidx.uiautomator)
     ksp(libs.compiler)
 
     // Room
@@ -303,7 +279,6 @@ dependencies {
     // AndroidX Test - Instrumented testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.espresso.contrib)
 
     // Dependencies for Android instrumented unit tests
     androidTestImplementation(libs.junit)
@@ -315,15 +290,14 @@ dependencies {
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.core.testing)
-    implementation(libs.androidx.espresso.idling.resource)
+    androidTestImplementation(libs.androidx.espresso.idling.resource)
     androidTestImplementation(libs.kotlinx.coroutines.test)
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    // For instrumented tests - with Kotlin
-    // androidTestImplementation(libs.hilt.android.testing)
-    // kspAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 }
 
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {

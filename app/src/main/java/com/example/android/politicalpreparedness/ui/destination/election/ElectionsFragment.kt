@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.ui.election
+package com.example.android.politicalpreparedness.ui.destination.election
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,17 +37,20 @@ class ElectionsFragment : Fragment() {
         binding.viewModel = viewModel
 
         // COMPLETED: Link elections to voter info
-        viewModel.selectedElection.observe(viewLifecycleOwner, { election ->
-            election?.let {
-                findNavController().navigate(
-                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                        election.id,
-                        election.division,
-                    ),
-                )
-                viewModel.doneNavigateToVoterInfo()
-            }
-        })
+        viewModel.selectedElection.observe(
+            viewLifecycleOwner,
+            { election ->
+                election?.let {
+                    findNavController().navigate(
+                        ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                            election.id,
+                            election.division,
+                        ),
+                    )
+                    viewModel.doneNavigateToVoterInfo()
+                }
+            },
+        )
 
         // COMPLETED: Initiate recycler adapters
         electionUpcomingAdapter =
