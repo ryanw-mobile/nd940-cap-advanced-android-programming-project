@@ -36,7 +36,7 @@ robolectric = "4.14.1"
 roomRuntime = "2.7.1"
 roomKtx = "2.7.1"
 roomCompiler = "2.7.1"
-safeArgs = "2.8.9"
+safeArgs = "2.9.0"
 timber = "5.0.1"
 
 # App configurations, not dependencies
