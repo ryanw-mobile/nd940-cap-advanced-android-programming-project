@@ -43,9 +43,8 @@ timber = "5.0.1"
 versionCode = "6"
 versionName = "2.0.0"
 minSdk = "28"
-targetSdk = "32"
-compileSdk = "34"
-buildToolsVersion = "34.0.0"
+targetSdk = "36"
+compileSdk = "36"
 uiautomator = "2.3.0"
 
 [libraries]
