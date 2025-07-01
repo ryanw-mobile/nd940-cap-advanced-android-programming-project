@@ -23,7 +23,7 @@ class DatabaseModule {
             ElectionDatabase::class.java,
             "election_database",
         )
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 }
