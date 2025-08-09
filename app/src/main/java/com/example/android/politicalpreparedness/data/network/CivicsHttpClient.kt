@@ -8,12 +8,12 @@ sealed class CivicsHttpClient : OkHttpClient() {
         fun getClient(): OkHttpClient = Builder()
             .addInterceptor { chain ->
                 val original = chain.request()
-                val url =
-                    original
-                        .url()
-                        .newBuilder()
-                        .addQueryParameter("key", BuildConfig.CIVIC_API_KEY)
-                        .build()
+                val url = original.url.newBuilder()
+                    .addQueryParameter(
+                        name = "key",
+                        value = BuildConfig.CIVIC_API_KEY,
+                    )
+                    .build()
                 val request =
                     original
                         .newBuilder()
