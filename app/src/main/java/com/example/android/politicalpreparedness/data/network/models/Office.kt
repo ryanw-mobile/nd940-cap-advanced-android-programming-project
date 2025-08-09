@@ -8,9 +8,7 @@ data class Office(
     @Json(name = "divisionId") val division: Division,
     @Json(name = "officialIndices") val officials: List<Int>,
 ) {
-    fun getRepresentatives(officials: List<Official>): List<Representative> {
-        return this.officials.map { index ->
-            Representative(officials[index], this)
-        }
+    fun getRepresentatives(officials: List<Official>): List<Representative> = this.officials.map { index ->
+        Representative(officials[index], this)
     }
 }

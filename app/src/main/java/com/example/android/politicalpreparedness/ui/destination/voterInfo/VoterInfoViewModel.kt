@@ -91,28 +91,22 @@ class VoterInfoViewModel @Inject constructor(
         }
     }
 
-    fun getVotingLocationUrl(): String? {
-        return _voterInfo.value
-            ?.state
-            ?.firstOrNull()
-            ?.electionAdministrationBody
-            ?.votingLocationFinderUrl
-    }
+    fun getVotingLocationUrl(): String? = _voterInfo.value
+        ?.state
+        ?.firstOrNull()
+        ?.electionAdministrationBody
+        ?.votingLocationFinderUrl
 
-    fun getBallotInformationUrl(): String? {
-        return _voterInfo.value
-            ?.state
-            ?.firstOrNull()
-            ?.electionAdministrationBody
-            ?.ballotInfoUrl
-    }
+    fun getBallotInformationUrl(): String? = _voterInfo.value
+        ?.state
+        ?.firstOrNull()
+        ?.electionAdministrationBody
+        ?.ballotInfoUrl
 
-    fun getCorrespondenceAddress(): String? {
-        return _voterInfo.value
-            ?.state
-            ?.firstOrNull()
-            ?.electionAdministrationBody
-            ?.correspondenceAddress
-            ?.toFormattedString()
-    }
+    fun getCorrespondenceAddress(): String? = _voterInfo.value
+        ?.state
+        ?.firstOrNull()
+        ?.electionAdministrationBody
+        ?.correspondenceAddress
+        ?.toFormattedString()
 }

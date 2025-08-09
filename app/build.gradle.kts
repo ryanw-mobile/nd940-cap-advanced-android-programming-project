@@ -4,7 +4,7 @@
  */
 
 import com.android.build.api.dsl.ManagedVirtualDevice
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
@@ -17,180 +17,41 @@ plugins {
     alias(libs.plugins.hiltAndroidPlugin)
     alias(libs.plugins.kotlinxKover)
     alias(libs.plugins.devtoolsKsp)
-    alias(libs.plugins.gradleKtlint)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.navigationSafeArgs)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinter)
     id("kotlin-parcelize")
     id("kotlin-kapt")
 }
 
+// Configuration
+val productApkName = "politicalpreparedness"
+val productNamespace = "com.example.android.politicalpreparedness"
+val isRunningOnCI = System.getenv("CI") == "true"
+
 android {
-    namespace = "com.example.android.politicalpreparedness"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = productNamespace
 
-    signingConfigs {
-        create("release") {
-            val isRunningOnCI = System.getenv("CI") == "true"
-            val keystorePropertiesFile = file("../../keystore.properties")
-
-            if (isRunningOnCI) {
-                println("Signing Config: using environment variables")
-                keyAlias = System.getenv("CI_ANDROID_KEYSTORE_ALIAS")
-                keyPassword = System.getenv("CI_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-                storeFile = file(System.getenv("KEYSTORE_LOCATION"))
-                storePassword = System.getenv("CI_ANDROID_KEYSTORE_PASSWORD")
-            } else if (keystorePropertiesFile.exists()) {
-                println("Signing Config: using keystore properties")
-                val properties = Properties()
-                InputStreamReader(
-                    FileInputStream(keystorePropertiesFile),
-                    Charsets.UTF_8,
-                ).use { reader ->
-                    properties.load(reader)
-                }
-
-                keyAlias = properties.getProperty("alias")
-                keyPassword = properties.getProperty("pass")
-                storeFile = file(properties.getProperty("store"))
-                storePassword = properties.getProperty("storePass")
-            } else {
-                println("Signing Config: skipping signing")
-            }
-        }
-    }
+    setupSdkVersionsFromVersionCatalog()
+    setupSigningAndBuildTypes()
+    setupPackagingResourcesDeduplication()
 
     defaultConfig {
-        applicationId = "com.example.android.politicalpreparedness"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = libs.versions.versionName.get()
+        applicationId = productNamespace
 
-        resourceConfigurations += setOf("en")
-
-        testInstrumentationRunner =
-            "com.example.android.politicalpreparedness.ui.test.CustomTestRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-
-        // Bundle output filename
-        val timestamp = SimpleDateFormat("yyyyMMdd-HHmmss").format(Date())
-        setProperty("archivesBaseName", "politicalpreparedness-$versionName-$timestamp")
-
-        val isRunningOnCI = System.getenv("CI") == "true"
-        val keystorePropertiesFile = file("../../keystore.properties")
-        if (isRunningOnCI) {
-            println("Importing Civic API Key from environment variable")
-            defaultConfig.buildConfigField(
-                type = "String",
-                name = "CIVIC_API_KEY",
-                value = System.getenv("CIVIC_API_KEY"),
-            )
-        } else if (keystorePropertiesFile.exists()) {
-            println("Importing Civic API Key from keystore")
-            val properties = Properties()
-            InputStreamReader(
-                FileInputStream(keystorePropertiesFile),
-                Charsets.UTF_8,
-            ).use { reader ->
-                properties.load(reader)
-            }
-
-            defaultConfig.buildConfigField(
-                type = "String",
-                name = "CIVIC_API_KEY",
-                value = properties.getProperty("civicApiKey") ?: "\"\"",
-            )
-        } else {
-            println("Civic API key not found.")
-            defaultConfig.buildConfigField(
-                "String",
-                "CIVIC_API_KEY",
-                "\"\"",
-            )
-        }
+        testInstrumentationRunner = "$productNamespace.ui.test.CustomTestRunner"
+        vectorDrawables { useSupportLibrary = true }
     }
 
-    buildTypes {
-        fun setOutputFileName() {
-            applicationVariants.all {
-                val variant = this
-                variant.outputs
-                    .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
-                    .forEach { output ->
-                        val timestamp = SimpleDateFormat("yyyyMMdd-HHmmss").format(Date())
-                        val outputFileName =
-                            "politicalpreparedness-${variant.versionName}-$timestamp-${variant.name}.apk"
-                        output.outputFileName = outputFileName
-                    }
-            }
-        }
-
-        getByName("debug") {
-            applicationIdSuffix = ".debug"
-            isMinifyEnabled = false
-            isShrinkResources = false
-            isDebuggable = true
-            setOutputFileName()
-        }
-
-        create("benchmark") {
-            initWith(getByName("release"))
-            isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
-
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks.add("release")
-        }
-
-        getByName("release") {
-            isShrinkResources = true
-            isMinifyEnabled = true
-            isDebuggable = false
-            setProguardFiles(
-                listOf(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro",
-                ),
-            )
-
-            signingConfigs.getByName("release").keyAlias?.let {
-                signingConfig = signingConfigs.getByName("release")
-            }
-
-            setOutputFileName()
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    androidResources.localeFilters.add("en")
 
     buildFeatures {
-        dataBinding = true
+        compose = true
         buildConfig = true
+        dataBinding = true
     }
-
-//    packaging {
-//        resources {
-//            excludes +=
-//                listOf(
-//                    "META-INF/AL2.0",
-//                    "META-INF/LGPL2.1",
-//                    "META-INF/licenses/ASM",
-//                    "META-INF/LICENSE.md",
-//                    "META-INF/LICENSE*.md",
-//                )
-//            pickFirsts +=
-//                listOf(
-//                    "win32-x86-64/attach_hotspot_windows.dll",
-//                    "win32-x86/attach_hotspot_windows.dll",
-//                )
-//        }
-//    }
 
     testOptions {
         animationsDisabled = true
@@ -201,22 +62,64 @@ android {
         }
 
         managedDevices {
-            devices {
+            allDevices {
                 create<ManagedVirtualDevice>("pixel2Api34") {
                     device = "Pixel 2"
                     apiLevel = 34
                     systemImageSource = "aosp-atd"
+                    testedAbi = "arm64-v8a" // better performance on CI and Macs
                 }
             }
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    // Api key: try environment variable first, then keystore properties file
+    val civicApiKeyEnv = System.getenv("CIVIC_API_KEY")
+    val keystorePropertiesFile = file("../../keystore.properties")
+
+    if (!civicApiKeyEnv.isNullOrBlank()) {
+        println("⚠\uFE0F Civic API key: imported from environment variable")
+        defaultConfig.buildConfigField(
+            type = "String",
+            name = "CIVIC_API_KEY",
+            value = System.getenv("CIVIC_API_KEY"),
+        )
+    } else if (keystorePropertiesFile.exists()) {
+        println("⚠\uFE0F Civic API key: Imported from keystore")
+        val properties = Properties()
+        InputStreamReader(
+            FileInputStream(keystorePropertiesFile),
+            Charsets.UTF_8,
+        ).use { reader ->
+            properties.load(reader)
+        }
+
+        defaultConfig.buildConfigField(
+            type = "String",
+            name = "CIVIC_API_KEY",
+            value = properties.getProperty("civicApiKey") ?: "\"\"",
+        )
+    } else {
+        println("⚠\uFE0F Civic API key: not found. App may not function correctly.")
+        defaultConfig.buildConfigField(
+            "String",
+            "CIVIC_API_KEY",
+            "\"\"",
+        )
+    }
 }
 
 kotlin {
-    jvmToolchain(17)
     compilerOptions {
+        optIn.add("kotlin.time.ExperimentalTime")
         freeCompilerArgs.add("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -302,64 +205,173 @@ dependencies {
     kspAndroidTest(libs.hilt.android.compiler)
 }
 
-configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    android.set(true)
-    ignoreFailures.set(true)
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.CHECKSTYLE)
-        reporter(ReporterType.SARIF)
+tasks {
+    check { dependsOn("detekt") }
+    preBuild { dependsOn("formatKotlin") }
+}
+
+detekt { parallel = true }
+
+kover {
+    useJacoco()
+    reports.filters.excludes {
+        packages(
+            "$productNamespace.di*",
+            "$productNamespace.ui.components",
+            "$productNamespace.ui.destinations",
+            "$productNamespace.ui.navigation",
+            "$productNamespace.ui.previewparameter",
+            "$productNamespace.ui.theme",
+            "$productNamespace.ui.utils",
+            "androidx",
+            "dagger.hilt.internal.aggregatedroot.codegen",
+            "hilt_aggregated_deps",
+        )
+
+        classes(
+            "$productNamespace.App",
+            "$productNamespace.*.*MembersInjector",
+            "$productNamespace.*.*Factory",
+            "$productNamespace.*.*HiltModules*",
+            "$productNamespace.data.source.local.*_Impl*",
+            "$productNamespace.data.source.local.*Impl_Factory",
+            "$productNamespace.BR",
+            "$productNamespace.BuildConfig",
+            "$productNamespace.Hilt*",
+            "$productNamespace.*.Hilt_*",
+            "$productNamespace.ComposableSingletons*",
+            "dagger.hilt.internal.aggregatedroot.codegen.*",
+            "hilt_aggregated_deps.*",
+            "*Fragment",
+            "*Fragment\$*",
+            "*Activity",
+            "*Activity\$*",
+            "*.databinding.*",
+            "*.BuildConfig",
+            "*.DebugUtil",
+        )
     }
 }
 
-tasks.named("preBuild") {
-    dependsOn(tasks.named("ktlintFormat"))
+// Gradle Build Utilities
+private fun BaseAppModuleExtension.setupSdkVersionsFromVersionCatalog() {
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
+    }
 }
 
-kover {
-    reports {
-        // common filters for all reports of all variants
-        filters {
-            // exclusions for reports
-            excludes {
-                // excludes class by fully-qualified JVM class name, wildcards '*' and '?' are available
-                classes(
-                    listOf(
-                        "com.example.android.politicalpreparedness.App",
-                        "com.example.android.politicalpreparedness.*.*MembersInjector",
-                        "com.example.android.politicalpreparedness.*.*Factory",
-                        "com.example.android.politicalpreparedness.*.*HiltModules*",
-                        "com.example.android.politicalpreparedness.data.source.local.*_Impl*",
-                        "com.example.android.politicalpreparedness.data.source.local.*Impl_Factory",
-                        "com.example.android.politicalpreparedness.BR",
-                        "com.example.android.politicalpreparedness.BuildConfig",
-                        "com.example.android.politicalpreparedness.Hilt*",
-                        "com.example.android.politicalpreparedness.*.Hilt_*",
-                        "com.example.android.politicalpreparedness.ComposableSingletons*",
-                        "*Fragment",
-                        "*Fragment\$*",
-                        "*Activity",
-                        "*Activity\$*",
-                        "*.BuildConfig",
-                        "*.DebugUtil",
-                    ),
-                )
-                // excludes all classes located in specified package and it subpackages, wildcards '*' and '?' are available
-                packages(
-                    listOf(
-                        "com.example.android.politicalpreparedness.di",
-                        "com.example.android.politicalpreparedness.ui.components",
-                        "com.example.android.politicalpreparedness.ui.destinations",
-                        "com.example.android.politicalpreparedness.ui.navigation",
-                        "com.example.android.politicalpreparedness.ui.previewparameter",
-                        "com.example.android.politicalpreparedness.ui.theme",
-                        "com.example.android.politicalpreparedness.ui.utils",
-                        "androidx",
-                        "dagger.hilt.internal.aggregatedroot.codegen",
-                        "hilt_aggregated_deps",
-                    ),
-                )
+private fun BaseAppModuleExtension.setupPackagingResourcesDeduplication() {
+    packaging.resources {
+        excludes.addAll(
+            listOf(
+                "META-INF/*.md",
+                "META-INF/proguard/*",
+                "META-INF/*.kotlin_module",
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.*",
+                "META-INF/LICENSE-notice.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.*",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "META-INF/*.properties",
+                "/*.properties",
+            ),
+        )
+    }
+}
+
+private fun BaseAppModuleExtension.setupSigningAndBuildTypes() {
+    val releaseSigningConfigName = "releaseSigningConfig"
+    val timestamp = SimpleDateFormat("yyyyMMdd-HHmmss").format(Date())
+    val baseName = "$productApkName-${libs.versions.versionName.get()}-$timestamp"
+    val isReleaseBuild = gradle.startParameter.taskNames.any {
+        it.contains("Release", ignoreCase = true)
+                || it.contains("Bundle", ignoreCase = true)
+                || it.equals("build", ignoreCase = true)
+    }
+
+    extensions.configure<BasePluginExtension> { archivesName.set(baseName) }
+
+    signingConfigs.create(releaseSigningConfigName) {
+        // Only initialise the signing config when a Release or Bundle task is being executed.
+        // This prevents Gradle sync or debug builds from attempting to load the keystore,
+        // which could fail if the keystore or environment variables are not available.
+        // SigningConfig itself is only wired to the 'release' build type, so this guard avoids unnecessary setup.
+        if (isReleaseBuild) {
+            val keystorePropertiesFile = file("../../keystore.properties")
+
+            if (isRunningOnCI || !keystorePropertiesFile.exists()) {
+                println("⚠\uFE0F Signing Config: using environment variables")
+                keyAlias = System.getenv("CI_ANDROID_KEYSTORE_ALIAS")
+                keyPassword = System.getenv("CI_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storeFile = file(System.getenv("KEYSTORE_LOCATION"))
+                storePassword = System.getenv("CI_ANDROID_KEYSTORE_PASSWORD")
+            } else {
+                println("⚠\uFE0F Signing Config: using keystore properties")
+                val properties = Properties()
+                InputStreamReader(
+                    FileInputStream(keystorePropertiesFile),
+                    Charsets.UTF_8,
+                ).use { reader ->
+                    properties.load(reader)
+                }
+
+                keyAlias = properties.getProperty("alias")
+                keyPassword = properties.getProperty("pass")
+                storeFile = file(properties.getProperty("store"))
+                storePassword = properties.getProperty("storePass")
             }
+        } else {
+            println("⚠\uFE0F Signing Config: not created for non-release builds.")
+        }
+    }
+
+    buildTypes {
+        fun setOutputFileName() {
+            applicationVariants.all {
+                outputs
+                    .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+                    .forEach { output ->
+                        val outputFileName = "$productApkName-$name-$versionName-$timestamp.apk"
+                        output.outputFileName = outputFileName
+                    }
+            }
+        }
+
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+            isMinifyEnabled = false
+            isDebuggable = true
+            setOutputFileName()
+        }
+
+        create("benchmark") {
+            initWith(getByName("release"))
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            matchingFallbacks.add("release")
+            setOutputFileName()
+        }
+
+        getByName("release") {
+            isShrinkResources = true
+            isMinifyEnabled = true
+            isDebuggable = false
+            setProguardFiles(
+                listOf(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro",
+                ),
+            )
+            signingConfig = signingConfigs.getByName(name = releaseSigningConfigName)
+            setOutputFileName()
         }
     }
 }

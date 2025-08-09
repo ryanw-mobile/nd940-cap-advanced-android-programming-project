@@ -31,21 +31,22 @@ retrofitVersion = "2.12.0"
 hilt = '2.57'
 devtoolsksp = "2.2.0-2.0.2"
 kover = "0.9.1"
-ktlint = "13.0.0"
 robolectric = "4.15.1"
 roomRuntime = "2.7.2"
 roomKtx = "2.7.2"
 roomCompiler = "2.7.2"
 safeArgs = "2.9.3"
 timber = "5.0.1"
+uiautomator = "2.3.0"
+kotlinter = "5.2.0"
+detekt = "1.23.8"
 
 # App configurations, not dependencies
-versionCode = "6"
-versionName = "2.0.0"
 minSdk = "28"
 targetSdk = "36"
 compileSdk = "36"
-uiautomator = "2.3.0"
+versionCode = "7"
+versionName = "2.1.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -95,10 +96,12 @@ androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomato
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hiltAndroidPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlinxKover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
-gradleKtlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtoolsksp" }
 androidTest = { id = "com.android.test", version.ref = "agp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 navigationSafeArgs = { id = "androidx.navigation.safeargs", version.ref = "safeArgs" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

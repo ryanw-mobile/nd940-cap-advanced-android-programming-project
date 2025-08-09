@@ -13,7 +13,5 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideElectionDao(database: ElectionDatabase): ElectionDao {
-        return database.electionDao
-    }
+    fun provideElectionDao(database: ElectionDatabase): ElectionDao = database.electionDao
 }
