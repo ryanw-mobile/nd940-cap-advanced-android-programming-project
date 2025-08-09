@@ -192,6 +192,7 @@ dependencies {
     implementation(libs.core.ktx)
 
     // Dependencies for Android instrumented unit tests
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.core.testing)
@@ -203,6 +204,15 @@ dependencies {
     ksp(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
     kspAndroidTest(libs.hilt.android.compiler)
+
+    // Compose - for future use
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
 
 tasks {
