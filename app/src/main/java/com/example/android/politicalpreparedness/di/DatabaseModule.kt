@@ -17,13 +17,11 @@ class DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext appContext: Context,
-    ): ElectionDatabase {
-        return Room.databaseBuilder(
-            appContext.applicationContext,
-            ElectionDatabase::class.java,
-            "election_database",
-        )
-            .fallbackToDestructiveMigration(dropAllTables = true)
-            .build()
-    }
+    ): ElectionDatabase = Room.databaseBuilder(
+        appContext.applicationContext,
+        ElectionDatabase::class.java,
+        "election_database",
+    )
+        .fallbackToDestructiveMigration(dropAllTables = true)
+        .build()
 }

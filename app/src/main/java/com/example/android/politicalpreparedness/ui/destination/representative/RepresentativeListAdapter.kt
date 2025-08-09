@@ -14,8 +14,7 @@ import com.example.android.politicalpreparedness.data.network.models.Channel
 import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
 import com.example.android.politicalpreparedness.domain.model.Representative
 
-class RepresentativeListAdapter :
-    ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
+class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -27,13 +26,10 @@ class RepresentativeListAdapter :
     ) = holder.bind(getItem(position))
 
     // This is needed for hasStableIds()
-    override fun getItemId(position: Int): Long {
-        return getItem(position).hashCode().toLong()
-    }
+    override fun getItemId(position: Int): Long = getItem(position).hashCode().toLong()
 }
 
-class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Representative) {
         // XML retrieves string values for text views
         binding.representative = item
@@ -88,17 +84,13 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
         enableLink(binding.wwwIcon, urls.first())
     }
 
-    private fun getFacebookUrl(channels: List<Channel>): String? {
-        return channels.filter { channel -> channel.type == "Facebook" }
-            .map { channel -> "https://www.facebook.com/${channel.id}" }
-            .firstOrNull()
-    }
+    private fun getFacebookUrl(channels: List<Channel>): String? = channels.filter { channel -> channel.type == "Facebook" }
+        .map { channel -> "https://www.facebook.com/${channel.id}" }
+        .firstOrNull()
 
-    private fun getTwitterUrl(channels: List<Channel>): String? {
-        return channels.filter { channel -> channel.type == "Twitter" }
-            .map { channel -> "https://www.twitter.com/${channel.id}" }
-            .firstOrNull()
-    }
+    private fun getTwitterUrl(channels: List<Channel>): String? = channels.filter { channel -> channel.type == "Twitter" }
+        .map { channel -> "https://www.twitter.com/${channel.id}" }
+        .firstOrNull()
 
     private fun enableLink(
         view: ImageView,

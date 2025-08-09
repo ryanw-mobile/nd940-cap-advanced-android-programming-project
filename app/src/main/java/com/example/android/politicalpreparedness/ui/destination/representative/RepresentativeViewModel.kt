@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@Suppress("TooGenericExceptionCaught")
 @HiltViewModel
 class RepresentativeViewModel @Inject constructor(
     @DispatcherModule.MainDispatcher private val dispatcher: CoroutineDispatcher,

@@ -53,6 +53,4 @@ fun TextView.formatDateValue(value: Date?) {
     } ?: ""
 }
 
-inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T> {
-    return adapter as ArrayAdapter<T>
-}
+inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T> = adapter as ArrayAdapter<T>

@@ -19,7 +19,5 @@ class ElectionJsonAdapter {
     }
 
     @ToJson
-    fun divisionToJson(division: Division): String {
-        return division.id
-    }
+    fun divisionToJson(division: Division): String = division.id
 }

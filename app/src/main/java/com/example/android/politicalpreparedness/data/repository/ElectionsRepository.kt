@@ -11,10 +11,12 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
+@Suppress("TooGenericExceptionCaught")
 class ElectionsRepository
 @Inject
-constructor(private val electionDao: ElectionDao) :
-    Repository {
+constructor(
+    private val electionDao: ElectionDao,
+) : Repository {
     // Data exposed to the public - they don't have to care where do the data comes from
     override val upcomingElections: LiveData<List<Election>> = electionDao.observeElectionList()
     override val followedElections: LiveData<List<Election>> = electionDao.observeFollowedElections()
@@ -32,21 +34,19 @@ constructor(private val electionDao: ElectionDao) :
     /***
      * Fetch data from REST API and store to database
      */
-    override suspend fun fetchUpcomingElections() =
-        withContext(Dispatchers.IO) {
-            try {
-                val electionResponse = CivicsApi.retrofitService.getElections()
-                electionDao.insertAll(electionResponse.elections)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                // We just do not make changes to the DB if API failed.
-            }
+    override suspend fun fetchUpcomingElections() = withContext(Dispatchers.IO) {
+        try {
+            val electionResponse = CivicsApi.retrofitService.getElections()
+            electionDao.insertAll(electionResponse.elections)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // We just do not make changes to the DB if API failed.
         }
+    }
 
-    override suspend fun isElectionFollowed(electionId: Int) =
-        withContext(Dispatchers.IO) {
-            _isFollowed = electionDao.isFollowedElection(electionId)
-        }
+    override suspend fun isElectionFollowed(electionId: Int) = withContext(Dispatchers.IO) {
+        _isFollowed = electionDao.isFollowedElection(electionId)
+    }
 
     // ---- VoterInfo ----
     override suspend fun fetchVoterInfo(
@@ -64,13 +64,11 @@ constructor(private val electionDao: ElectionDao) :
             }
     }
 
-    override suspend fun unfollowElection(electionId: Int) =
-        withContext(Dispatchers.IO) {
-            electionDao.unfollowElection(electionId)
-        }
+    override suspend fun unfollowElection(electionId: Int) = withContext(Dispatchers.IO) {
+        electionDao.unfollowElection(electionId)
+    }
 
-    override suspend fun followElection(electionId: Int) =
-        withContext(Dispatchers.IO) {
-            electionDao.followElection(electionId)
-        }
+    override suspend fun followElection(electionId: Int) = withContext(Dispatchers.IO) {
+        electionDao.followElection(electionId)
+    }
 }

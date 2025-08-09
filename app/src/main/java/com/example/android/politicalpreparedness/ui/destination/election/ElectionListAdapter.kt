@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.data.network.models.Election
 import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
 
-class ElectionListAdapter(private val clickListener: ElectionListener) :
-    ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
+class ElectionListAdapter(private val clickListener: ElectionListener) : ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ElectionViewHolder {
-        return ElectionViewHolder.from(parent)
-    }
+    ): ElectionViewHolder = ElectionViewHolder.from(parent)
 
     // COMPLETED: Bind ViewHolder
     override fun onBindViewHolder(
@@ -27,14 +24,11 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
     }
 
     // This is needed for hasStableIds()
-    override fun getItemId(position: Int): Long {
-        return getItem(position).hashCode().toLong()
-    }
+    override fun getItemId(position: Int): Long = getItem(position).hashCode().toLong()
 }
 
 // COMPLETED: Create ElectionViewHolder
-class ElectionViewHolder(val binding: ViewholderElectionBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class ElectionViewHolder(val binding: ViewholderElectionBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         listener: ElectionListener,
         item: Election,
