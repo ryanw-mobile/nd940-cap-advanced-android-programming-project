@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
+@Suppress("TooGenericExceptionCaught")
 class ElectionsRepository
 @Inject
 constructor(
