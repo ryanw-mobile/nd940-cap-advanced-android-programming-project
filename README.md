@@ -52,40 +52,46 @@ now [logged as issues](https://github.com/ryanw-mobile/nd940-cap-advanced-androi
 * [AndroidX Activity KTX](https://developer.android.com/jetpack/androidx/releases/activity) - Apache 2.0 - Extensions for Android Activity
 * [AndroidX Core KTX](https://developer.android.com/jetpack/androidx/releases/core) - Apache 2.0 - Extensions for Android Core
 * [AndroidX Core Testing](https://developer.android.com/jetpack/androidx/releases/arch-core) - Apache 2.0 - Core testing utilities
-* [AndroidX Espresso](https://developer.android.com/training/testing/espresso) - Apache 2.0 - Espresso library for UI testing
+* [AndroidX Espresso](https://developer.android.com/training/testing/espresso) - Apache 2.0 - UI testing framework for Android
 * [AndroidX Fragment KTX](https://developer.android.com/jetpack/androidx/releases/fragment) - Apache 2.0 - Extensions for Android Fragment
 * [AndroidX Fragment Testing](https://developer.android.com/jetpack/androidx/releases/fragment) - Apache 2.0 - Utilities for testing fragments
-* [AndroidX Navigation Fragment KTX](https://developer.android.com/jetpack/androidx/releases/navigation) - Apache 2.0 - Navigation KTX for fragments
-* [AndroidX Room](https://developer.android.com/jetpack/androidx/releases/room) - Apache 2.0 - Room database
+* [AndroidX Navigation KTX](https://developer.android.com/jetpack/androidx/releases/navigation) - Apache 2.0 - KTX extensions for Navigation components
+* [AndroidX Room](https://developer.android.com/jetpack/androidx/releases/room) - Apache 2.0 - Database access with annotation processing and Kotlin extensions
+* [Jetpack Compose UI](https://developer.android.com/jetpack/compose) - Apache 2.0 - Modern declarative UI toolkit with testing and tooling support
+* [AndroidX Material3](https://developer.android.com/jetpack/androidx/releases/compose-material3) - Apache 2.0 - Material Design 3 components for Compose
 * [ConstraintLayout](https://developer.android.com/jetpack/androidx/releases/constraintlayout) - Apache 2.0 - Constraint-based layout system
-* [AndroidX Core Test KTX](https://developer.android.com/jetpack/androidx/releases/test) - Apache 2.0 - Core testing utilities for AndroidX
-* [Glide](https://github.com/bumptech/glide) - BSD - Image loading and caching library
-* [Hilt Android](https://dagger.dev/hilt) - Apache 2.0 - Dependency injection library for Android
-* [Kotlin Standard Library](https://kotlinlang.org/api/latest/jvm/stdlib/) - Apache 2.0 - Standard library for Kotlin
-* [JUnit](https://junit.org/junit4/) - Eclipse Public License 1.0 - Unit testing framework
-* [Kotlin Reflect](https://kotlinlang.org/docs/reflection.html) - Apache 2.0 - Reflection library for Kotlin
-* [Kotlinx Coroutines Android](https://github.com/Kotlin/kotlinx.coroutines) - Apache 2.0 - Coroutines support for Android
-* [AndroidX Lifecycle LiveData KTX](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Apache 2.0 - KTX extensions for LiveData
-* [AndroidX Lifecycle ViewModel KTX](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Apache 2.0 - KTX extensions for ViewModel
-* [Material Components](https://material.io/develop/android) - Apache 2.0 - Material Design UI components
-* [Mockito Core](https://site.mockito.org/) - MIT - Mocking framework for unit tests in Java
-* [Moshi](https://github.com/square/moshi) - Apache 2.0 - JSON library for Android and Java
+* [AndroidX UIAutomator](https://developer.android.com/training/testing/other-components/ui-automator) - Apache 2.0 - UI automation testing library for Android
+* [Dexmaker Mockito](https://github.com/linkedin/dexmaker) - Apache 2.0 - DexMaker-based Mockito implementation for Android
+* [Glide](https://github.com/bumptech/glide) - BSD - Image loading and caching library for Android
+* [Hilt for Android](https://dagger.dev/hilt) - Apache 2.0 - Dependency injection with compile-time DI and testing support
+* [JUnit + AndroidX Extensions](https://developer.android.com/training/testing/junit-rules) - Apache 2.0 / EPL - JUnit 4 with AndroidX KTX support for instrumented tests
+* [Kotlin Standard Library](https://kotlinlang.org/api/latest/jvm/stdlib/) - Apache 2.0 - Core language features for Kotlin
+* [Kotlin Reflect](https://kotlinlang.org/docs/reflection.html) - Apache 2.0 - Reflection support for Kotlin
+* [Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines) - Apache 2.0 - Support for asynchronous and concurrent programming in Kotlin
+* [AndroidX Lifecycle LiveData KTX](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Apache 2.0 - Kotlin extensions for LiveData
+* [AndroidX Lifecycle ViewModel KTX](https://developer.android.com/jetpack/androidx/releases/lifecycle) - Apache 2.0 - Kotlin extensions for ViewModel
+* [Material Components](https://material.io/develop/android) - Apache 2.0 - Material Design UI components for Android
+* [Mockito Core](https://site.mockito.org/) - MIT - Java mocking framework for unit tests
+* [Moshi](https://github.com/square/moshi) - Apache 2.0 - Modern JSON library for Android and Java with Kotlin and adapter support
 * [Play Services Location](https://developers.google.com/android/guides/overview) - Apache 2.0 - Location services from Google Play
 * [Retrofit](https://square.github.io/retrofit/) - Apache 2.0 - Type-safe HTTP client for Android and Java
-* [Robolectric](http://robolectric.org/) - Apache 2.0 - Unit testing framework for Android
-* [Timber](https://github.com/JakeWharton/timber) - Apache 2.0 - Logging library for Android
+* [Retrofit Kotlin Coroutines Adapter](https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter) - Apache 2.0 - Coroutine support for Retrofit
+* [Robolectric](http://robolectric.org/) - Apache 2.0 - JVM-based unit testing framework for Android
+* [Timber](https://github.com/JakeWharton/timber) - Apache 2.0 - Lightweight logging library for Android
 
 ### Plugins
 
 * [Android Application Plugin](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration) - Google - Plugin for building Android applications
 * [Jetbrains Kotlin Android Plugin](https://kotlinlang.org/docs/android.html) - JetBrains - Plugin for Kotlin Android projects
+* [Compose Compiler Plugin](https://developer.android.com/jetpack/compose/setup) - JetBrains - Compose plugin for Kotlin
 * [Hilt Android Plugin](https://dagger.dev/hilt) - Google - Plugin for Hilt Android dependency injection
 * [Kover Plugin](https://github.com/Kotlin/kotlinx-kover) - JetBrains - Code coverage tool for Kotlin
-* [Ktlint Plugin](https://github.com/JLLeitschuh/ktlint-gradle) - JLLeitschuh - Plugin for Kotlin linter
 * [KSP Plugin](https://github.com/google/ksp) - Google - Kotlin Symbol Processing API
 * [Android Test Plugin](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration) - Google - Plugin for Android test projects
 * [Serialization Plugin](https://github.com/Kotlin/kotlinx.serialization) - JetBrains - Plugin for Kotlin serialization
 * [Navigation Safe Args Plugin](https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args) - AndroidX - Plugin for type-safe navigation
+* [Detekt Plugin](https://github.com/detekt/detekt) - Artur Bosch - Static code analysis for Kotlin
+* [Kotlinter Plugin](https://github.com/jeremymailen/kotlinter-gradle) - Jeremy Mailen - Plugin for Kotlin linting
 
 &nbsp;
 
@@ -93,55 +99,62 @@ now [logged as issues](https://github.com/ryanw-mobile/nd940-cap-advanced-androi
 ### Requirements
 
 * To build the app by yourself, you need your own [Civic API key from Google](https://console.developers.google.com/)
+* You can then either provide the API key in a `keystore.properties` file (`civicApiKey`), or set it as an environment variable `CIVIC_API_KEY`
 
-&nbsp;
+### Without Keystore (Debug Builds)
 
-### Setting up the keystore
+By default, debug builds do not require a keystore. You can run:
 
-Release builds will be signed if either the keystore file or environment variables are set.
-Otherwise, the app will be built unsigned and without the Google Civic API key installed, which will not
-pull any data from the endpoint.
+```bash
+./gradlew assembleDebug
+```
 
-### Local
+No signing config is required unless you explicitly build a release variant.
 
-* Android Keystore is not being stored in this repository. You need your own Keystore to generate
-  the apk / App Bundle
+### With Keystore (Release Builds)
 
-* If your project folder is at `/app/nd940-cap/`, the Keystore file and `keystore.properties`
-  should be placed at `/app/`
+Signing configuration is only triggered when:
+- the task includes "Release" or "Bundle"
+- or the environment variable `CI=true` is set
 
-* The format of `keystore.properties` is:
-  ```
-     store=/app/release-key.keystore
-     alias=<alias>
-     pass=<alias password>
-     storePass=<keystore password>
-     civicApiKey="<your API Key here>"
-  ```
+There are two ways to supply the keystore:
 
-### CI environment
+#### 1. Environment Variables (For CI)
 
-* This project has been configured to support automated CI builds.
+Provide the following environment variables (e.g. in GitHub Secrets):
 
-* The following environment variables have been set to provide the keystore:
-  ```
-     CI = true
-     HOME = <the home directory of the bitrise environment>
-     CI_ANDROID_KEYSTORE_PASSWORD = <your keystore password>
-     CI_ANDROID_KEYSTORE_ALIAS = <your keystore alias>
-     CI_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD = <your keystore private key password>
-     CIVIC_API_KEY <your API Key>
-  ```
+```
+KEYSTORE_LOCATION=./keystore.jks
+CI_ANDROID_KEYSTORE_ALIAS=yourAlias
+CI_ANDROID_KEYSTORE_PASSWORD=yourKeystorePassword
+CI_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD=yourPrivateKeyPassword
+CIVIC_API_KEY=yourCivicApiKey
+```
 
-### Build and install on the connected device
+#### 2. `keystore.properties` File (For Local Builds)
 
-This app has two build variants: `Debug` and `Release`. The most common build commands are:
+Create a `keystore.properties` file at the root:
 
-* `./gradlew clean installDebug`
-* `./gradlew clean instal`
-* `./gradlew clean bundleRelease`
-* `./gradlew clean assembleRelease`
+```properties
+alias=yourAlias
+pass=yourPrivateKeyPassword
+store=path/to/keystore.jks
+storePass=yourKeystorePassword
+civicApiKey=yourCivicApiKey
+```
 
-The generated apk(s) will be stored under `app/build/outputs/`
+Then build:
 
-&nbsp;
+```bash
+./gradlew bundleRelease
+```
+
+### Output Format
+
+Release builds are timestamped using the format:
+
+```
+<app-name>-<buildType>-<versionName>-<yyyyMMdd-HHmmss>.apk
+```
+
+This applies to both APK and AAB artifacts.
