@@ -42,34 +42,38 @@ class VoterInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        /**
-         Hint: You will need to ensure proper data is provided from previous fragment.
-         */
-        viewModel.voterInfoLoadError.observe(viewLifecycleOwner, { error ->
-            if (error) {
-                binding.dataScreen.visibility = View.GONE
-                binding.loadingScreen.visibility = View.GONE
-                binding.errorScreen.visibility = View.VISIBLE
-            }
-        })
+        // Hint: You will need to ensure proper data is provided from previous fragment.
+        viewModel.voterInfoLoadError.observe(
+            viewLifecycleOwner,
+            { error ->
+                if (error) {
+                    binding.dataScreen.visibility = View.GONE
+                    binding.loadingScreen.visibility = View.GONE
+                    binding.errorScreen.visibility = View.VISIBLE
+                }
+            },
+        )
 
         // Control the visibility of the State Correspondence
         // Could have a better way to do this
-        viewModel.voterInfo.observe(viewLifecycleOwner, {
-            // When it changes and have valid values, we update the UI
-            binding.apply {
-                addressGroup.visibility =
-                    if (viewModel!!.getCorrespondenceAddress().isNullOrEmpty()) {
-                        View.GONE
-                    } else {
-                        View.VISIBLE
-                    }
+        viewModel.voterInfo.observe(
+            viewLifecycleOwner,
+            {
+                // When it changes and have valid values, we update the UI
+                binding.apply {
+                    addressGroup.visibility =
+                        if (viewModel!!.getCorrespondenceAddress().isNullOrEmpty()) {
+                            View.GONE
+                        } else {
+                            View.VISIBLE
+                        }
 
-                // COMPLETED: Handle loading of URLs
-                stateLocations.setOnClickListener { openWebUrl(viewModel!!.getVotingLocationUrl()) }
-                stateBallot.setOnClickListener { openWebUrl(viewModel!!.getBallotInformationUrl()) }
-            }
-        })
+                    // COMPLETED: Handle loading of URLs
+                    stateLocations.setOnClickListener { openWebUrl(viewModel!!.getVotingLocationUrl()) }
+                    stateBallot.setOnClickListener { openWebUrl(viewModel!!.getBallotInformationUrl()) }
+                }
+            },
+        )
 
         // COMPLETED: Handle save button UI state
         // XML interacting with ViewModel directly
