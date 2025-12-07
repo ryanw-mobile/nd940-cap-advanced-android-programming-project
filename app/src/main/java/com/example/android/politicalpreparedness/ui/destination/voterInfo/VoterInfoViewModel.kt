@@ -48,9 +48,7 @@ class VoterInfoViewModel @Inject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    /**
-     * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
-     */
+    // Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
     init {
         refresh()
     }
