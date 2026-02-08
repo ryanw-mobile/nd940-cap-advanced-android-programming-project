@@ -21,6 +21,8 @@ plugins {
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlinter)
+    // https://developer.android.com/build/migrate-to-built-in-kotlin
+    alias(libs.plugins.legacy.kapt)
     id("kotlin-parcelize")
 }
 
