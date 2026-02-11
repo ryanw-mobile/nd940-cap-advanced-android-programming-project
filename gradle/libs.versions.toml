@@ -1,5 +1,5 @@
 [versions]
-activityKtx = "1.12.3"
+activityKtx = "1.12.4"
 agp = "9.0.0"
 constraintlayoutVersion = "2.2.1"
 converterMoshi = "3.0.0"
