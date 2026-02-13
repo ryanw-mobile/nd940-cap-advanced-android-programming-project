@@ -1,6 +1,6 @@
 [versions]
 activityKtx = "1.12.4"
-agp = "9.0.0"
+agp = "9.0.1"
 constraintlayoutVersion = "2.2.1"
 converterMoshi = "3.0.0"
 coreKtx = "1.17.0"
