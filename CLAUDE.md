@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MVVM + Clean Architecture with three layers:
 
-- **`ui/`** — Fragments + ViewModels (Hilt-injected), XML data binding, Navigation Component. Compose dependencies are present but UI is currently XML-based.
+- **`ui/`** — Fragments + ViewModels (Hilt-injected), View Binding, Navigation Component. Compose dependencies are present but UI is currently XML-based.
 - **`data/`** — Repository pattern with Room (local) and Retrofit/Moshi (remote). The repository interface abstracts both sources.
 - **`domain/`** — Business logic, decoupled from Android framework.
 - **`di/`** — Hilt modules: `DatabaseModule`, `AppModule` (DAOs), `DispatcherModule` (injects `@Main`, `@IO`, `@Default` coroutine dispatchers for testability).
@@ -36,7 +36,7 @@ Key patterns:
 - **Unit tests** (`src/test/`): Robolectric-based, run on JVM. Use `CustomTestRunner` with `HiltTestApplication`.
 - **Instrumented tests** (`src/androidTest/`): Espresso + UIAutomator. Managed device: Pixel 2 API 35 (AOSP-ATD).
 - **Shared test utilities** live in `src/sharedTest/`.
-- Coverage excludes DI modules, generated code, fragments, activities, and data binding classes.
+- Coverage excludes DI modules, generated code, fragments, activities, and binding classes.
 
 ## Code Quality
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.data.network.models.Channel
 import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
 import com.example.android.politicalpreparedness.domain.model.Representative
+import com.example.android.politicalpreparedness.ui.fetchImage
 
 class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
     override fun onCreateViewHolder(
@@ -31,14 +32,11 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeView
 
 class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Representative) {
-        // XML retrieves string values for text views
-        binding.representative = item
-
-        // TextView values are handled at XML
-
-        // Use Glide to take care of the profile image
-        // BindingAdapter is defined to supply the URL from the XML
-        // binding.representativePhoto.setImageResource(R.drawable.ic_profile)
+        binding.representativeOfficeName.text = item.office.name
+        binding.representativeName.text = item.official.name
+        binding.representativeParty.text = item.official.party ?: ""
+        binding.representativePhoto.contentDescription = item.official.name
+        fetchImage(binding.representativePhoto, item.official.photoUrl)
 
         // COMPLETED: Show social links ** Hint: Use provided helper methods
         // COMPLETED: Show www link ** Hint: Use provided helper methods
@@ -54,8 +52,6 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
         item.official.urls?.let {
             showWWWLinks(it)
         }
-
-        binding.executePendingBindings()
     }
 
     // COMPLETED: Add companion object to inflate ViewHolder (from)
