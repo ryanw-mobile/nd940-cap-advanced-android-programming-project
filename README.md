@@ -85,7 +85,7 @@ now [logged as issues](https://github.com/ryanw-mobile/nd940-cap-advanced-androi
 * [Jetbrains Kotlin Android Plugin](https://kotlinlang.org/docs/android.html) - JetBrains - Plugin for Kotlin Android projects
 * [Compose Compiler Plugin](https://developer.android.com/jetpack/compose/setup) - JetBrains - Compose plugin for Kotlin
 * [Hilt Android Plugin](https://dagger.dev/hilt) - Google - Plugin for Hilt Android dependency injection
-* [Kover Plugin](https://github.com/Kotlin/kotlinx-kover) - JetBrains - Code coverage tool for Kotlin
+* [Jacoco Plugin](https://www.jacoco.org/jacoco/) - JaCoCo - Code coverage tool for Java and Kotlin
 * [KSP Plugin](https://github.com/google/ksp) - Google - Kotlin Symbol Processing API
 * [Android Test Plugin](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration) - Google - Plugin for Android test projects
 * [Serialization Plugin](https://github.com/Kotlin/kotlinx.serialization) - JetBrains - Plugin for Kotlin serialization
