@@ -15,9 +15,8 @@ class LaunchFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val binding = FragmentLaunchBinding.inflate(inflater)
-        binding.lifecycleOwner = viewLifecycleOwner
+    ): View {
+        val binding = FragmentLaunchBinding.inflate(inflater, container, false)
 
         binding.representativeButton.setOnClickListener { navToRepresentatives() }
         binding.upcomingButton.setOnClickListener { navToElections() }

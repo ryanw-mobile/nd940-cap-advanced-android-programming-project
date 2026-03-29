@@ -15,9 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -37,7 +38,7 @@ class RepresentativeFragment : Fragment() {
     // Hilt DI - not using @Inject
     private val viewModel: RepresentativeViewModel by viewModels()
 
-    lateinit var binding: FragmentRepresentativeBinding
+    private lateinit var binding: FragmentRepresentativeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,10 +46,7 @@ class RepresentativeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         // COMPLETED: Establish bindings
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
 
         // COMPLETED: Define and assign Representative adapter
         val representativesAdapter =
@@ -66,6 +64,34 @@ class RepresentativeFragment : Fragment() {
             viewLifecycleOwner,
             { representativesAdapter.submitList(it) },
         )
+
+        // Sync address fields from ViewModel to UI (e.g. when location is used)
+        viewModel.address.observe(viewLifecycleOwner) { address ->
+            if (binding.addressLine1.text.toString() != address.line1) {
+                binding.addressLine1.setText(address.line1)
+            }
+            if (binding.addressLine2.text.toString() != (address.line2 ?: "")) {
+                binding.addressLine2.setText(address.line2 ?: "")
+            }
+            if (binding.city.text.toString() != address.city) {
+                binding.city.setText(address.city)
+            }
+            if (binding.zip.text.toString() != address.zip) {
+                binding.zip.setText(address.zip)
+            }
+            @Suppress("UNCHECKED_CAST")
+            val spinnerAdapter = binding.state.adapter as? ArrayAdapter<String>
+            val position = spinnerAdapter?.getPosition(address.state) ?: -1
+            if (position >= 0 && binding.state.selectedItemPosition != position) {
+                binding.state.setSelection(position)
+            }
+        }
+
+        // Sync EditText changes back to ViewModel address
+        binding.addressLine1.doAfterTextChanged { viewModel.address.value?.line1 = it.toString() }
+        binding.addressLine2.doAfterTextChanged { viewModel.address.value?.line2 = it.toString() }
+        binding.city.doAfterTextChanged { viewModel.address.value?.city = it.toString() }
+        binding.zip.doAfterTextChanged { viewModel.address.value?.zip = it.toString() }
 
         // COMPLETED: Establish button listeners for field and location search
         binding.state.onItemSelectedListener =
@@ -91,15 +117,6 @@ class RepresentativeFragment : Fragment() {
 
         return binding.root
     }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        //COMPLETED: Handle location permission result to get location on permission granted
-//    }
 
     /**
      * The following permission request has been rewritten using the latest offering from Google.
@@ -164,20 +181,6 @@ class RepresentativeFragment : Fragment() {
                 }.show()
             }
         }
-
-//    private fun checkLocationPermissions(): Boolean {
-//        return if (isPermissionGranted()) {
-//            true
-//        } else {
-//            //COMPLETED: Request Location permissions
-//            false
-//        }
-//    }
-
-//    private fun isPermissionGranted(): Boolean {
-//        //COMPLETED Check if permission is already granted and return (true = granted, false = denied/other)
-//        return true
-//    }
 
     /**
      * Permission check has been skipped because this function is called only after checking for permission

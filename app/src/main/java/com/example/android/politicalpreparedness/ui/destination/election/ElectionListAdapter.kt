@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.data.network.models.Election
 import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ElectionListAdapter(private val clickListener: ElectionListener) : ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
     override fun onCreateViewHolder(
@@ -29,22 +31,19 @@ class ElectionListAdapter(private val clickListener: ElectionListener) : ListAda
 
 // COMPLETED: Create ElectionViewHolder
 class ElectionViewHolder(val binding: ViewholderElectionBinding) : RecyclerView.ViewHolder(binding.root) {
+    private val dateFormat = SimpleDateFormat("dd/MM/yyy", Locale.getDefault())
+
     fun bind(
         listener: ElectionListener,
         item: Election,
     ) {
-        binding.apply {
-            election = item
-            clickListener = listener
-            executePendingBindings()
-        }
+        binding.root.setOnClickListener { listener.onClick(item) }
+        binding.listitemElectionTitle.text = item.name
+        binding.listitemElectionDate.text = dateFormat.format(item.electionDay)
     }
 
     // COMPLETED: Add companion object to inflate ViewHolder (from)
     companion object {
-        // @LayoutRes
-        // val LAYOUT = R.layout.viewholder_election
-
         fun from(parent: ViewGroup): ElectionViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ViewholderElectionBinding.inflate(layoutInflater, parent, false)

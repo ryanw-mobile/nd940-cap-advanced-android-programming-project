@@ -35,7 +35,7 @@ now [logged as issues](https://github.com/ryanw-mobile/nd940-cap-advanced-androi
 * Kotlin
 * Kotlin Coroutines and Flow
 * MVVM & clean architecture
-* XML Views
+* XML Views with View Binding
 * Device permission
 * Device location
 * Dark theme support
