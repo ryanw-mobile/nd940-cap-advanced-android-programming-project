@@ -66,32 +66,10 @@ class RepresentativeFragment : Fragment() {
         )
 
         // Sync address fields from ViewModel to UI (e.g. when location is used)
-        viewModel.address.observe(viewLifecycleOwner) { address ->
-            if (binding.addressLine1.text.toString() != address.line1) {
-                binding.addressLine1.setText(address.line1)
-            }
-            if (binding.addressLine2.text.toString() != (address.line2 ?: "")) {
-                binding.addressLine2.setText(address.line2 ?: "")
-            }
-            if (binding.city.text.toString() != address.city) {
-                binding.city.setText(address.city)
-            }
-            if (binding.zip.text.toString() != address.zip) {
-                binding.zip.setText(address.zip)
-            }
-            @Suppress("UNCHECKED_CAST")
-            val spinnerAdapter = binding.state.adapter as? ArrayAdapter<String>
-            val position = spinnerAdapter?.getPosition(address.state) ?: -1
-            if (position >= 0 && binding.state.selectedItemPosition != position) {
-                binding.state.setSelection(position)
-            }
-        }
+        viewModel.address.observe(viewLifecycleOwner) { address -> updateAddressFields(address) }
 
         // Sync EditText changes back to ViewModel address
-        binding.addressLine1.doAfterTextChanged { viewModel.address.value?.line1 = it.toString() }
-        binding.addressLine2.doAfterTextChanged { viewModel.address.value?.line2 = it.toString() }
-        binding.city.doAfterTextChanged { viewModel.address.value?.city = it.toString() }
-        binding.zip.doAfterTextChanged { viewModel.address.value?.zip = it.toString() }
+        setupAddressTextWatchers()
 
         // COMPLETED: Establish button listeners for field and location search
         binding.state.onItemSelectedListener =
@@ -116,6 +94,32 @@ class RepresentativeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun updateAddressFields(address: com.example.android.politicalpreparedness.data.network.models.Address) {
+        if (binding.addressLine1.text.toString() != address.line1) binding.addressLine1.setText(address.line1)
+        if (binding.addressLine2.text.toString() != (address.line2 ?: "")) binding.addressLine2.setText(address.line2 ?: "")
+        if (binding.city.text.toString() != address.city) binding.city.setText(address.city)
+        if (binding.zip.text.toString() != address.zip) binding.zip.setText(address.zip)
+        @Suppress("UNCHECKED_CAST")
+        val spinnerAdapter = binding.state.adapter as? ArrayAdapter<String>
+        val position = spinnerAdapter?.getPosition(address.state) ?: -1
+        if (position >= 0 && binding.state.selectedItemPosition != position) binding.state.setSelection(position)
+    }
+
+    private fun setupAddressTextWatchers() {
+        binding.addressLine1.doAfterTextChanged { text ->
+            viewModel.address.value?.let { if (it.line1 != text.toString()) it.line1 = text.toString() }
+        }
+        binding.addressLine2.doAfterTextChanged { text ->
+            viewModel.address.value?.let { if (it.line2 != text.toString()) it.line2 = text.toString() }
+        }
+        binding.city.doAfterTextChanged { text ->
+            viewModel.address.value?.let { if (it.city != text.toString()) it.city = text.toString() }
+        }
+        binding.zip.doAfterTextChanged { text ->
+            viewModel.address.value?.let { if (it.zip != text.toString()) it.zip = text.toString() }
+        }
     }
 
     /**

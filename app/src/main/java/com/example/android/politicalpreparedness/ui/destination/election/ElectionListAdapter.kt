@@ -31,7 +31,7 @@ class ElectionListAdapter(private val clickListener: ElectionListener) : ListAda
 
 // COMPLETED: Create ElectionViewHolder
 class ElectionViewHolder(val binding: ViewholderElectionBinding) : RecyclerView.ViewHolder(binding.root) {
-    private val dateFormat = SimpleDateFormat("dd/MM/yyy", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     fun bind(
         listener: ElectionListener,

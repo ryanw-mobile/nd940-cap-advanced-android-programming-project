@@ -55,7 +55,7 @@ class VoterInfoFragment : Fragment() {
             }
         }
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         viewModel.voterInfo.observe(viewLifecycleOwner) { voterInfo ->
             binding.electionName.text = voterInfo.election.name
             binding.electionDate.text = dateFormat.format(voterInfo.election.electionDay)
