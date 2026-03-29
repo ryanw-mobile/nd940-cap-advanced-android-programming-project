@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.data.network.models.Election
+import com.example.android.politicalpreparedness.ui.setFormattedDate
 import com.example.android.politicalpreparedness.databinding.ViewholderElectionBinding
 
 class ElectionListAdapter(private val clickListener: ElectionListener) : ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
@@ -33,11 +34,9 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) : RecyclerView.
         listener: ElectionListener,
         item: Election,
     ) {
-        binding.apply {
-            election = item
-            clickListener = listener
-            executePendingBindings()
-        }
+        binding.root.setOnClickListener { listener.onClick(item) }
+        binding.listitemElectionTitle.text = item.name
+        binding.listitemElectionDate.setFormattedDate(item.electionDay)
     }
 
     // COMPLETED: Add companion object to inflate ViewHolder (from)

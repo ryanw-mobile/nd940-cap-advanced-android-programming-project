@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.ui.setFormattedDate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,6 +23,8 @@ class VoterInfoFragment : Fragment() {
     // Hilt DI - not using @Inject
     private val viewModel: VoterInfoViewModel by viewModels()
 
+    private lateinit var binding: FragmentVoterInfoBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,56 +32,58 @@ class VoterInfoFragment : Fragment() {
     ): View {
 //        val args = VoterInfoFragmentArgs.fromBundle(requireArguments())
 
-        // COMPLETED: Add ViewModel values and create ViewModel
-//        val viewModelFactory =
-        //          VoterInfoViewModelFactory(electionsRepository, args.argElectionId, args.argDivision)
-//        val viewModel =
-//            ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
+        // Use View Binding instead of Data Binding
+        binding = FragmentVoterInfoBinding.inflate(inflater, container, false)
 
-        // COMPLETED: Add binding values
-        val binding: FragmentVoterInfoBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        // Observe loading state and update UI
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.loadingScreen.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        // Observe follow status and update button
+        viewModel.isFollowed.observe(viewLifecycleOwner) { isFollowed ->
+            binding.buttonSave.text = if (isFollowed) {
+                getString(R.string.unfollow_election)
+            } else {
+                getString(R.string.follow_election)
+            }
+        }
+
+        // Set button click listener
+        binding.buttonSave.setOnClickListener {
+            viewModel.toggleFollowElection()
+        }
 
         // Hint: You will need to ensure proper data is provided from previous fragment.
         viewModel.voterInfoLoadError.observe(
             viewLifecycleOwner,
-            { error ->
-                if (error) {
-                    binding.dataScreen.visibility = View.GONE
-                    binding.loadingScreen.visibility = View.GONE
-                    binding.errorScreen.visibility = View.VISIBLE
+        ) { error ->
+            if (error) {
+                binding.dataScreen.visibility = View.GONE
+                binding.loadingScreen.visibility = View.GONE
+                binding.errorScreen.visibility = View.VISIBLE
+            }
+        }
+
+        // Observe voter info and update UI
+        viewModel.voterInfo.observe(viewLifecycleOwner) { voterInfo ->
+            // Update election name and date
+            binding.electionName.text = voterInfo?.election?.name ?: ""
+            binding.electionDate.setFormattedDate(voterInfo?.election?.electionDay)
+
+            // Control the visibility of the State Correspondence
+            val correspondenceAddress = viewModel.getCorrespondenceAddress()
+            if (correspondenceAddress.isNullOrEmpty()) {
+                binding.addressGroup.visibility = View.GONE
+            } else {
+                binding.address.text = correspondenceAddress
+                binding.addressGroup.visibility = View.VISIBLE
                 }
-            },
-        )
 
-        // Control the visibility of the State Correspondence
-        // Could have a better way to do this
-        viewModel.voterInfo.observe(
-            viewLifecycleOwner,
-            {
-                // When it changes and have valid values, we update the UI
-                binding.apply {
-                    addressGroup.visibility =
-                        if (viewModel!!.getCorrespondenceAddress().isNullOrEmpty()) {
-                            View.GONE
-                        } else {
-                            View.VISIBLE
-                        }
-
-                    // COMPLETED: Handle loading of URLs
-                    stateLocations.setOnClickListener { openWebUrl(viewModel!!.getVotingLocationUrl()) }
-                    stateBallot.setOnClickListener { openWebUrl(viewModel!!.getBallotInformationUrl()) }
-                }
-            },
-        )
-
-        // COMPLETED: Handle save button UI state
-        // XML interacting with ViewModel directly
-
-        // COMPLETED: cont'd Handle save button clicks
-        // XML calling ViewModel function directly
+            // COMPLETED: Handle loading of URLs
+            binding.stateLocations.setOnClickListener { openWebUrl(viewModel.getVotingLocationUrl()) }
+            binding.stateBallot.setOnClickListener { openWebUrl(viewModel.getBallotInformationUrl()) }
+        }
 
         return binding.root
     }

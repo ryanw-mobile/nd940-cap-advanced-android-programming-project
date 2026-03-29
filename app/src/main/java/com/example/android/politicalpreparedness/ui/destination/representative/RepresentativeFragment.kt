@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,6 +24,7 @@ import com.example.android.politicalpreparedness.BuildConfig
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.data.network.models.Address
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
+import com.example.android.politicalpreparedness.ui.setStateValue
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,18 +37,15 @@ class RepresentativeFragment : Fragment() {
     // Hilt DI - not using @Inject
     private val viewModel: RepresentativeViewModel by viewModels()
 
-    lateinit var binding: FragmentRepresentativeBinding
+    private lateinit var binding: FragmentRepresentativeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // COMPLETED: Establish bindings
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        // Use View Binding instead of Data Binding
+        binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
 
         // COMPLETED: Define and assign Representative adapter
         val representativesAdapter =
@@ -68,6 +65,25 @@ class RepresentativeFragment : Fragment() {
         )
 
         // COMPLETED: Establish button listeners for field and location search
+        // Observe address changes and update UI
+        viewModel.address.observe(
+            viewLifecycleOwner,
+        ) { address ->
+            address?.let {
+                binding.addressLine1.setText(it.line1)
+                binding.addressLine2.setText(it.line2)
+                binding.city.setText(it.city)
+                binding.state.setStateValue(it.state)
+                binding.zip.setText(it.zip)
+            }
+        }
+
+        // Update ViewModel when user edits text fields
+        binding.addressLine1.setOnFocusChangeListener { _, _ -> updateAddressFromFields() }
+        binding.addressLine2.setOnFocusChangeListener { _, _ -> updateAddressFromFields() }
+        binding.city.setOnFocusChangeListener { _, _ -> updateAddressFromFields() }
+        binding.zip.setOnFocusChangeListener { _, _ -> updateAddressFromFields() }
+
         binding.state.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -83,13 +99,26 @@ class RepresentativeFragment : Fragment() {
                     viewModel.address.value?.state = binding.state.selectedItem as String
                 }
             }
+        
         binding.buttonLocation.setOnClickListener { checkAndRequestLocationPermissionsAndGetLocation() }
         binding.buttonSearch.setOnClickListener {
             hideKeyboard()
+            updateAddressFromFields()
             viewModel.fetchRepresentatives()
         }
 
         return binding.root
+    }
+
+    private fun updateAddressFromFields() {
+        val address = Address(
+            binding.addressLine1.text.toString(),
+            binding.addressLine2.text.toString(),
+            binding.city.text.toString(),
+            binding.state.selectedItem as String,
+            binding.zip.text.toString(),
+        )
+        viewModel.setAddress(address)
     }
 
 //    override fun onRequestPermissionsResult(

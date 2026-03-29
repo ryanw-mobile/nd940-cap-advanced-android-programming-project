@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,7 +18,7 @@ class ElectionsFragment : Fragment() {
     // Hilt DI - not using @Inject
     private val viewModel: ElectionsViewModel by viewModels()
 
-    lateinit var binding: FragmentElectionBinding
+    private lateinit var binding: FragmentElectionBinding
     private lateinit var electionUpcomingAdapter: ElectionListAdapter
     private lateinit var electionFollowedAdapter: ElectionListAdapter
 
@@ -28,13 +27,8 @@ class ElectionsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // COMPLETED: Add ViewModel values and create ViewModel
-        // By Injection
-
-        // COMPLETED: Add binding values
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        // Use View Binding instead of Data Binding
+        binding = FragmentElectionBinding.inflate(inflater, container, false)
 
         // COMPLETED: Link elections to voter info
         viewModel.selectedElection.observe(

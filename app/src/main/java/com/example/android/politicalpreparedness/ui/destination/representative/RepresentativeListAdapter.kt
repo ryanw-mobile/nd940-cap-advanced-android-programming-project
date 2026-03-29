@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.data.network.models.Channel
 import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
+import com.example.android.politicalpreparedness.ui.loadProfileImage
 import com.example.android.politicalpreparedness.domain.model.Representative
 
 class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
@@ -32,23 +33,21 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeView
 class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Representative) {
         // XML retrieves string values for text views
-        binding.representative = item
-
-        // TextView values are handled at XML
-
-        // Use Glide to take care of the profile image
-        // BindingAdapter is defined to supply the URL from the XML
-        // binding.representativePhoto.setImageResource(R.drawable.ic_profile)
-
+        // Populate text views
+        binding.representativeOfficeName.text = item.office.name
+        binding.representativeName.text = item.official.name
+        binding.representativeParty.text = item.official.party
+        
+        // Load profile image
+        binding.representativePhoto.loadProfileImage(item.official.photoUrl)
+        binding.representativePhoto.contentDescription = item.official.name
         // COMPLETED: Show social links ** Hint: Use provided helper methods
         // COMPLETED: Show www link ** Hint: Use provided helper methods
         View.GONE.let {
-            binding.twitterIcon.visibility = it
-            binding.facebookIcon.visibility = it
-            binding.wwwIcon.visibility = it
-        }
-
-        item.official.channels?.let {
+        binding.twitterIcon.visibility = View.GONE
+        binding.facebookIcon.visibility = View.GONE
+        binding.wwwIcon.visibility = View.GONE
+        
             showSocialLinks(it)
         }
         item.official.urls?.let {
@@ -59,7 +58,6 @@ class RepresentativeViewHolder(private val binding: ViewholderRepresentativeBind
     }
 
     // COMPLETED: Add companion object to inflate ViewHolder (from)
-    companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ViewholderRepresentativeBinding.inflate(layoutInflater, parent, false)
